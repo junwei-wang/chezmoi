@@ -1,0 +1,208 @@
+# Folder view configuration files
+.DS_Store
+Desktop.ini
+
+# Thumbnail cache files
+._*
+Thumbs.db
+
+# Files that might appear on external disks
+.Spotlight-V100
+.Trashes
+
+# *************************
+# ***** Java language *****
+# *************************
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+*.o
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# ****************************
+# ***** Python lanaguage *****
+# ****************************
+# Compiled Python files
+*.pyc
+
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*,cover
+.hypothesis/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+#Ipython Notebook
+.ipynb_checkpoints
+
+# ******************
+# ***** Jekyll *****
+# ******************
+_site/
+.sass-cache/
+.jekyll-metadata
+
+# ******************
+# ***** MacOS *****
+# ******************
+**/.DS_Store
+*/.DS_Store
+*~
+
+# shell
+.bash_history
+.zcompdump*
+.zsh-update
+.zsh_history
+
+# directories
+Applications/
+AppData/
+Desktop/
+Documents/
+Dropbox/
+Google Drive*/
+Library/
+Mail/
+Movies/
+Music/
+Pictures/
+Public/
+Software/
+git/
+gitee/
+github/
+github-jwang/
+projects/
+workspace/
+
+# security
+.aws
+.ssh
+.gnupg*
+.gnus
+
+.Xauthority
+.authinfo
+
+# application
+.android/
+.atom/
+auto/
+.bundle/
+# .config/
+.conda/
+.cups/
+.docker/
+.dropbox/
+.emacs.d/
+.gem
+.gradle
+.idapro/
+.ipython/
+.iterm2/
+.iterm2_shell_integration.zsh
+.jupyter/
+.julia*
+.lesshst
+.local/
+.m2/repository/
+.matplotlib/
+.mume/
+.node-gyp/
+.npm/
+.opam/
+.openjfx/
+.oracle_jre_usage/
+.pEp*
+.pcloud/
+.pylint.d/
+.python_history
+.sage/
+.subversion/
+.tor/
+.virtualenvs/
+.viminfo
+.vscode/
+.wget-hsts
+.yarnrc
+VirtualBox VMs/
+Creative Cloud Files/
+OneDrive/
+Zotero/
+.CFUserTextEncoding
+.Trash/
