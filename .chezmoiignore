@@ -1,0 +1,30 @@
+{{- if eq .chezmoi.os "darwin" }}
+AppData
+Applications
+Desktop
+Documents
+Downloads
+Library
+Movies
+Music
+News
+Pictures
+Public
+{{- end }}
+
+# Cloud Drives
+Dropbox
+Google Drive*
+OneDrive
+pCloud Drive
+
+# project folders
+git
+github*
+projects
+workspace
+
+# softwares
+Postman
+VirtualBox VMs
+Zotero
