@@ -1,3 +1,4 @@
+##### System #####
 {{- if eq .chezmoi.os "darwin" }}
 AppData
 Applications
@@ -14,19 +15,32 @@ Public
 .Trash
 {{- end }}
 
-# Cloud Drives
+##### Cloud Drives #####
 Dropbox
 Google Drive*
 OneDrive
 pCloud Drive
 
-# project folders
+##### Project folders #####
 git
 github*
 projects
 workspace
 
-# softwares
+##### Softwares #####
 Postman
 VirtualBox VMs
 Zotero
+
+##### Software Data and Config #####
+#>>> GnuPG
+.pEp*
+#>>> Python
+.python_history
+.pylint.d
+.tox
+.virtualenvs
+#>>> Vim
+.viminfo
+#>>> Zsh
+.zsh_history
