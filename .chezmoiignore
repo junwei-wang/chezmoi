@@ -11,9 +11,13 @@ Music
 News
 Pictures
 Public
-.DS_Store
+DS_Store
 .Trash
 {{- end }}
+.local/
+
+#>>> history
+.lesshst
 
 ##### Cloud Drives #####
 Dropbox
@@ -33,13 +37,36 @@ VirtualBox VMs
 Zotero
 
 ##### Software Data and Config #####
+{{- if eq .chezmoi.os "darwin" }}
+#>>>iTerm2
+.iterm2*
+{{- end }}
+
 #>>> GnuPG
 .pEp*
+#>>> Java
+.m2
+#>>> JavaScript
+.node-gyp
+.npm
+#>>> Julia
+.julia
+.julia_history
+#>>> Markdown preview enhanced for vscode
+.mume
+#>>> pCloud
+.pcloud
 #>>> Python
+.jupyter
+.matplotlib
 .python_history
 .pylint.d
 .tox
 .virtualenvs
+#>>> SageMath
+.sage
+#>>> Subversion
+.subversion
 #>>> Vim
 .viminfo
 #>>> Zsh
