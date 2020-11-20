@@ -11,13 +11,21 @@ Music
 News
 Pictures
 Public
-DS_Store
+.DS_Store
 .Trash
 {{- end }}
+.cache/
 .local/
-
+*.log
 #>>> history
 .lesshst
+.bash_history
+.julia_history
+.python_history
+.zsh_history
+
+##### Security #####
+.gnupg
 
 ##### Cloud Drives #####
 Dropbox
@@ -41,7 +49,17 @@ Zotero
 #>>>iTerm2
 .iterm2*
 {{- end }}
-
+#>>> Docker
+.docker
+#>>> Dropbox
+.dropbox
+#>>> Emacs
+#>>> FileZilla
+.config/filezilla
+#>>> Haskell
+.cabal
+#>>> IDA Pro
+.idapro
 #>>> GnuPG
 .pEp*
 #>>> Java
@@ -51,7 +69,6 @@ Zotero
 .npm
 #>>> Julia
 .julia
-.julia_history
 #>>> Markdown preview enhanced for vscode
 .mume
 #>>> pCloud
@@ -59,15 +76,14 @@ Zotero
 #>>> Python
 .jupyter
 .matplotlib
-.python_history
 .pylint.d
 .tox
 .virtualenvs
+#>>> Ruby
+.gem
 #>>> SageMath
 .sage
 #>>> Subversion
 .subversion
 #>>> Vim
 .viminfo
-#>>> Zsh
-.zsh_history
