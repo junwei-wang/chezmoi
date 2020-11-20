@@ -17,6 +17,7 @@ Public
 .cache/
 .local/
 *.log
+LICENSE
 #>>> history
 .lesshst
 .bash_history
