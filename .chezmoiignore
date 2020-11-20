@@ -10,6 +10,8 @@ Music
 News
 Pictures
 Public
+.DS_Store
+.Trash
 {{- end }}
 
 # Cloud Drives

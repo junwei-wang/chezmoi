@@ -1,0 +1,8 @@
+# .latexmkrc starts
+$pdf_mode = 1;
+$pdf_previewer = 'open -a skim';
+$clean_ext = 'bbl rel nav out snm vrb %R-blx.bib %R.synctex.gz';
+$pdflatex = 'pdflatex -shell-escape -interaction=nonstopmode -synctex=1 %O %S';
+$xelatex = 'xelatex -shell-escape -interaction=nonstopmode -synctex=1 %O %S';
+$xelatex_previewer = 'open -a skim';
+# .latexmkrc ends
