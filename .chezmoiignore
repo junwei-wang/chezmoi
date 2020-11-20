@@ -50,6 +50,8 @@ Zotero
 #>>>iTerm2
 .iterm2*
 {{- end }}
+#>>> chezmoi
+.config/chezmoi
 #>>> Docker
 .docker
 #>>> Dropbox
