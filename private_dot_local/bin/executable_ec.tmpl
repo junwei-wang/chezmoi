@@ -1,0 +1,18 @@
+#!/bin/sh
+
+emacs_server_is_running()
+{
+    ps ux | grep "\bemacs\b" | grep -v grep >/dev/null
+}
+
+if emacs_server_is_running; then
+    echo "Emacs server is running..."
+else
+    echo "Starting Emacs server..."
+{{- if eq .chezmoi.os "darwin" }}
+    brew services restart emacs-plus@27; sleep 5
+{{- else if eq .chezmoi.os "linux" }}
+    emacs --daemon; sleep 5
+{{ end }}
+fi
+emacsclient -n "$@" 2>/dev/null &

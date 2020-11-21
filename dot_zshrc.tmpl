@@ -1,5 +1,5 @@
 ZSH="${HOME}/.oh-my-zsh"
-
+[[ -e $ZSH ]] || sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" 
 
 {{ if eq .chezmoi.os "darwin" -}}
 ZSH_THEME="random"
@@ -24,12 +24,11 @@ export UPDATE_ZSH_DAYS=7
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-
-{{ if eq .chezmoi.os "darwin" }}
+{{ if eq .chezmoi.os "darwin" -}}
 plugins=(brew docker git history osx pip python tmux)
-{{ else if eq .chezmoi.os "linux" }}
+{{- else if eq .chezmoi.os "linux" }}
 plugins=(docker git history pip python tmux)
-{{ end }}
+{{- end }}
 
 source $ZSH/oh-my-zsh.sh
 source ~/.init/initialize
@@ -37,14 +36,13 @@ source ~/.init/initialize
 if [[ -n $SSH_CONNECTION ]]; then
    export EDITOR='vim'
 else
-{{ if eq .chezmoi.os "darwin" -}}
+{{- if eq .chezmoi.os "darwin" }}
    export EDITOR='ecc'
-{{ else if eq .chezmoi.os "linux" }}
+{{- else if eq .chezmoi.os "linux" }}
    export EDITOR='ecc'
 {{- end }}
 fi
 
-
-{{ if eq .chezmoi.os "darwin" }}
+{{ if eq .chezmoi.os "darwin" -}}
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-{{ end }}
+{{ end -}}

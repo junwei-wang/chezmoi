@@ -1,0 +1,108 @@
+#!/bin/bash
+
+set -e
+
+include_cite=1
+
+usage() {
+    echo "$0 [options]"
+    echo "    -C        only copy reference to clipboard"
+    echo "    -h        this message"
+}
+
+args=()
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -C)
+            include_cite=""
+            shift
+            ;;
+        -h | --help)
+            usage
+            exit 0
+            ;;
+        -*)
+            echo "error: unkown option $1!"
+            usage
+            exit 1
+            ;;
+        *)
+            args+=("$1")
+            shift
+    esac
+done
+set -- "${args[@]}"
+
+if [[ ! `type git` ]]; then
+    echo git required
+    exit 1
+fi
+
+if [[ ! `type fzf` ]]; then
+    echo "fzf required: https://github.com/junegunn/fzf"
+    exit 1
+fi
+
+if [[ ! `type grep` ]]; then
+    echo "grep required"
+    exit 1
+fi
+
+if [[ ! `type xclip` ]]; then
+    echo "xclip not found, but recommended for automatic copy of citations to clipboard"
+fi
+
+dir="$HOME/.cb"
+bib="$dir/cryptobib/crypto.bib"
+n=12
+
+# create config dir if it doesn't exist already
+if [[ ! -d $dir ]]; then
+    echo "creating config directory $dir"
+    mkdir -p "$dir"
+fi
+
+# clone cryptobib if it isn't already
+if [[ ! -d $dir/cryptobib ]]; then
+    git clone "git@github.com:cryptobib/export.git" "$dir/cryptobib"
+fi
+
+line=$(grep -Pe '\s+title = ' "$bib" | fzf --preview="grep --color=always --fixed-strings -C$n {} $bib")
+
+citations=($(grep -C"$n" --fixed-strings "$line" "$bib" | perl -E "
+while (<STDIN>) {
+    if (/^@.*\{(.*),$/../^\}$/) {
+        chomp;
+        if (\$_ eq q/$line/) {
+            push @citations, \$1;
+        }
+    }
+}
+print join ' ', @citations;"))
+
+if [[ $include_cite ]]; then
+    function cite() {
+        echo -n "\\cite{$1}"
+    }
+else
+    function cite() {
+        echo -n "$1"
+    }
+fi
+
+copy() {
+    echo "\\cite{$1}"
+    # [[ `type xclip` ]] && echo -n "\\cite{$1}" | xclip
+}
+
+if [[ "${#citations[@]}" -gt 1 ]]; then
+    echo "multiple citations:"
+    for ((i = 0; i < ${#citations[@]}; i++)) do
+        echo "  $((i+1))) ${citations[$i]}"
+    done
+    echo -n "which citation? [1-${#citations[@]}] "
+    read response
+    copy "${citations[$((response - 1))]}"
+else
+    copy "${citations[0]}"
+fi

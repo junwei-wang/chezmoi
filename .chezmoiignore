@@ -27,6 +27,8 @@ LICENSE
 
 ##### Security #####
 .gnupg
+.ssh/master-*
+.ssh/id*
 
 ##### Cloud Drives #####
 Dropbox
@@ -77,6 +79,7 @@ Zotero
 #>>> pCloud
 .pcloud
 #>>> Python
+.ipython
 .jupyter
 .matplotlib
 .pylint.d
