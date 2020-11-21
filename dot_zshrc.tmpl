@@ -1,5 +1,5 @@
 ZSH="${HOME}/.oh-my-zsh"
-[[ -e $ZSH ]] || sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" 
+[[ -e $ZSH ]] || sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 {{ if eq .chezmoi.os "darwin" -}}
 ZSH_THEME="random"
@@ -46,3 +46,5 @@ fi
 {{ if eq .chezmoi.os "darwin" -}}
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 {{ end -}}
+
+. ${HOME}/.config/init
