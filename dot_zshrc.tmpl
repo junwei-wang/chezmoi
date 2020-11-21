@@ -1,4 +1,4 @@
-export ZSH="${HOME}/.oh-my-zsh"
+ZSH="${HOME}/.oh-my-zsh"
 
 
 {{ if eq .chezmoi.os "darwin" -}}
@@ -19,13 +19,32 @@ HIST_STAMPS="yyyy-mm-dd"
 
 ZSH_COMPDUMP="$ZSH_CACHE_DIR/.zcompdump"
 
+export UPDATE_ZSH_DAYS=7
+
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+
+{{ if eq .chezmoi.os "darwin" }}
 plugins=(brew docker git history osx pip python tmux)
+{{ else if eq .chezmoi.os "linux" }}
+plugins=(docker git history pip python tmux)
+{{ end }}
 
 source $ZSH/oh-my-zsh.sh
 source ~/.init/initialize
-# alias ohmyzsh="mate ~/.oh-my-zsh"
 
+if [[ -n $SSH_CONNECTION ]]; then
+   export EDITOR='vim'
+else
+{{ if eq .chezmoi.os "darwin" -}}
+   export EDITOR='ecc'
+{{ else if eq .chezmoi.os "linux" }}
+   export EDITOR='ecc'
+{{- end }}
+fi
+
+
+{{ if eq .chezmoi.os "darwin" }}
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+{{ end }}

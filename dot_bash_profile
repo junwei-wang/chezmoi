@@ -1,1 +1,5 @@
-export GPG_TTY=$(tty)
+#
+# ~/.bash_profile
+#
+
+[[ -f ~/.bashrc ]] && . ~/.bashrc
