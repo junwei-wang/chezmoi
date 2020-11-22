@@ -1,18 +1,23 @@
 ##### System #####
-{{- if eq .chezmoi.os "darwin" }}
-AppData
-Applications
 Desktop
 Documents
 Downloads
+Music
+Pictures
+{{- if eq .chezmoi.os "darwin" }}
+AppData
+Applications
 Library
 Movies
-Music
 News
-Pictures
 Public
 .DS_Store
 .Trash
+AppData
+{{- else if eq .chezmoi.os "linux" }}
+Public
+Templates
+Videos
 {{- end }}
 
 .android
@@ -105,4 +110,4 @@ Zotero
 .viminfo
 #>>> Zsh
 .oh-my-zsh
-.zcompdump-jwang-mbp-5.8
+.zcompdump-*
