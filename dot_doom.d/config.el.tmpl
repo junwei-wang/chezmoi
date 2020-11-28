@@ -39,13 +39,15 @@
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-vibrant)
 
+(setq projectile-project-search-path '("~/git/" "~/github/" "~/github-jwang/" "~/gitea_local" "~/projects/" "~/workspace/"))
+
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/github/org/")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type 'relative)
 
 
 ;; Here are some additional functions/macros that could help you configure Doom:
@@ -97,16 +99,20 @@
 (setq ispell-personal-dictionary "~/.aspell.en.pws")
 
 ;;;;;;;;;;; neotree
-(setq neo-hidden-regexp-list
-      '("^\\." "\\.cs\\.meta$" "\\.pyc$" "~$" "^#.*#$" "\\.elc$"
-        ;; latex
-        "\\.aux$" "\\.synctex\\.gz$" "\\.fls$" "\\.tdo$" "\\.bbl$" "\\.blg$"))
-(setq neo-window-fixed-size nil)
+(setq neo-hidden-regexp-list '("^\\." "\\.cs\\.meta$"
+                               ;; Python
+                               "\\.pyc$" "__pycache__" "\\.egg-info"
+                               "~$" "^#.*#$" "\\.elc$"
+                               ;; Latex
+                               "\\.aux$" "\\.synctex\\.gz$" "\\.fls$" "\\.tdo$" "\\.bbl$" "\\.blg$")
+      neo-window-fixed-size nil)
+
+
 
 ;;;;;;;;;; LaTeX
 ;; indentation
-(setq LaTeX-indent-level 2)
-(setq LaTeX-item-indent 0)
+(setq LaTeX-indent-level 2
+      LaTeX-item-indent 0)
 
 ; (setq TeX-error-overview-open-after-TeX-run t)
 (mapc (lambda (mode) (add-hook 'LaTeX-mode-hook mode))
@@ -121,3 +127,17 @@
 (add-hook 'python-mode-hook #'py-autopep8-enable-on-save)
 (set-formatter! 'autopep8 'py-autopep8 :modes '(python-mode))
 ; (add-hook 'python-mode-hook (lambda () (set-fill-column 100)))
+
+;;;;;;;;;; Org-Roam
+(setq org-roam-graph-viewer "/Applications/Firefox.app/Contents/MacOS/firefox")
+(setq org-roam-server-host "127.0.0.1"
+      org-roam-server-port 8080
+      org-roam-server-authenticate nil
+      org-roam-server-export-inline-images t
+      org-roam-server-serve-files nil
+      org-roam-server-served-file-extensions '("pdf" "mp4" "ogv")
+      org-roam-server-network-poll t
+      org-roam-server-network-arrows nil
+      org-roam-server-network-label-truncate t
+      org-roam-server-network-label-truncate-length 60
+      org-roam-server-network-label-wrap-length 20)
