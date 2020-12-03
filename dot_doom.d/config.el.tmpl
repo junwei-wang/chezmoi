@@ -141,3 +141,15 @@
       org-roam-server-network-label-truncate t
       org-roam-server-network-label-truncate-length 60
       org-roam-server-network-label-wrap-length 20)
+
+(use-package org-roam-bibtex
+  :after org-roam
+  :hook (org-roam-mode . org-roam-bibtex-mode))
+
+
+;;;;;;;;; Bibliography
+(setq bibtex-completion-bibliography
+      '("~/.cb/cryptobib/crypto.bib"
+        "~/github/biblio/crxwork/wheely.bib"))
+(setq bibtex-completion-library-path
+      '("~/github/biblio/papers"))
