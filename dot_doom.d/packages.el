@@ -9,17 +9,24 @@
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
 ;(package! some-package)
 
+(package! beacon)
+
 (package! py-autopep8)
 
 ;;; org-roam
-;;; org-roam-bibtex
+;;; org-roam-server
+(package! org-roam-server)
+
+;;;;;;;;; org-roam-bibtex (ORB)
 (package! org-roam-bibtex
   :recipe (:host github :repo "org-roam/org-roam-bibtex"))
 ;; When using org-roam via the `+roam` flag
 (unpin! org-roam company-org-roam)
 
-;;; org-roam-server
-(package! org-roam-server)
+;;; ORB dependencies
+(package! org-ref)
+(package! helm-bibtex)
+(package! ivy-bibtex)
 
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:

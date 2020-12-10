@@ -128,7 +128,30 @@
 (set-formatter! 'autopep8 'py-autopep8 :modes '(python-mode))
 ; (add-hook 'python-mode-hook (lambda () (set-fill-column 100)))
 
+
+;;;;;;;;;; Orgmode
+(after! org
+  (setq time-stamp-active t
+    time-stamp-start "#\\+LAST_MODIFIED:[ \t]*"
+    time-stamp-end "$"
+    time-stamp-format "\[%04y-%02m-%02d %3a %02H:%02M\]")
+  (add-hook 'before-save-hook 'time-stamp))
+
 ;;;;;;;;;; Org-Roam
+(setq org-roam-capture-templates
+      '(("d" "default" plain
+         (function org-roam-capture--get-point)
+         "%?"
+         :file-name "%<%Y%m%d>-${slug}"
+         :head "#+TITLE: ${title}\n#+CREATED: %U\n#+LAST_MODIFIED: %U\n#+ROAM_ALIAS:\n#+ROAM_TAGS:\n\n"
+         :unnarrowed t)
+        ("D" "default copy" plain
+         (function org-roam-capture--get-point)
+         "%?"
+         :file-name "%<%Y%m%d%H%M%S>-${slug}"
+         :head "#+TITLE: ${title}\n#+CREATED: %U\n#+LAST_MODIFIED: %U\n\n"
+         :unnarrowed t)))
+
 (setq org-roam-graph-viewer "/Applications/Firefox.app/Contents/MacOS/firefox")
 (setq org-roam-server-host "127.0.0.1"
       org-roam-server-port 8080
@@ -146,10 +169,40 @@
   :after org-roam
   :hook (org-roam-mode . org-roam-bibtex-mode))
 
+(setq orb-preformat-keywords '("year" "citekey" "title" "author")
+      orb-templates '(("r" "ref" plain (function org-roam-capture--get-point)
+                       (file "~/github/org/templates/orb.org")
+                       :file-name "biblio/${citekey}"
+                       :head "#+TITLE: ${year} - [${citekey}] - ${title} -- ${author}\n"
+                       :unnarrowed t)))
 
 ;;;;;;;;; Bibliography
-(setq bibtex-completion-bibliography
-      '("~/.cb/cryptobib/crypto.bib"
-        "~/github/biblio/crxwork/wheely.bib"))
-(setq bibtex-completion-library-path
-      '("~/github/biblio/papers"))
+;;; helm-bibtex
+(setq bibtex-completion-bibliography '("~/.cb/cryptobib/crypto.bib"
+                                       "~/github/biblio/misc.bib"
+                                       "~/github/biblio/tifs.bib"
+                                       "~/github/biblio/crxwork/wheely.bib")
+      bibtex-completion-library-path '("~/github/biblio/papers"))
+
+;;; org-ref
+(setq reftex-default-bibliography bibtex-completion-bibliography
+      ; show broken links is slow in large files
+      org-ref-show-broken-links nil)
+
+;; see org-ref for use of these variables
+(setq ;org-ref-bibliography-notes "~/Dropbox/bibliography/notes.org"
+      org-ref-default-bibliography bibtex-completion-bibliography
+      org-ref-pdf-directory "~/github/biblio/papers")
+
+;;;;;;;;;; Org-Noter
+(setq org-noter-notes-search-path '(org-directory
+                                    "~/github/org/roam/biblio"))
+
+;;;;;;;;;; beacon
+(beacon-mode 1)
+(setq beacon-color "#bf616a"
+      beacon-size 80
+      beacon-blink-delay 0.5
+      beacon-blink-duration 0.5
+      beacon-blink-when-focused t
+      beacon-blink-when-point-moves-vertically t)
