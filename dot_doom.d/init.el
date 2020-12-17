@@ -15,7 +15,7 @@
 ;;      directory (for easy access to its source code).
 
 (doom! :input
-       ;;chinese
+       chinese
        ;;japanese
 
        :completion
@@ -167,7 +167,7 @@
        yaml              ; JSON, but readable
 
        :email
-       (mu4e +gmail)
+       (mu4e +org +gmail)
        ;;notmuch
        ;;(wanderlust +gmail)
 

@@ -1,4 +1,4 @@
-personal_ws-1.1 en 182 
+personal_ws-1.1 en 198
 ACM
 ACNS
 AES
@@ -11,6 +11,7 @@ Asiacrypt
 Bayes
 Biryukov
 Bitslicing
+Boneh
 Boyen
 CCA
 CDF
@@ -42,8 +43,10 @@ IND
 ISW
 IoT
 JCEN
+Joux
 Junwei
 KP
+Katz
 Kerckhoffs
 Kerckhoffs's
 LACS
@@ -70,6 +73,7 @@ SCA
 SIMD
 SPN
 Saclay
+Sahai
 Sbox
 Shamir
 Sihem
@@ -83,6 +87,7 @@ VBB
 Vaikuntanathan
 Vinod
 WBC
+Weil
 Wheely
 WhibOx
 Winograd
@@ -96,6 +101,8 @@ bijection
 bijections
 bijective
 bijectivity
+bilinear
+biometric
 bitcode
 bitsliced
 bitslicing
@@ -109,6 +116,7 @@ chronologic
 ciphertext
 ciphertexts
 composability
+computable
 covariance
 cryptanalyses
 cryptanalysis
@@ -130,7 +138,10 @@ distinguishers
 ePrint
 encodings
 encryptions
+geolocation
+geospatial
 homomorphic
+homomorphically
 https
 hypergeometric
 iO
@@ -144,6 +155,7 @@ injective
 invertible
 isogeny
 isomorphism
+iteratively
 lifecycle
 malwares
 misc
@@ -164,19 +176,23 @@ pseudorandom
 pseudorandomly
 pseudorandomness
 quantile
+qutebrowser
 randomisation
 randomised
 ransomware
 runtime
 several
 standardisation
+stateful
 subfield
 subkey
 submatrix
 todo
+unary
 unbreakability
 untrusted
 wayness
+webpage
 website
 wiki
 wyverse
