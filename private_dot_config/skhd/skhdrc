@@ -76,6 +76,15 @@
 # A REFERENCE ONLY, WHEN MAKING YOUR OWN CONFIGURATION..          #
 # ############################################################### #
 
+######### command
+# terminal
+ctrl + cmd - i : open /Applications/iTerm.app 
+# email
+ctrl + cmd - e : open /Applications/Thunderbird.app
+# reset windowm manager
+ctrl + cmd - r : $HOME/.local/bin/resetwm
+
+
 # focus window
 ctrl + cmd - h : yabai -m window --focus west
 ctrl + cmd - l : yabai -m window --focus east
@@ -165,3 +174,4 @@ alt - t : yabai -m window --toggle float;\
 # alt - p : yabai -m window --toggle sticky;\
 #           yabai -m window --toggle topmost;\
 #           yabai -m window --toggle pip
+
