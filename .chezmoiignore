@@ -38,7 +38,7 @@ LICENSE
 ##### Security #####
 .aws
 .gnupg
-.ssh/master-*
+.ssh/cache-*
 .ssh/id*
 .ssh/known_hosts
 

@@ -52,7 +52,7 @@ yabai -m config window_gap                   06
 # space 3: browser
 
 # application excpetions
-yabai -m rule --add app="^(AppCleaner|Garmin Express|GPG Keychain|Toggl Track|WeChat|YoudaoDict)$" manage=off
+yabai -m rule --add app="^(AppCleaner|Garmin Express|GPG Keychain|Logi Options|Toggl Track|WeChat|YoudaoDict)$" manage=off
 yabai -m rule --add app="^(System Preferences|System Information)$" manage=off
 
 # buildin status bar (does not work)

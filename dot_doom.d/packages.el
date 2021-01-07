@@ -9,9 +9,14 @@
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
 ;(package! some-package)
 
+;;;; UI
 (package! beacon)
 
+;;;; Python
 (package! py-autopep8)
+
+;;;; email
+(package! org-mime)
 
 ;;; org-roam
 ;;; org-roam-server

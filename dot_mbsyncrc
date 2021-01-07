@@ -1,0 +1,178 @@
+# mbsyncrc based on
+# http://pragmaticemacs.com/emacs/migrating-from-offlineimap-to-mbsync-for-mu4e/
+# and
+# https://www.reddit.com/r/emacs/comments/bfsck6/mu4e_for_dummies/
+# which are based on
+# http://www.ict4g.net/adolfo/notes/2014/12/27/EmacsIMAP.html
+
+# ACCOUNT INFORMATION
+IMAPAccount gmail-wakemecn
+# Address to connect to
+Host imap.gmail.com
+User wakemecn@gmail.com 
+#PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.emacs.d/mu4e/.mbsyncpass-wakemecn.gpg"
+PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mu4e/.mbsyncpass-wakemecn.gpg"
+AuthMechs LOGIN
+SSLType IMAPS
+SSLVersions SSLv3
+#CertificateFile /opt/local/share/curl/curl-ca-bundle.crt
+
+# THEN WE SPECIFY THE LOCAL AND REMOTE STORAGE
+# - THE REMOTE STORAGE IS WHERE WE GET THE MAIL FROM (E.G., THE
+#   SPECIFICATION OF AN IMAP ACCOUNT)
+# - THE LOCAL STORAGE IS WHERE WE STORE THE EMAIL ON OUR COMPUTER
+
+# REMOTE STORAGE (USE THE IMAP ACCOUNT SPECIFIED ABOVE)
+IMAPStore gmail-wakemecn-remote
+Account gmail-wakemecn
+
+# LOCAL STORAGE (CREATE DIRECTORIES with mkdir -p Maildir/gmail)
+MaildirStore gmail-wakemecn-local
+Path ~/.mbsync/gmail-wakemecn/
+Inbox ~/.mbsync/gmail-wakemecn/INBOX
+
+# CONNECTIONS SPECIFY LINKS BETWEEN REMOTE AND LOCAL FOLDERS
+#
+# CONNECTIONS ARE SPECIFIED USING PATTERNS, WHICH MATCH REMOTE MAIl
+# FOLDERS. SOME COMMONLY USED PATTERS INCLUDE:
+#
+# 1 "*" TO MATCH EVERYTHING
+# 2 "!DIR" TO EXCLUDE "DIR"
+# 3 "DIR" TO MATCH DIR
+
+Channel gmail-wakemecn-inbox
+Master :gmail-wakemecn-remote:
+Slave :gmail-wakemecn-local:
+Patterns "INBOX"
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-wakemecn-trash
+Master :gmail-wakemecn-remote:"[Gmail]/Trash"
+Slave :gmail-wakemecn-local:"Trash"
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-wakemecn-sent
+Master :gmail-wakemecn-remote:"[Gmail]/Sent Mail"
+Slave :gmail-wakemecn-local:"Sent Mail"
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-wakemecn-all
+Master :gmail-wakemecn-remote:"[Gmail]/All Mail"
+Slave :gmail-wakemecn-local:"All Mail"
+Create Both
+Expunge Both
+SyncState *
+
+Channel gmail-wakemecn-starred
+Master :gmail-wakemecn-remote:"[Gmail]/Starred"
+Slave :gmail-wakemecn-local:"Starred"
+Create Both
+Expunge Both
+SyncState *
+
+# GROUPS PUT TOGETHER CHANNELS, SO THAT WE CAN INVOKE
+# MBSYNC ON A GROUP TO SYNC ALL CHANNELS
+#
+# FOR INSTANCE: "mbsync gmail" GETS MAIL FROM
+# "gmail-inbox", "gmail-sent", and "gmail-trash"
+#
+Group gmail-wakemecn
+Channel gmail-wakemecn-inbox
+Channel gmail-wakemecn-sent
+Channel gmail-wakemecn-trash
+Channel gmail-wakemecn-all
+Channel gmail-wakemecn-starred
+
+
+###################################################################
+# CRX account
+
+# ACCOUNT INFORMATION
+IMAPAccount CRX
+# Address to connect to
+Host imap.gmail.com
+User junwei.wang@cryptoexperts.com 
+#PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.emacs.d/mu4e/.mbsyncpass-CRX.gpg"
+PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mu4e/.mbsyncpass-CRX.gpg"
+AuthMechs LOGIN
+SSLType IMAPS
+SSLVersions SSLv3
+#CertificateFile /opt/local/share/curl/curl-ca-bundle.crt
+
+# THEN WE SPECIFY THE LOCAL AND REMOTE STORAGE
+# - THE REMOTE STORAGE IS WHERE WE GET THE MAIL FROM (E.G., THE
+#   SPECIFICATION OF AN IMAP ACCOUNT)
+# - THE LOCAL STORAGE IS WHERE WE STORE THE EMAIL ON OUR COMPUTER
+
+# REMOTE STORAGE (USE THE IMAP ACCOUNT SPECIFIED ABOVE)
+IMAPStore CRX-remote
+Account CRX
+
+# LOCAL STORAGE (CREATE DIRECTORIES with mkdir -p Maildir/gmail)
+MaildirStore CRX-local
+Path ~/.mbsync/CRX/
+Inbox ~/.mbsync/CRX/INBOX
+
+# CONNECTIONS SPECIFY LINKS BETWEEN REMOTE AND LOCAL FOLDERS
+#
+# CONNECTIONS ARE SPECIFIED USING PATTERNS, WHICH MATCH REMOTE MAIl
+# FOLDERS. SOME COMMONLY USED PATTERS INCLUDE:
+#
+# 1 "*" TO MATCH EVERYTHING
+# 2 "!DIR" TO EXCLUDE "DIR"
+# 3 "DIR" TO MATCH DIR
+
+Channel CRX-inbox
+Master :CRX-remote:
+Slave :CRX-local:
+Patterns "INBOX"
+Create Both
+Expunge Both
+SyncState *
+
+Channel CRX-trash
+Master :CRX-remote:"[Gmail]/Trash"
+Slave :CRX-local:"Trash"
+Create Both
+Expunge Both
+SyncState *
+
+Channel CRX-sent
+Master :CRX-remote:"[Gmail]/Sent Mail"
+Slave :CRX-local:"Sent Mail"
+Create Both
+Expunge Both
+SyncState *
+
+Channel CRX-all
+Master :CRX-remote:"[Gmail]/All Mail"
+Slave :CRX-local:"All Mail"
+Create Both
+Expunge Both
+SyncState *
+
+Channel CRX-starred
+Master :CRX-remote:"[Gmail]/Starred"
+Slave :CRX-local:"Starred"
+Create Both
+Expunge Both
+SyncState *
+
+# GROUPS PUT TOGETHER CHANNELS, SO THAT WE CAN INVOKE
+# MBSYNC ON A GROUP TO SYNC ALL CHANNELS
+#
+# FOR INSTANCE: "mbsync gmail" GETS MAIL FROM
+# "gmail-inbox", "gmail-sent", and "gmail-trash"
+#
+Group CRX
+Channel CRX-inbox
+Channel CRX-sent
+Channel CRX-trash
+Channel CRX-all
+Channel CRX-starred

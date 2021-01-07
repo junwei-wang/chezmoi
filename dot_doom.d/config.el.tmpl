@@ -3,13 +3,14 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
-
+;; [[file:config.org::*Personal Information][Personal Information:1]]
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
 (setq user-full-name "Junwei Wang"
       user-mail-address "junwei.wang@cryptoexperts.com")
+;; Personal Information:1 ends here
 
-
+;; [[file:config.org::*Appearance][Appearance:1]]
 ;; if started by emacs command or desktop file
 ;; open emacs in fullscreen
 (toggle-frame-maximized)
@@ -40,13 +41,22 @@
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-vibrant)
 
-(setq projectile-project-search-path '("~/git/" "~/github/" "~/github-jwang/" "~/gitea_local" "~/projects/" "~/workspace/"))
-
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-;(setq display-line-numbers-type 'relative)
 (setq display-line-numbers-type t)
 
+;;;;;;;;;; beacon
+(beacon-mode 1)
+(setq beacon-color "#bf616a"
+      beacon-size 80
+      beacon-blink-delay 0.5
+      beacon-blink-duration 0.5
+      beacon-blink-when-focused t
+      beacon-blink-when-point-moves-vertically t)
+;; Appearance:1 ends here
+
+;; [[file:config.org::*Others][Others:1]]
+(setq projectile-project-search-path '("~/git/" "~/github/" "~/github-jwang/" "~/gitea_local" "~/projects/" "~/workspace/"))
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
@@ -104,37 +114,55 @@
                                ;; Latex
                                "\\.aux$" "\\.synctex\\.gz$" "\\.fls$" "\\.tdo$" "\\.bbl$" "\\.blg$")
       neo-window-fixed-size nil)
+;; Others:1 ends here
 
-
-
+;; [[file:config.org::*LaTeX][LaTeX:1]]
 ;;;;;;;;;; LaTeX
 ;; indentation
 (setq LaTeX-indent-level 2
       LaTeX-item-indent 0)
 
-; (setq TeX-error-overview-open-after-TeX-run t)
+;; (setq TeX-error-overview-open-after-TeX-run t)
 (mapc (lambda (mode) (add-hook 'LaTeX-mode-hook mode))
       (list 'auto-fill-mode
             'display-fill-column-indicator-mode))
 (add-hook 'TeX-mode-hook (lambda () (set-fill-column 100)))
 
+(after! tex
+  (setq-default TeX-master nil))
+;; LaTeX:1 ends here
+
+;; [[file:config.org::*Python][Python:1]]
 ;;;;;;;;;; Python
 (mapc (lambda (mode) (add-hook 'python-mode-hook mode))
       (list 'py-autopep8-enable-on-save
             'display-fill-column-indicator-mode))
 (add-hook 'python-mode-hook #'py-autopep8-enable-on-save)
 (set-formatter! 'autopep8 'py-autopep8 :modes '(python-mode))
-; (add-hook 'python-mode-hook (lambda () (set-fill-column 100)))
+;; (add-hook 'python-mode-hook (lambda () (set-fill-column 100)))
+;; Python:1 ends here
 
-
+;; [[file:config.org::*Org Mode][Org Mode:1]]
 ;;;;;;;;;; Orgmode
-(after! org
-  (setq time-stamp-active t
-    time-stamp-start "#\\+LAST_MODIFIED:[ \t]*"
-    time-stamp-end "$"
-    time-stamp-format "\[%04y-%02m-%02d %3a %02H:%02M\]")
-  (add-hook 'before-save-hook 'time-stamp))
+(setq org-directory "~/github/org/")
+(setq org-image-actual-width nil)
 
+;; (after! org
+;;   (setq-local time-stamp-active t
+;;               time-stamp-start "#\\+LAST_MODIFIED:[ \t]*"
+;;               time-stamp-end "$"
+;;               time-stamp-format "\[%Y-%02m-%02d %3a %02H:%02M\]")
+;;   (add-hook 'before-save-hook 'time-stamp))
+
+(add-hook 'org-mode-hook (lambda ()
+                           (setq-local time-stamp-active t
+                                       time-stamp-start "#\\+LAST_MODIFIED:[ \t]*"
+                                       time-stamp-end "$"
+                                       time-stamp-format "\[%Y-%02m-%02d %3a %02H:%02M\]")
+                           (add-hook 'before-save-hook 'time-stamp nil 'local)))
+;; Org Mode:1 ends here
+
+;; [[file:config.org::*Org Roam][Org Roam:1]]
 ;;;;;;;;;; Org-Roam
 (setq org-roam-capture-templates
       '(("d" "default" plain
@@ -151,17 +179,33 @@
          :unnarrowed t)))
 
 (setq org-roam-graph-viewer "/Applications/Firefox.app/Contents/MacOS/firefox")
-(setq org-roam-server-host "127.0.0.1"
-      org-roam-server-port 8080
-      org-roam-server-authenticate nil
-      org-roam-server-export-inline-images t
-      org-roam-server-serve-files nil
-      org-roam-server-served-file-extensions '("pdf" "mp4" "ogv")
-      org-roam-server-network-poll t
-      org-roam-server-network-arrows nil
-      org-roam-server-network-label-truncate t
-      org-roam-server-network-label-truncate-length 60
-      org-roam-server-network-label-wrap-length 20)
+(use-package! org-roam-server
+  :config
+  (setq org-roam-server-host "127.0.0.1"
+        org-roam-server-port 8080
+        org-roam-server-authenticate nil
+        org-roam-server-export-inline-images t
+        org-roam-server-serve-files nil
+        org-roam-server-served-file-extensions '("pdf" "mp4" "ogv")
+        org-roam-server-network-poll t
+        org-roam-server-network-arrows nil
+        org-roam-server-network-label-truncate t
+        org-roam-server-network-label-truncate-length 60
+        org-roam-server-network-label-wrap-length 20))
+
+;; issue: https://github.com/org-roam/org-roam-server/issues/115
+(defun org-roam-server-open ()
+  "Ensure the server is active, then open the roam graph."
+  (interactive)
+  (smartparens-global-mode -1)
+  (org-roam-server-mode 1)
+  (browse-url-xdg-open (format "http://localhost:%d" org-roam-server-port))
+  (smartparens-global-mode 1))
+;; automatically enable server-mode
+(after! org-roam
+  (smartparens-global-mode -1)
+  (org-roam-server-mode)
+  (smartparens-global-mode 1))
 
 (use-package org-roam-bibtex
   :after org-roam
@@ -178,30 +222,166 @@
 ;;; helm-bibtex
 (setq bibtex-completion-bibliography '("~/.cb/cryptobib/crypto.bib"
                                        "~/github/biblio/thesis.bib"
+                                       "~/github/biblio/book.bib"
                                        "~/github/biblio/misc.bib"
+                                       "~/github/biblio/temp.bib"
                                        "~/github/biblio/tifs.bib"
                                        "~/github/biblio/crxwork/wheely.bib")
       bibtex-completion-library-path '("~/github/biblio/papers"))
 
 ;;; org-ref
 (setq reftex-default-bibliography bibtex-completion-bibliography
-      ; show broken links is slow in large files
+      ;; show broken links is slow in large files
       org-ref-show-broken-links nil)
 
 ;; see org-ref for use of these variables
-(setq ;org-ref-bibliography-notes "~/Dropbox/bibliography/notes.org"
+(setq org-ref-bibliography-notes "~/github/biblio/notes.org"
       org-ref-default-bibliography bibtex-completion-bibliography
       org-ref-pdf-directory "~/github/biblio/papers")
 
 ;;;;;;;;;; Org-Noter
 (setq org-noter-notes-search-path '(org-directory
                                     "~/github/org/roam/biblio"))
+;; Org Roam:1 ends here
 
-;;;;;;;;;; beacon
-(beacon-mode 1)
-(setq beacon-color "#bf616a"
-      beacon-size 80
-      beacon-blink-delay 0.5
-      beacon-blink-duration 0.5
-      beacon-blink-when-focused t
-      beacon-blink-when-point-moves-vertically t)
+;; [[file:config.org::*Email][Email:1]]
+;;;;;;;;; MU4E
+(setq mu4e-maildir (expand-file-name "~/.mbsync"))
+(setq +mu4e-mu4e-mail-path (expand-file-name "~/.mbsync"))
+
+;; get mail
+(setq ;;mu4e-get-mail-command "mbsync -c ~/.emacs.d/mu4e/.mbsyncrc -a"
+ ;; mu4e-html2text-command "w3m -T text/html" ;;using the default mu4e-shr2text
+ mu4e-view-prefer-html t
+ mu4e-update-interval 180
+ mu4e-headers-auto-update t
+ ;; mu4e-compose-signature-auto-include nil
+ mu4e-compose-format-flowed t)
+
+;; enable inline images
+(setq mu4e-view-show-images t)
+;; use imagemagick, if available
+(when (fboundp 'imagemagick-register-types)
+  (imagemagick-register-types))
+
+;; every new email composition gets its own frame!
+(setq mu4e-compose-in-new-frame t)
+
+;; don't save message to Sent Messages, IMAP takes care of this
+(setq mu4e-sent-messages-behavior 'delete)
+
+(add-hook 'mu4e-view-mode-hook #'visual-line-mode)
+
+;; <tab> to navigate to links, <RET> to open them in browser
+(add-hook 'mu4e-view-mode-hook
+          (lambda()
+            ;; try to emulate some of the eww key-bindings
+            (local-set-key (kbd "<RET>") 'mu4e~view-browse-url-from-binding)
+            (local-set-key (kbd "<tab>") 'shr-next-link)
+            (local-set-key (kbd "<backtab>") 'shr-previous-link)))
+
+;; (set-email-account! "gmail-wakemecn"
+;;                     '((mu4e-sent-folder       . "/gmail-wakemecn/Sent Mail")
+;;                       (mu4e-drafts-folder     . "/gmail-wakemecn/Drafts")
+;;                       (mu4e-trash-folder      . "/gmail-wakemecn/Trash")
+;;                       (mu4e-refile-folder     . "/gmail-wakemecn/All Mail")
+;;                       (smtpmail-smtp-user     . "wakemecn@gmail.com")
+;;                       (mu4e-compose-signature . "\n\nBest regards,\nJunwei Wang"))
+;;                     t)
+
+;; (set-email-account! "CRX"
+;;                     '((mu4e-sent-folder       . "/CRX/Sent Mail")
+;;                       (mu4e-drafts-folder     . "/CRX/Drafts")
+;;                       (mu4e-trash-folder      . "/CRX/Trash")
+;;                       (mu4e-refile-folder     . "/CRX/All Mail")
+;;                       (smtpmail-smtp-user     . "junwei.wang@cryptoexperts.com")
+;;                       (mu4e-compose-signature . "\n\nBest regards,\nJunwei Wang"))
+;;                     nil)
+;; convert org mode to HTML automatically
+(setq org-mu4e-convert-to-html t)
+
+;;from vxlabs config
+;; show full addresses in view message (instead of just names)
+;; toggle per name with M-RET
+(setq mu4e-view-show-addresses 't)
+
+;; don't ask when quitting
+(setq mu4e-confirm-quit nil)
+
+;; mu4e-context
+(setq mu4e-context-policy 'pick-first)
+(setq mu4e-compose-context-policy 'always-ask)
+
+;;set up queue for offline email
+;;use mu mkdir  ~/.maildir/$ACCOUNT/queue to set up first
+(setq smtpmail-queue-mail nil)  ;; start in normal mode
+
+(after! mu4e-context
+  :config
+  (setq mu4e-contexts
+        (list
+         (make-mu4e-context
+          :name "wakemecn" ;;for gmail-wakemecn
+          :enter-func (lambda () (mu4e-message "Entering context [wakemecn]"))
+          :leave-func (lambda () (mu4e-message "Leaving context [wakemecn]"))
+          :match-func (lambda (msg)
+                        (when msg
+                          (mu4e-message-contact-field-matches
+                           msg '(:from :to :cc :bcc) "wakemecn@gmail.com")))
+          :vars '((user-mail-address . "wakemecn@gmail.com")
+                  (user-full-name . "Junwei Wang")
+                  (mu4e-sent-folder . "/gmail-wakemecn/Sent Mail")
+                  (mu4e-drafts-folder . "/gmail-wakemecn/drafts")
+                  (mu4e-trash-folder . "/gmail-wakemecn/Trash")
+                  (mu4e-compose-signature . (concat "Formal Signature\n" "Emacs 27.1, org-mode 10, mu4e 1.4\n"))
+                  (mu4e-compose-format-flowed . t)
+                  (smtpmail-queue-dir . "~/.maildir/gmail-wakemecn/queue/cur")
+                  (message-send-mail-function . smtpmail-send-it)
+                  (smtpmail-smtp-user . "wakemecn")
+                  (smtpmail-starttls-credentials . (("smtp.gmail.com" 587 nil nil)))
+                  (smtpmail-auth-credentials . (expand-file-name "~/.authinfo.gpg"))
+                  (smtpmail-default-smtp-server . "smtp.gmail.com")
+                  (smtpmail-smtp-server . "smtp.gmail.com")
+                  (smtpmail-smtp-service . 587)
+                  (smtpmail-debug-info . t)
+                  (smtpmail-debug-verbose . t)
+                  (mu4e-maildir-shortcuts . ( ("/gmail-wakemecn/INBOX"     . ?i)
+                                              ("/gmail-wakemecn/Sent Mail" . ?s)
+                                              ("/gmail-wakemecn/Trash"     . ?t)
+                                              ("/gmail-wakemecn/All Mail"  . ?a)
+                                              ("/gmail-wakemecn/Starred"   . ?r)
+                                              ("/gmail-wakemecn/drafts"    . ?d)
+                                              ))))
+         (make-mu4e-context
+          :name "CRX" ;; for CRX mail
+          :enter-func (lambda () (mu4e-message "Entering context [CRX]"))
+          :leave-func (lambda () (mu4e-message "Leaving context [CRX]"))
+          :match-func (lambda (msg)
+                        (when msg
+                          (mu4e-message-contact-field-matches
+                           msg '(:from :to :cc :bcc) "junwei.wang@cryptoexperts.com")))
+          :vars '((user-mail-address . "junwei.wang@cryptoexperts.com")
+                  (user-full-name . "Junwei Wang")
+                  (mu4e-sent-folder . "/CRX/Sent Mail")
+                  (mu4e-drafts-folder . "/CRX/drafts")
+                  (mu4e-trash-folder . "/CRX/Trash")
+                  (mu4e-compose-signature . (concat "Informal Signature\n" "Emacs is awesome!\n"))
+                  (mu4e-compose-format-flowed . t)
+                  (smtpmail-queue-dir . "~/.maildir/CRX/queue/cur")
+                  (message-send-mail-function . smtpmail-send-it)
+                  (smtpmail-smtp-user . "junwei.wang@cryptoexperts.com")
+                  (smtpmail-starttls-credentials . (("smtp.gmail.com" 587 nil nil)))
+                  (smtpmail-auth-credentials . (expand-file-name "~/.authinfo.gpg"))
+                  (smtpmail-default-smtp-server . "smtp.gmail.com")
+                  (smtpmail-smtp-server . "smtp.gmail.com")
+                  (smtpmail-smtp-service . 587)
+                  (smtpmail-debug-info . t)
+                  (smtpmail-debug-verbose . t)
+                  (mu4e-maildir-shortcuts . ( ("/CRX/INBOX"     . ?i)
+                                              ("/CRX/Sent Mail" . ?s)
+                                              ("/CRX/Trash"     . ?t)
+                                              ("/CRX/All Mail"  . ?a)
+                                              ("/CRX/Starred"   . ?r)
+                                              ("/CRX/drafts"    . ?d)
+                                              )))))))
+;; Email:1 ends here
