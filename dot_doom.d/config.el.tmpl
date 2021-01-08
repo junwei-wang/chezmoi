@@ -13,7 +13,7 @@
 ;; [[file:config.org::*Appearance][Appearance:1]]
 ;; if started by emacs command or desktop file
 ;; open emacs in fullscreen
-(toggle-frame-maximized)
+;; (toggle-frame-maximized)
 ;; (if (eq initial-window-system 'x)
 ;;     (toggle-frame-maximized)
 ;;   (toggle-frame-maximized))
@@ -119,17 +119,17 @@
 ;; [[file:config.org::*LaTeX][LaTeX:1]]
 ;;;;;;;;;; LaTeX
 ;; indentation
-(setq LaTeX-indent-level 2
-      LaTeX-item-indent 0)
-
-;; (setq TeX-error-overview-open-after-TeX-run t)
+(after! tex
+  (setq-default TeX-master nil))
+(after! latex
+  (setq LaTeX-indent-level 2
+        LaTeX-item-indent -2
+        ;;  TeX-error-overview-open-after-TeX-run t
+        ))
 (mapc (lambda (mode) (add-hook 'LaTeX-mode-hook mode))
       (list 'auto-fill-mode
             'display-fill-column-indicator-mode))
 (add-hook 'TeX-mode-hook (lambda () (set-fill-column 100)))
-
-(after! tex
-  (setq-default TeX-master nil))
 ;; LaTeX:1 ends here
 
 ;; [[file:config.org::*Python][Python:1]]
@@ -249,20 +249,24 @@
 (setq mu4e-maildir (expand-file-name "~/.mbsync"))
 (setq +mu4e-mu4e-mail-path (expand-file-name "~/.mbsync"))
 
-;; get mail
-(setq ;;mu4e-get-mail-command "mbsync -c ~/.emacs.d/mu4e/.mbsyncrc -a"
- ;; mu4e-html2text-command "w3m -T text/html" ;;using the default mu4e-shr2text
- mu4e-view-prefer-html t
- mu4e-update-interval 180
- mu4e-headers-auto-update t
- ;; mu4e-compose-signature-auto-include nil
- mu4e-compose-format-flowed t)
-
+(after! mu4e
+  ;; get mail
+  (setq
+   ;; mu4e-get-mail-command "mbsync -c ~/.mbsyncrc -a"
+   ;; mu4e-html2text-command "w3m -T text/html" ;;using the default mu4e-shr2text
+   mu4e-view-prefer-html t
+   mu4e-update-interval 180
+   mu4e-headers-auto-update t
+   ;; mu4e-compose-signature-auto-include nil
+   mu4e-compose-format-flowed t)
+  (add-to-list 'mu4e-view-actions
+               '("ViewInBrowser" . mu4e-action-view-in-browser) t))
 ;; enable inline images
 (setq mu4e-view-show-images t)
 ;; use imagemagick, if available
 (when (fboundp 'imagemagick-register-types)
   (imagemagick-register-types))
+
 
 ;; every new email composition gets its own frame!
 (setq mu4e-compose-in-new-frame t)

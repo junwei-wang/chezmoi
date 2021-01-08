@@ -1,7 +1,14 @@
 alias ls lsd
 
+alias pg "ps aux | grep"
+
 # editor
 alias ecc "emacsclient -nc"
+
+# brew
+alias b "brew"
+alias bs "brew services"
+alias bi "brew install"
 
 # git
 alias g git
