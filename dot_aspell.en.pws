@@ -1,4 +1,4 @@
-personal_ws-1.1 en 200
+personal_ws-1.1 en 204 
 ACM
 ACNS
 AES
@@ -36,6 +36,7 @@ Eurocrypt
 FEAI
 FHE
 GF
+GPG
 Github
 Goubin
 HCE
@@ -53,6 +54,7 @@ LACS
 LDA
 LLVM
 LWE
+LaTeX
 MPC
 Matthieu
 MixColumn
@@ -94,6 +96,7 @@ Winograd
 affine
 analyse
 analysed
+aspell
 auditability
 auditable
 balanceness
@@ -183,6 +186,7 @@ randomised
 ransomware
 ridesharing
 runtime
+see
 several
 standardisation
 stateful

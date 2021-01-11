@@ -1,10 +1,10 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2021-01-08 Fri 14:49]
+#+LAST_MODIFIED: [2021-01-11 Mon 09:36]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
 
-This libreate configuraiton for [[https://github.com/hlissner/doom-emacs][Doom Emacs]] is inspired by (aka. stolen from) [[https://tecosaur.github.io/emacs-config/config.html][tecosaur]].
+This libreate configuration for [[https://github.com/hlissner/doom-emacs][Doom Emacs]] is inspired by (aka. stolen from) [[https://tecosaur.github.io/emacs-config/config.html][tecosaur]].
 
 * Prerequisites
 
@@ -709,3 +709,7 @@ yaml                ; JSON, but readable
 
 
 *** Packages
+* Existing issues
+** aspell mark most words incorrect
+
+- see https://github.com/hlissner/doom-emacs/issues/4009
