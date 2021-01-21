@@ -1,10 +1,11 @@
-personal_ws-1.1 en 204 
+personal_ws-1.1 en 211 
 ACM
 ACNS
 AES
 ANF
 Acknowledgement
 AddRoundKey
+Aleksei
 Algorithmica
 AsiaCrypt
 Asiacrypt
@@ -82,6 +83,7 @@ Sihem
 TCC
 TCHES
 TLS
+Thibauld
 TikZ
 UTM
 Udovenko
@@ -93,6 +95,7 @@ Weil
 Wheely
 WhibOx
 Winograd
+Yao's
 affine
 analyse
 analysed
@@ -142,7 +145,10 @@ distinguishers
 ePrint
 encodings
 encryptions
+endian
+endianness
 geolocation
+geolocations
 geospatial
 homomorphic
 homomorphically
@@ -156,6 +162,7 @@ impl
 incompressibility
 indistinguishability
 injective
+instantiation
 invertible
 isogeny
 isomorphism

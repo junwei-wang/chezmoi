@@ -1,4 +1,5 @@
 set -gx PATH $PATH $HOME/.emacs.d/bin $HOME/.local/bin
 
-# Android NDK
-set -gx PATH $PATH $HOME/Library/Android/sdk/ndk/22.0.7026061
+set -gx SAGE_ROOT /Users/junwei/projects/sage-9.1
+
+set -gx ANDROID_NDK_HOME /usr/local/share/android-ndk

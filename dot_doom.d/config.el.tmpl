@@ -34,7 +34,7 @@
       doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
 (custom-set-faces!
   '(font-lock-comment-face :slant italic)
-  '(font-lock-keyword-face :slant italic))
+  '(font-lock-keyword-face :weight bold))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -104,7 +104,8 @@
 
 ;;;;;;;;;;;;; spelling
 ;; overwriting the value set by doom
-(setq ispell-personal-dictionary "~/.aspell.en.pws")
+(setq ispell-dictionary "en_US"
+      ispell-personal-dictionary "~/.aspell.en.pws")
 
 ;;;;;;;;;;; neotree
 (setq neo-hidden-regexp-list '("^\\." "\\.cs\\.meta$"
