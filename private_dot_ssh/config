@@ -1,0 +1,49 @@
+# default for all
+Host *
+    # share connections
+    ControlMaster auto
+    ControlPath ~/.ssh/cache-%r@%h:%p
+    ControlPersist 24h
+    # forward
+    ForwardAgent no
+    ForwardX11 no
+    ForwardX11Trusted yes
+    #
+    Port 22
+    Protocol 2
+    ServerAliveInterval 60
+    ServerAliveCountMax 30
+    IdentityFile ~/.ssh/id_rsa
+
+# crx office
+
+Host crx
+    User jwang
+    Hostname crxserver.cryptoexperts.net
+
+Host crxgit
+    User git
+    Hostname git.cryptoexperts.net
+
+Host imac
+    User junwei
+    Hostname jwang.cryptoexperts.net
+    ProxyJump crx
+
+Host crxregistry
+    User registry
+    Hostname registry
+    ProxyJump crx
+
+Host crxdocker
+    User docker
+    Hostname registry
+    ProxyJump crx
+
+
+# AWS: whitebox engine
+
+Host apidemo
+    User admin
+    Hostname 15.236.244.70
+    IdentityFile ~/git/admin_passwords/jwang/keypair-wbe-demo-jwang.pem

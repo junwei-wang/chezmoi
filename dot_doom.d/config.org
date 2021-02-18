@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2021-01-11 Mon 09:36]
+#+LAST_MODIFIED: [2021-02-18 Thu 11:48]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -11,7 +11,9 @@ This libreate configuration for [[https://github.com/hlissner/doom-emacs][Doom E
 ** Install necessary softwares
 
 #+begin_src shell
-brew install tidy-html5
+brew install tidy-html5   # format html
+brew install clang-format # format c/cpp
+brew install stfmt        # format shell
 #+end_src
 
 ** Refresh environment
@@ -22,11 +24,19 @@ doom env refresh
 ** Install
 
 #+begin_src emacs-lisp :tangle no
-(pdf-tools-install)
-(plantuml-download-jar)
+(pdf-tools-install)      ;; for pdftools
+(plantuml-download-jar)  ;; for plantuml
+(irony-install-server)   ;; for c/c++
+#+end_src
+
+#+begin_src bash
+cmake -DCMAKE_INSTALL_PREFIX\=/Users/junwei/.emacs.d/.local/etc/irony-server/ -DLIBCLANG_LIBRARY\=/usr/local/opt/llvm/lib/libclang.dylib -DLIBCLANG_INCLUDE_DIR\=/usr/local/opt/llvm/include /Users/junwei/.emacs.d/.local/straight/build-27.1/irony/server && cmake --build . --use-stderr --config Release --target install
 #+end_src
 
 * Rudimentary configuration
+:LOGBOOK:
+CLOCK: [2021-02-16 Tue 11:40]
+:END:
 Make this file run (slightly) faster with lexical binding (see [[https://nullprogram.com/blog/2016/12/22/][this blog post]] for more info).
 
 #+begin_src emacs-lisp :comments no
@@ -77,7 +87,7 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
       doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
 (custom-set-faces!
   '(font-lock-comment-face :slant italic)
-  '(font-lock-keyword-face :slant italic))
+  '(font-lock-keyword-face :weight bold))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -149,7 +159,8 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
 
 ;;;;;;;;;;;;; spelling
 ;; overwriting the value set by doom
-(setq ispell-personal-dictionary "~/.aspell.en.pws")
+(setq ispell-dictionary "en_US"
+      ispell-personal-dictionary "~/.aspell.en.pws")
 
 ;;;;;;;;;;; neotree
 (setq neo-hidden-regexp-list '("^\\." "\\.cs\\.meta$"
@@ -159,7 +170,6 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
                                ;; Latex
                                "\\.aux$" "\\.synctex\\.gz$" "\\.fls$" "\\.tdo$" "\\.bbl$" "\\.blg$")
       neo-window-fixed-size nil)
-
 #+end_src
 
 ** LaTeX
@@ -214,6 +224,13 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
                            (add-hook 'before-save-hook 'time-stamp nil 'local)))
 #+end_src
 
+*** LaTeX
+#+begin_src emacs-lisp
+;;;;;;;;;; Org LaTeX
+;;; https://emacs.stackexchange.com/a/41187
+;;;; (add-to-list 'org-latex-packages-alist "~/github/org/latex/mymacros.sty")
+#+end_src
+
 *** Org Roam
 
 #+begin_src emacs-lisp
@@ -255,15 +272,17 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
   (org-roam-server-mode 1)
   (browse-url-xdg-open (format "http://localhost:%d" org-roam-server-port))
   (smartparens-global-mode 1))
+
 ;; automatically enable server-mode
 (after! org-roam
   (smartparens-global-mode -1)
   (org-roam-server-mode)
-  (smartparens-global-mode 1))
+  (smartparens-global-mode 1)
+  (org-roam-bibtex-mode))
 
-(use-package org-roam-bibtex
-  :after org-roam
-  :hook (org-roam-mode . org-roam-bibtex-mode))
+;; (use-package! org-roam-bibtex
+;;   :after org-roam
+;;   :hook (org-roam-mode . org-roam-bibtex-mode))
 
 (setq orb-preformat-keywords '("year" "citekey" "title" "author")
       orb-templates '(("r" "ref" plain (function org-roam-capture--get-point)
@@ -287,6 +306,9 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
 (setq reftex-default-bibliography bibtex-completion-bibliography
       ;; show broken links is slow in large files
       org-ref-show-broken-links nil)
+
+;; org-ref
+(setq org-ref-completion-library 'org-ref-ivy-cite)
 
 ;; see org-ref for use of these variables
 (setq org-ref-bibliography-notes "~/github/biblio/notes.org"
@@ -602,6 +624,7 @@ grammar             ; tasing grammar mistake every you make
 #+name: doom-tools
 #+begin_src emacs-lisp
 ;;ansible
+biblio
 ;;debugger          ; FIXME stepping through code, to help you add bugs
 ;;direnv
 docker
@@ -667,7 +690,7 @@ markdown            ; writing docs for people to ignore
 ;;nim               ; python + lisp at the speed of c
 ;;nix               ; I hereby declare "nix geht mehr!"
 ;;ocaml             ; an objective camel
-(org +gnuplot +noter +pretty +pomodoro +roam)   ; organize your plain life in plain text
+(org +gnuplot +pomodoro +pretty +roam +noter)   ; organize your plain life in plain text
 ;;php               ; perl's insecure younger brother
 plantuml            ; diagrams for confusing people more
 ;;purescript        ; javascript, but functional

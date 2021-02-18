@@ -2,6 +2,8 @@ alias ls lsd
 
 alias pg "ps aux | grep"
 
+alias grep ggrep
+
 # editor
 alias ecc "emacsclient -nc"
 
@@ -23,3 +25,5 @@ alias gco "git checkout"
 
 alias gF "git pull"
 alias gp "git push"
+
+alias crxgl "ssh crxgit"

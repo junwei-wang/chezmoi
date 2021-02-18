@@ -165,6 +165,11 @@
 
 ;; [[file:config.org::*Org Roam][Org Roam:1]]
 ;;;;;;;;;; Org-Roam
+;;;;;;;;;; Org LaTeX
+;;; https://emacs.stackexchange.com/a/41187
+;;;; (add-to-list 'org-latex-packages-alist "~/github/org/latex/mymacros.sty")
+;; LaTeX:1 ends here
+
 (setq org-roam-capture-templates
       '(("d" "default" plain
          (function org-roam-capture--get-point)
@@ -206,11 +211,12 @@
 (after! org-roam
   (smartparens-global-mode -1)
   (org-roam-server-mode)
-  (smartparens-global-mode 1))
+  (smartparens-global-mode 1)
+  (org-roam-bibtex-mode))
 
-(use-package org-roam-bibtex
-  :after org-roam
-  :hook (org-roam-mode . org-roam-bibtex-mode))
+;; (use-package! org-roam-bibtex
+;;   :after org-roam
+;;   :hook (org-roam-mode . org-roam-bibtex-mode))
 
 (setq orb-preformat-keywords '("year" "citekey" "title" "author")
       orb-templates '(("r" "ref" plain (function org-roam-capture--get-point)
@@ -234,6 +240,9 @@
 (setq reftex-default-bibliography bibtex-completion-bibliography
       ;; show broken links is slow in large files
       org-ref-show-broken-links nil)
+
+;; org-ref
+(setq org-ref-completion-library 'org-ref-ivy-cite)
 
 ;; see org-ref for use of these variables
 (setq org-ref-bibliography-notes "~/github/biblio/notes.org"
