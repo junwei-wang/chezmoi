@@ -4,6 +4,7 @@ Documents
 Downloads
 Music
 Pictures
+Screenshots
 {{- if eq .chezmoi.os "darwin" }}
 AppData
 Applications
@@ -14,6 +15,7 @@ Public
 .DS_Store
 .Trash
 AppData
+iCloud Drive (Archive)
 {{- else if eq .chezmoi.os "linux" }}
 Public
 Templates
@@ -31,6 +33,7 @@ LICENSE
 .julia_history
 .python_history
 .zsh_history
+.gnuplot_history
 
 ##### Personal #####
 .cb
@@ -53,6 +56,7 @@ git
 github*
 projects
 workspace
+AndroidStudioProjects
 
 ##### Softwares #####
 CloudMe
@@ -111,3 +115,4 @@ Zotero
 #>>> Zsh
 .oh-my-zsh
 .zcompdump-*
+.zsh_sessions
