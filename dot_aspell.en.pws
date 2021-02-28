@@ -1,4 +1,4 @@
-personal_ws-1.1 en 241 
+personal_ws-1.1 en 269 
 ACM
 ACNS
 AES
@@ -10,9 +10,12 @@ Algorithmica
 Applebaum
 AsiaCrypt
 Asiacrypt
+Atmel
 Barak
 Barrington
 Bayes
+Belaïd
+Bellare
 Biryukov
 Bitslicing
 Boneh
@@ -24,6 +27,7 @@ CHES
 COSADE
 CRX
 CTF
+Canetti
 Coppersmith
 Coron
 CryptoExperts
@@ -42,6 +46,7 @@ Eurocrypt
 FEAI
 FHE
 Feistel
+Fouque
 GF
 GPG
 Github
@@ -50,6 +55,7 @@ Goldwasser
 Goubin
 Goyal
 HCE
+Halevi
 IND
 ISW
 IoT
@@ -67,6 +73,7 @@ LDA
 LLVM
 LWE
 LaTeX
+Lepoint
 Lindell
 MPC
 Matthieu
@@ -75,6 +82,7 @@ Micali
 MixColumn
 NIST
 Nespresso
+OpenStreetMap
 PKC
 PMF
 PPT
@@ -96,13 +104,16 @@ Sahai
 Sbox
 Shamir
 Sihem
+Standaert
 TCC
 TCHES
 TLS
 Thibauld
+Tibouchi
 TikZ
 UTM
 Udovenko
+Unforgeable
 VBB
 Vaikuntanathan
 Vinod
@@ -119,6 +130,7 @@ analysed
 aspell
 auditability
 auditable
+backend
 balanceness
 bibtex
 bijection
@@ -136,9 +148,12 @@ blockchains
 bytecode
 cardinality
 cayman
+chipmaker
+chipset
 chronologic
 ciphertext
 ciphertexts
+compilable
 composability
 composable
 computable
@@ -155,6 +170,7 @@ cryptobib
 cryptocurrencies
 cryptocurrency
 cryptographic
+cryptology
 cryptolux
 cryptosystem
 cryptosystems
@@ -170,10 +186,12 @@ encodings
 encryptions
 endian
 endianness
+failover
 geolocation
 geolocations
 geospatial
 gitbook
+gitea
 homomorphic
 homomorphically
 https
@@ -192,7 +210,10 @@ isogeny
 isomorphism
 iteratively
 lifecycle
+macOS
 malwares
+maskverif
+microcontroller
 misc
 mmaps
 monomial
@@ -200,6 +221,7 @@ multilinear
 namespace
 nonce
 obfuscator
+opam
 parallelization
 pdf
 plaintext
@@ -217,9 +239,12 @@ qutebrowser
 randomisation
 randomised
 ransomware
+reproducibility
 residuosity
+reusability
 ridesharing
 runtime
+scalable
 see
 several
 stackexchange
@@ -232,8 +257,11 @@ submatrix
 todo
 unary
 unbreakability
+unlinkability
+unlinkable
 untrusted
 vectorization
+verifier
 wayness
 webpage
 website

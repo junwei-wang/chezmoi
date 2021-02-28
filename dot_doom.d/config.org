@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2021-02-18 Thu 11:48]
+#+LAST_MODIFIED: [2021-02-21 Sun 15:47]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -170,6 +170,9 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
                                ;; Latex
                                "\\.aux$" "\\.synctex\\.gz$" "\\.fls$" "\\.tdo$" "\\.bbl$" "\\.blg$")
       neo-window-fixed-size nil)
+
+;;;;;;;;;;;;;;; calendar
+(setq calendar-week-start-day 1)
 #+end_src
 
 ** LaTeX
@@ -294,13 +297,13 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
 ;;;;;;;;; Bibliography
 ;;; helm-bibtex
 (setq bibtex-completion-bibliography '("~/.cb/cryptobib/crypto.bib"
-                                       "~/github/biblio/thesis.bib"
-                                       "~/github/biblio/book.bib"
-                                       "~/github/biblio/misc.bib"
-                                       "~/github/biblio/temp.bib"
-                                       "~/github/biblio/tifs.bib"
-                                       "~/github/biblio/crxwork/wheely.bib")
-      bibtex-completion-library-path '("~/github/biblio/papers"))
+                                       "~/github/org/biblio/thesis.bib"
+                                       "~/github/org/biblio/book.bib"
+                                       "~/github/org/biblio/misc.bib"
+                                       "~/github/org/biblio/temp.bib"
+                                       "~/github/org/biblio/tifs.bib"
+                                       "~/github/org/biblio/crxwork/wheely.bib")
+      bibtex-completion-library-path '("~/github/org/biblio/pdfs"))
 
 ;;; org-ref
 (setq reftex-default-bibliography bibtex-completion-bibliography
@@ -311,9 +314,9 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
 (setq org-ref-completion-library 'org-ref-ivy-cite)
 
 ;; see org-ref for use of these variables
-(setq org-ref-bibliography-notes "~/github/biblio/notes.org"
+(setq org-ref-bibliography-notes "~/github/org/biblio/notes.org"
       org-ref-default-bibliography bibtex-completion-bibliography
-      org-ref-pdf-directory "~/github/biblio/papers")
+      org-ref-pdf-directory "~/github/org/biblio/pdfs")
 
 ;;;;;;;;;; Org-Noter
 (setq org-noter-notes-search-path '(org-directory
