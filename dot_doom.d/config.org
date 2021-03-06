@@ -4,7 +4,7 @@
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
 
-This libreate configuration for [[https://github.com/hlissner/doom-emacs][Doom Emacs]] is inspired by (aka. stolen from) [[https://tecosaur.github.io/emacs-config/config.html][tecosaur]].
+This liberate configuration for [[https://github.com/hlissner/doom-emacs][Doom Emacs]] is inspired by (aka. stolen from) [[https://tecosaur.github.io/emacs-config/config.html][tecosaur]].
 
 * Prerequisites
 
@@ -225,6 +225,12 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
                                        time-stamp-end "$"
                                        time-stamp-format "\[%Y-%02m-%02d %3a %02H:%02M\]")
                            (add-hook 'before-save-hook 'time-stamp nil 'local)))
+#+end_src
+
+*** Noter
+
+#+begin_src emacs-lisp
+(setq org-noter-always-create-frame nil)
 #+end_src
 
 *** LaTeX
@@ -693,7 +699,7 @@ markdown            ; writing docs for people to ignore
 ;;nim               ; python + lisp at the speed of c
 ;;nix               ; I hereby declare "nix geht mehr!"
 ;;ocaml             ; an objective camel
-(org +gnuplot +pomodoro +pretty +roam +noter)   ; organize your plain life in plain text
+(org +gnuplot +pomodoro +present +pretty +roam +noter)   ; organize your plain life in plain text
 ;;php               ; perl's insecure younger brother
 plantuml            ; diagrams for confusing people more
 ;;purescript        ; javascript, but functional
@@ -707,7 +713,7 @@ python              ; beautiful is better than ugly
 ;;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
 ;;scala             ; java, but good
 ;;scheme            ; a fully conniving family of lisps
-sh                  ; she sells {ba,z,fi}sh shells on the C xor
+(sh +fish)          ; she sells {ba,z,fi}sh shells on the C xor
 ;;sml
 ;;solidity          ; do you need a blockchain? No.
 ;;swift             ; who asked for emoji variables?

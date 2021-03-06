@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-brew services restart spacebar
+# brew services restart spacebar
 brew services restart yabai
 brew services restart skhd
