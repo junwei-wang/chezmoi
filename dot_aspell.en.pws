@@ -1,4 +1,4 @@
-personal_ws-1.1 en 270
+personal_ws-1.1 en 287
 ACM
 ACNS
 AES
@@ -20,6 +20,7 @@ Bitslicing
 Boneh
 Boyen
 Brakerski
+Brakersky
 CCA
 CDF
 CHES
@@ -31,6 +32,7 @@ Chillotti
 Coppersmith
 Coron
 CryptoExperts
+CryptoNets
 DBI
 DCA
 DES
@@ -55,6 +57,7 @@ Goldwasser
 Goubin
 Goyal
 HCE
+HElib
 Halevi
 Homebrew
 IND
@@ -77,12 +80,14 @@ LaTeX
 Lepoint
 Lindell
 MPC
+Mathematica
 Matthieu
 Merkle
 Micali
 MixColumn
 NIST
 Nespresso
+Nginx
 OpenStreetMap
 PKC
 PMF
@@ -94,6 +99,7 @@ RFID
 RGB
 RNG
 RSA
+Regev
 Riscure
 Rivain
 SAC
@@ -103,7 +109,9 @@ SPN
 Saclay
 Sahai
 Sbox
+Schnorr
 Shamir
+Shoup
 Sihem
 Standaert
 TCC
@@ -117,6 +125,7 @@ Udovenko
 Unforgeable
 VBB
 Vaikuntanathan
+Vercauteren
 Vinod
 WBC
 Weil
@@ -176,8 +185,11 @@ cryptolux
 cryptosystem
 cryptosystems
 cyber
+cyclotomic
 cyptolux
+dataset
 decrypt
+decrypted
 decrypting
 distinguisher
 distinguishers
@@ -217,6 +229,8 @@ maskverif
 microcontroller
 misc
 mmaps
+moduli
+monic
 monomial
 multilinear
 namespace
@@ -224,6 +238,7 @@ nonce
 obfuscator
 opam
 parallelization
+parallelized
 pdf
 plaintext
 plaintexts
@@ -240,6 +255,7 @@ qutebrowser
 randomisation
 randomised
 ransomware
+relinearization
 reproducibility
 residuosity
 reusability
@@ -258,6 +274,7 @@ submatrix
 todo
 unary
 unbreakability
+univariate
 unlinkability
 unlinkable
 untrusted

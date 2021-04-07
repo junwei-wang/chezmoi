@@ -2,13 +2,15 @@
 # https://github.com/mathiasbynens/dotfiles/blob/master/.gitconfig
 [user]
     name        = Junwei Wang
-    email       = junwei.wang@cryptoexperts.com
-    signingkey  = 9F288BD7E2BD84AA
+    email       = me@jwa.ng
+    signingkey  = 249EF49B5E8B6264
 
 [core]
     editor         = emacsclient -t
     excludesfile   = /Users/junwei/.gitignore
     attributesfile = ~/.gitattributes
+	quotePath = false
+	commitGraph = true
 
 [push]
     default     = matching
@@ -84,3 +86,7 @@
     ff = only
 [init]
     defaultBranch = main
+[receive]
+	advertisePushOptions = true
+[gc]
+	writeCommitGraph = true
