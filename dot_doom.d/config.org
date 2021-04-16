@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2021-04-07 Wed 07:59]
+#+LAST_MODIFIED: [2021-04-16 Fri 10:09]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -178,7 +178,8 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
 (setq +format-on-save-enabled-modes
       '(not emacs-lisp-mode  ; elisp's mechanisms are good enough
             sql-mode         ; sqlformat is currently broken
-            web-mode))
+            web-mode         ; html-tidy is not nice
+            ))
 (setq-hook! 'web-mode-hook +format-with 'prettier-prettify)
 #+end_src
 
@@ -230,6 +231,23 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
 (setq org-directory "~/github/org/")
 (setq org-image-actual-width nil)
 
+(defun make-leetcode-link (leetcode-problem-name)
+  (browse-url (concat "https://leetcode.com/problems/" leetcode-problem-name)))
+(defun make-leetcode-submission-link (leetcode-problem-name)
+  (browse-url (concat "https://leetcode.com/problems/" leetcode-problem-name "/submissions/")))
+(defun make-eprint-link (eprint-id)
+  (browse-url (concat "https://eprint.iacr.org/" eprint-id)))
+
+
+(after! org
+
+  (org-add-link-type "leetcode" #'make-leetcode-link)
+  (org-add-link-type "leetcode-submission" #'make-leetcode-submission-link)
+  (org-add-link-type "eprint" #'make-eprint-link))
+
+
+;;  I don't know whey the following does not work
+
 ;; (after! org
 ;;   (setq-local time-stamp-active t
 ;;               time-stamp-start "#\\+LAST_MODIFIED:[ \t]*"
@@ -253,10 +271,10 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
          ((agenda "" ((org-agenda-span 14)
                       (org-agenda-start-day "-13d"))))
          ((org-agenda-compact-blocks t))) ;; options set here apply to the entire block
-        ("x" ""
-         ((agenda "" ((org-agenda-span 1))))
-         ((org-agenda-compact-blocks t)))
-        ))
+        ("d" "today's agenda"
+         ((agenda "" ((org-agenda-span 1)
+                      (org-agenda-start-day "0d"))))
+         ((org-agenda-compact-blocks t)))))
 #+end_src
 
 *** Noter
@@ -283,13 +301,12 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
          :file-name "%<%Y%m%d>-${slug}"
          :head "#+TITLE: ${title}\n#+CREATED: %U\n#+LAST_MODIFIED: %U\n#+ROAM_ALIAS:\n#+ROAM_TAGS:\n\n"
          :unnarrowed t)
-        ("D" "default copy" plain
+        ("l" "LeetCode" plain
          (function org-roam-capture--get-point)
-         "%?"
-         :file-name "%<%Y%m%d%H%M%S>-${slug}"
-         :head "#+TITLE: ${title}\n#+CREATED: %U\n#+LAST_MODIFIED: %U\n\n"
+         (file "~/github/org/templates/org-roam-leetcode.org")
+         :file-name "leetcode/${slug}"
+         :head "#+TITLE: ${title}\n"
          :unnarrowed t)))
-
 (setq org-roam-graph-viewer "/Applications/Firefox.app/Contents/MacOS/firefox")
 (use-package! org-roam-server
   :config
@@ -326,7 +343,8 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
 ;;   :hook (org-roam-mode . org-roam-bibtex-mode))
 
 (setq orb-preformat-keywords '("year" "citekey" "title" "author")
-      orb-templates '(("r" "ref" plain (function org-roam-capture--get-point)
+      orb-templates '(("r" "ref" plain
+                       (function org-roam-capture--get-point)
                        (file "~/github/org/templates/orb.org")
                        :file-name "biblio/${citekey}"
                        :head "#+TITLE: ${year} - [${citekey}] - ${title} -- ${author}\n"
@@ -337,6 +355,7 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
 (setq bibtex-completion-bibliography '("~/.cb/cryptobib/crypto.bib"
                                        "~/github/org/biblio/thesis.bib"
                                        "~/github/org/biblio/book.bib"
+                                       "~/github/org/biblio/course.bib"
                                        "~/github/org/biblio/misc.bib"
                                        "~/github/org/biblio/temp.bib"
                                        "~/github/org/biblio/tifs.bib"

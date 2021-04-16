@@ -1,4 +1,4 @@
-personal_ws-1.1 en 287
+personal_ws-1.1 en 294
 ACM
 ACNS
 AES
@@ -28,6 +28,7 @@ COSADE
 CRX
 CTF
 Canetti
+Cheon
 Chillotti
 Coppersmith
 Coron
@@ -77,6 +78,7 @@ LDA
 LLVM
 LWE
 LaTeX
+LeetCode
 Lepoint
 Lindell
 MPC
@@ -95,6 +97,7 @@ PPT
 PRNG
 Paillier
 PoPETS
+Pythonic
 RFID
 RGB
 RNG
@@ -125,6 +128,7 @@ Udovenko
 Unforgeable
 VBB
 Vaikuntanathan
+Vandermonde
 Vercauteren
 Vinod
 WBC
@@ -155,6 +159,8 @@ bitslicing
 bitwise
 blockchain
 blockchains
+breakpoint
+bruteforce
 bytecode
 cardinality
 cayman
@@ -191,6 +197,7 @@ dataset
 decrypt
 decrypted
 decrypting
+deliverables
 distinguisher
 distinguishers
 ePrint
