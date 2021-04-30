@@ -1,4 +1,4 @@
-personal_ws-1.1 en 294
+personal_ws-1.1 en 302
 ACM
 ACNS
 AES
@@ -86,10 +86,11 @@ Mathematica
 Matthieu
 Merkle
 Micali
-MixColumn
+MixColumns
 NIST
 Nespresso
 Nginx
+Niantic
 OpenStreetMap
 PKC
 PMF
@@ -103,6 +104,7 @@ RGB
 RNG
 RSA
 Regev
+Rijndeal
 Riscure
 Rivain
 SAC
@@ -114,9 +116,11 @@ Sahai
 Sbox
 Schnorr
 Shamir
+ShiftRows
 Shoup
 Sihem
 Standaert
+SubBytes
 TCC
 TCHES
 TLS
@@ -152,6 +156,7 @@ bijections
 bijective
 bijectivity
 bilinear
+binarily
 biometric
 bitcode
 bitsliced
@@ -186,6 +191,7 @@ cryptobib
 cryptocurrencies
 cryptocurrency
 cryptographic
+cryptographically
 cryptology
 cryptolux
 cryptosystem
@@ -194,6 +200,7 @@ cyber
 cyclotomic
 cyptolux
 dataset
+decisional
 decrypt
 decrypted
 decrypting
@@ -279,6 +286,7 @@ subkey
 sublinear
 submatrix
 todo
+trie
 unary
 unbreakability
 univariate

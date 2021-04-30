@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2021-04-16 Fri 10:09]
+#+LAST_MODIFIED: [2021-04-28 Wed 11:55]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -235,6 +235,8 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
   (browse-url (concat "https://leetcode.com/problems/" leetcode-problem-name)))
 (defun make-leetcode-submission-link (leetcode-problem-name)
   (browse-url (concat "https://leetcode.com/problems/" leetcode-problem-name "/submissions/")))
+(defun make-leetcode-solution-link (leetcode-problem-name)
+  (browse-url (concat "https://leetcode.com/problems/" leetcode-problem-name "/solution/")))
 (defun make-eprint-link (eprint-id)
   (browse-url (concat "https://eprint.iacr.org/" eprint-id)))
 
@@ -299,7 +301,7 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
          (function org-roam-capture--get-point)
          "%?"
          :file-name "%<%Y%m%d>-${slug}"
-         :head "#+TITLE: ${title}\n#+CREATED: %U\n#+LAST_MODIFIED: %U\n#+ROAM_ALIAS:\n#+ROAM_TAGS:\n\n"
+         :head "#+TITLE: ${title}\n#+CREATED: %U\n#+LAST_MODIFIED: %U\n#+ROAM_ALIAS: ${roam_alias}\n#+ROAM_TAGS: ${roam_tags}\n\n"
          :unnarrowed t)
         ("l" "LeetCode" plain
          (function org-roam-capture--get-point)
@@ -379,6 +381,44 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
 (setq org-noter-notes-search-path '(org-directory
                                     "~/github/org/roam/biblio"))
 #+end_src
+*** Org publish
+
+#+begin_src emacs-lisp
+(setq org-publish-project-alist
+      '(("Hands-on Applied Crypto"
+         :base-directory "~/github/junwei-wang/hands-on-applied-crypto/"
+         :publishing-function org-html-publish-to-html
+         :publishing-directory "~/github/junwei-wang/hands-on-applied-crypto/docs"
+         :html-head-include-scripts nil        ;Disable the default javascript snippet
+         :html-head-include-default-style nil  ;Disable the default css style
+         :section-numbers nil
+         :table-of-contents nil
+         :html-head "<link href=\"https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap\" rel=\"stylesheet\">
+    <link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css\" integrity=\"sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2\" crossorigin=\"anonymous\">
+    <link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css\">
+    <link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css\">
+    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/brands.min.css\">
+    <link rel=\"stylesheet\" href=\"https://jwa.ng/sass/researcher.min.css\">"
+
+
+
+         ;; <meta name=\"viewport\" content=\"width=device-width, initpial-scale=1\">\n
+         ;; <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">
+         ;; <link rel=\"stylesheet\" type=\"text/css\" href=\"themes/readtheorg/css/htmlize.css\"/>\n
+         ;; <link rel=\"stylesheet\" type=\"text/css\" href=\"themes/readtheorg/css/rtd-full.css\"/>\n
+         ;; <link rel=\"stylesheet\" type=\"text/css\" href=\"themes/readtheorg/css/readtheorg.css\"/>\n
+         ;; <script src=\"https://code.jquery.com/jquery-3.2.1.slim.min.js\" integrity=\"sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN\" crossorigin=\"anonymous\"></script>
+         ;; <script src=\"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js\" integrity=\"sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q\" crossorigin=\"anonymous\"></script>
+         ;; <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js\" integrity=\"sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl\" crossorigin=\"anonymous\"></script>
+         ;; <scRipt type=\"text/javascript\" src=\"themes/lib/js/jquery-3.2.1.min.js\"></script>
+         ;; <script type=\"text/javascript\" src=\"themes/lib/js/jquery.stickytableheaders.min.js\"></script>
+         ;; <script type=\"text/javascript\" src=\"themes/readtheorg/js/readtheorg.js\"></script>"
+         ;; ;; :style "<link rel=\"stylesheet\"
+         ;;        href=\"../other/mystyle.css\"
+         ;;        type=\"text/css\"/>"
+         )))
+#+end_src
+
 
 ** Email
 
@@ -666,10 +706,10 @@ vc                  ; version-control and Emacs, sitting in a tree
 
 #+name: doom-term
 #+begin_src emacs-lisp
-eshell              ; the elisp shell that works everywhere
+;;eshell            ; the elisp shell that works everywhere
 ;;shell             ; simple shell REPL for Emacs
 ;;term              ; basic terminal emulator for Emacs
-;;vterm             ; the best terminal emulation in Emacs
+vterm               ; the best terminal emulation in Emacs
 #+end_src
 
 #+name: doom-checkers
