@@ -40,6 +40,8 @@ LICENSE
 
 ##### Security #####
 .aws
+.authinfo.gpg
+.borg-passphrase
 .gnupg
 .ssh/cache-*
 .ssh/id*
@@ -117,3 +119,6 @@ Zotero
 .oh-my-zsh
 .zcompdump-*
 .zsh_sessions
+
+##### misc #####
+.emacs.d
