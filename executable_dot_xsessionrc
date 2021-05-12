@@ -1,0 +1,5 @@
+xmodmap ~/.xmodmaprc
+
+xrandr --setprovideroutputsource modesetting NVIDIA-0
+xrandr --output HDMI-0 --auto --output eDP-1-1 --auto --left-of HDMI-0
+xrandr --dpi 96

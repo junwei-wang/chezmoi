@@ -1,4 +1,3 @@
-set -gx PATH $HOME/bin $HOME/.emacs.d/bin $HOME/.local/bin $PATH
 
 set -gx SAGE_ROOT /Users/junwei/projects/sage-9.1
 

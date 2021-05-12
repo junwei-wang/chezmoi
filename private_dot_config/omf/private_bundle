@@ -2,6 +2,7 @@ package extract
 package fasd
 package foreign-env
 package git-refresh
+package https://github.com/dracula/fish
 theme agnoster
 theme bobthefish
 theme default
