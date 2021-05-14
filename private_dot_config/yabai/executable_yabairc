@@ -46,11 +46,14 @@ yabai -m config right_padding 08
 yabai -m config window_gap 06
 
 # space names
-yabai -m space 1 --label org
-yabai -m space 2 --label dev
-yabai -m space 3 --label web
-yabai -m space 4 --label social
-yabai -m space 5 --label music
+yabai -m space 1 --label "org"
+yabai -m space 2 --label "dev"
+yabai -m space 3 --label "web"
+yabai -m space 4 --label "conf"
+yabai -m space 5 --label "5"
+yabai -m space 6 --label "mail"
+yabai -m space 7 --label "social"
+yabai -m space 8 --label "music"
 
 # space 1: terminal
 

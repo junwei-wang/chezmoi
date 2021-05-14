@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2021-04-28 Wed 11:55]
+#+LAST_MODIFIED: [2021-05-02 Sun 21:54]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -295,7 +295,24 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
 *** Org Roam
 
 #+begin_src emacs-lisp
-;;;;;;;;;; Org-Roam
+;; ;;;;;;;;;; Org-Roam v2
+;; (use-package! org-roam
+;;   :after org
+;;   :commands
+;;   (org-roam-buffer
+;;    org-roam-setup
+;;    org-roam-capture
+;;    org-roam-node-find)
+;;   :config
+;;   ;;(setq org-roam-mode-sections
+;;   ;;      (list #'org-roam-backlinks-insert-section
+;;   ;;            #'org-roam-reflinks-insert-section
+;;   ;;            #'org-roam-unlinked-references-insert-section))
+;;   (org-roam-setup))
+#+end_src
+
+#+begin_src emacs-lisp
+;;;; Org-Roam v1
 (setq org-roam-capture-templates
       '(("d" "default" plain
          (function org-roam-capture--get-point)

@@ -9,8 +9,8 @@
     editor         = emacsclient -t
     excludesfile   = /Users/junwei/.gitignore
     attributesfile = ~/.gitattributes
-	quotePath = false
-	commitGraph = true
+    quotePath = false
+    commitGraph = true
 
 [push]
     default     = matching
