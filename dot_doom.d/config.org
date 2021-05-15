@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2021-05-14 Fri 12:27]
+#+LAST_MODIFIED: [2021-05-14 Fri 14:50]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -295,7 +295,19 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
 *** Org Roam
 
 #+begin_src emacs-lisp
-;; ;;;;;;;;;; Org-Roam v2
+;;;;;;;;;; Org-Roam v2
+(use-package org-roam
+      :ensure t
+      :hook
+      (after-init . org-roam-mode)
+      :custom
+      (org-roam-directory (file-truename "~/github/org/roam"))
+      :bind (:map org-roam-mode-map
+              (("C-c n l" . org-roam)
+               ("C-c n f" . org-roam-find-file)
+               ("C-c n g" . org-roam-graph))
+              :map org-mode-map
+              (("C-c n i" . org-roam-insert))))
 ;; (use-package! org-roam
 ;;   :after org
 ;;   :commands
@@ -327,35 +339,35 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
          :head "#+TITLE: ${title}\n"
          :unnarrowed t)))
 (setq org-roam-graph-viewer "/Applications/Firefox.app/Contents/MacOS/firefox")
-(use-package! org-roam-server
-  :config
-  (setq org-roam-server-host "127.0.0.1"
-        org-roam-server-port 8080
-        org-roam-server-authenticate nil
-        org-roam-server-export-inline-images t
-        org-roam-server-serve-files nil
-        org-roam-server-served-file-extensions '("pdf" "mp4" "ogv")
-        org-roam-server-network-poll t
-        org-roam-server-network-arrows nil
-        org-roam-server-network-label-truncate t
-        org-roam-server-network-label-truncate-length 60
-        org-roam-server-network-label-wrap-length 20))
+;; (use-package! org-roam-server
+;;   :config
+;;   (setq org-roam-server-host "127.0.0.1"
+;;         org-roam-server-port 8080
+;;         org-roam-server-authenticate nil
+;;         org-roam-server-export-inline-images t
+;;         org-roam-server-serve-files nil
+;;         org-roam-server-served-file-extensions '("pdf" "mp4" "ogv")
+;;         org-roam-server-network-poll t
+;;         org-roam-server-network-arrows nil
+;;         org-roam-server-network-label-truncate t
+;;         org-roam-server-network-label-truncate-length 60
+;;         org-roam-server-network-label-wrap-length 20))
 
 ;; issue: https://github.com/org-roam/org-roam-server/issues/115
-(defun org-roam-server-open ()
-  "Ensure the server is active, then open the roam graph."
-  (interactive)
-  (smartparens-global-mode -1)
-  (org-roam-server-mode 1)
-  (browse-url-xdg-open (format "http://localhost:%d" org-roam-server-port))
-  (smartparens-global-mode 1))
+;; (defun org-roam-server-open ()
+;;   "Ensure the server is active, then open the roam graph."
+;;   (interactive)
+;;   (smartparens-global-mode -1)
+;;   (org-roam-server-mode 1)
+;;   (browse-url-xdg-open (format "http://localhost:%d" org-roam-server-port))
+;;   (smartparens-global-mode 1))
 
-;; automatically enable server-mode
-(after! org-roam
-  (smartparens-global-mode -1)
-  (org-roam-server-mode)
-  (smartparens-global-mode 1)
-  (org-roam-bibtex-mode))
+;; ;; automatically enable server-mode
+;; (after! org-roam
+;;   (smartparens-global-mode -1)
+;;   (org-roam-server-mode)
+;;   (smartparens-global-mode 1)
+;;   (org-roam-bibtex-mode))
 
 ;; (use-package! org-roam-bibtex
 ;;   :after org-roam
@@ -808,7 +820,7 @@ markdown            ; writing docs for people to ignore
 ;;nim               ; python + lisp at the speed of c
 ;;nix               ; I hereby declare "nix geht mehr!"
 ;;ocaml             ; an objective camel
-(org +gnuplot +pomodoro +present +pretty +roam +noter)   ; organize your plain life in plain text
+(org +gnuplot +pomodoro +present +pretty +noter)   ; organize your plain life in plain text
 ;;php               ; perl's insecure younger brother
 plantuml            ; diagrams for confusing people more
 ;;purescript        ; javascript, but functional

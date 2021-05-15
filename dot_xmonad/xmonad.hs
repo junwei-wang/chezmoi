@@ -3,6 +3,7 @@ import           XMonad
 import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.ManageDocks
 import qualified XMonad.StackSet               as W
+import           XMonad.Wallpaper
 
 import qualified Data.Map                      as M
 import           Data.Maybe                     ( fromJust )
@@ -83,6 +84,7 @@ main :: IO ()
 main = do
   xmproc0 <- spawnPipe "xmobar -x 0 $HOME/.config/xmobar/xmobarrc0"
   xmproc1 <- spawnPipe "xmobar -x 1 $HOME/.config/xmobar/xmobarrc1"
+  setRandomWallpaper ["$HOME/Wallpapers", "$HOME/Pictures/Wallpapers"]
   xmonad
     $                 docks defaultConfig
                         { modMask            = myModMask -- Use Super instead of Alt

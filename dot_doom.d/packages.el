@@ -20,10 +20,10 @@
 
 
 ;;; org-roam
-;; (package! org-roam
-;;   :recipe (:host github :repo "org-roam/org-roam" :branch "v2"))
-(package! org-roam
-  :recipe (:host github :repo "org-roam/org-roam"))
+ (package! org-roam
+  :recipe (:host github :repo "org-roam/org-roam" :branch "v2"))
+;;(package! org-roam
+;;  :recipe (:host github :repo "org-roam/org-roam"))
 
 ;;; org-roam-server
 (package! org-roam-server)
