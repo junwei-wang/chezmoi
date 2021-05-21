@@ -42,8 +42,9 @@ windowCount =
 
 myStartupHook :: X ()
 myStartupHook = do
-  spawnOnce "volumeicon &"
   spawnOnce "nm-applet &"
+  spawnOnce "volumeicon &"
+  spawnOnce "blueman-applet &"
   spawnOnce "conky -c $HOME/.config/conky/xmonad.conkyrc"
   spawnOnce
     "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 --tint 0x282c34  --height 30 &"
@@ -71,13 +72,13 @@ clickable ws =
 myKeys :: [(String, X ())]
 myKeys =
     -- Xmonad
-  [ ("M-C-r"       , spawn "xmonad --recompile")  -- Recompiles xmonad
-  , ("M-S-r"       , spawn "xmonad --restart")    -- Restarts xmonad
+  [ ("M-C-r"     , spawn "xmonad --recompile")  -- Recompiles xmonad
+  , ("M-S-r"     , spawn "xmonad --restart")    -- Restarts xmonad
 
     -- Run Prompt
-  , ("M-S-<Return>", spawn "dmenu_run -i -p \"Run: \"") -- Dmenu
-  , ("M-p"         , spawn "rofi -show drun")    -- Dmenu
-  , ("M-<Return>"  , spawn (myTerminal)) -- Dmenu
+  , ("M-d"       , spawn "dmenu_run -i -p \"Run: \"") -- Dmenu
+  , ("M-S-d"     , spawn "rofi -show drun")    -- Dmenu
+  , ("M-<Return>", spawn (myTerminal)) -- Dmenu
   ]
 
 main :: IO ()

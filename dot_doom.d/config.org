@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2021-05-14 Fri 14:50]
+#+LAST_MODIFIED: [2021-05-21 Fri 11:31]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -304,7 +304,7 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
       (org-roam-directory (file-truename "~/github/org/roam"))
       :bind (:map org-roam-mode-map
               (("C-c n l" . org-roam)
-               ("C-c n f" . org-roam-find-file)
+               ("C-c n f" . org-roam-node-find)
                ("C-c n g" . org-roam-graph))
               :map org-mode-map
               (("C-c n i" . org-roam-insert))))
