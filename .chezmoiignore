@@ -70,8 +70,15 @@ Zotero
 
 ##### Software Data and Config #####
 {{- if eq .chezmoi.os "darwin" }}
+#>>> X
+.xsessionrc
 #>>>iTerm2
 .iterm2*
+#>>>> conky
+.config/conky
+#>>>> xmonad
+.config/xmobar
+.xmonad
 {{- end }}
 #>>> chezmoi
 .config/chezmoi
