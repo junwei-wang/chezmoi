@@ -47,6 +47,7 @@ LICENSE
 .ssh/id*
 .ssh/known_hosts
 .ssh/authorized_keys
+.password-store
 
 ##### Cloud Drives #####
 Dropbox
