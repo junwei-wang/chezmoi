@@ -8,7 +8,6 @@ Screenshots
 {{- if eq .chezmoi.os "darwin" }}
 AppData
 Applications
-Library
 Movies
 News
 Public
@@ -17,6 +16,7 @@ Public
 AppData
 iCloud Drive (Archive)
 {{- else if eq .chezmoi.os "linux" }}
+Library
 Public
 Templates
 Videos

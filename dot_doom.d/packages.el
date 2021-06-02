@@ -21,7 +21,9 @@
 
 ;;; org-roam
  (package! org-roam
-  :recipe (:host github :repo "org-roam/org-roam" :branch "v2"))
+   :recipe (:host github
+            :repo "org-roam/org-roam"
+            :branch "v2"))
 ;;(package! org-roam
 ;;  :recipe (:host github :repo "org-roam/org-roam"))
 
@@ -30,7 +32,10 @@
 
 ;;;;;;;;; org-roam-bibtex (ORB)
 (package! org-roam-bibtex
-  :recipe (:host github :repo "org-roam/org-roam-bibtex"))
+  :recipe (:host github
+           :repo "org-roam/org-roam-bibtex"
+           :branch "org-roam-v2"))
+
 ;; When using org-roam via the `+roam` flag
 (unpin! org-roam company-org-roam)
 ;; When using bibtex-completion via the `biblio` module
