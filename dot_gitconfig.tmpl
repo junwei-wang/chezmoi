@@ -2,8 +2,13 @@
 # https://github.com/mathiasbynens/dotfiles/blob/master/.gitconfig
 [user]
     name        = Junwei Wang
+{{ if (eq .chezmoi.hostname "jwang-imac") }}
+    email       = junwei.wang@cryptoexperts.com
+    signingkey  = 9F288BD7E2BD84AA
+{{ else }}
     email       = me@jwa.ng
     signingkey  = 249EF49B5E8B6264
+{{ end }}
 
 [core]
     editor         = emacsclient -t
@@ -87,6 +92,6 @@
 [init]
     defaultBranch = main
 [receive]
-	advertisePushOptions = true
+    advertisePushOptions = true
 [gc]
-	writeCommitGraph = true
+    writeCommitGraph = true

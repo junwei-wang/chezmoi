@@ -153,7 +153,7 @@ ctrl + cmd - w : yabai -m window --resize top:0:-80
 # decrease window size
 shift + cmd - a : yabai -m window --resize left:80:0
 shift + cmd - s : yabai -m window --resize bottom:0:-80
-shift + cmd - d : yabai -m window --resize right:-80:0
+# shift + cmd - d : yabai -m window --resize right:-80:0
 shift + cmd - w : yabai -m window --resize top:0:80
 
 # set insertion point in focused container
