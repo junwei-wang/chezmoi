@@ -80,6 +80,8 @@ Zotero
 #>>>> xmonad
 .config/xmobar
 .xmonad
+{{- else if eq .chezmoi.os "linux" }}
+.config/skhd
 {{- end }}
 #>>> chezmoi
 .config/chezmoi

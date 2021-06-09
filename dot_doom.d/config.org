@@ -331,6 +331,31 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
       (:prefix ("r" . "Org Roam")
        :desc "Find roam node" "f" #'org-roam-node-find
        :desc "Insert roam node" "i" #'org-roam-node-insert))
+
+(use-package! org-roam-bibtex
+  :after org-roam
+  :hook (org-roam-mode . org-roam-bibtex-mode))
+
+(setq orb-preformat-keywords '("year" "citekey" "title" "author" "file"))
+(setq org-roam-capture-templates
+      '(("d" "default" plain "?"
+         :if-new (file+head "${slug}.org"
+                            "#+TITLE: ${title}\n#+CREATED: %U\n#+LAST_MODIFIED: %U\n#+ROAM_ALIAS: ${roam_alias}\n#+ROAM_TAGS: ${roam_tags}\n\n")
+         :unnarrowed t)
+        ("l" "LeetCode" plain
+         (function org-roam-capture--get-point)
+         (file "~/github/org/templates/org-roam-leetcode.org")
+         :file-name "leetcode/${slug}"
+         :head "#+TITLE: ${title}\n"
+         :unnarrowed t)
+        ("r" "bibliography reference" plain
+         (file "~/github/org/templates/orb.org")
+         :if-new
+         (file+head "biblio/${citekey}.org"
+                    "#+TITLE: ${year} - [${citekey}] - ${title} -- ${author}\n")
+         :unnarrowed t)))
+
+
 ;; (use-package! org-roam
 ;;   :after org
 ;;   :commands
