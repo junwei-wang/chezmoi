@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2021-06-09 Wed 11:50]
+#+LAST_MODIFIED: [2021-06-09 Wed 12:25]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -373,20 +373,7 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
 
 #+begin_src emacs-lisp
 ;;;; Org-Roam v1
-(setq org-roam-capture-templates
-      '(("d" "default" plain
-         (function org-roam-capture--get-point)
-         "%?"
-         :file-name "%<%Y%m%d>-${slug}"
-         :head "#+TITLE: ${title}\n#+CREATED: %U\n#+LAST_MODIFIED: %U\n#+ROAM_ALIAS: ${roam_alias}\n#+ROAM_TAGS: ${roam_tags}\n\n"
-         :unnarrowed t)
-        ("l" "LeetCode" plain
-         (function org-roam-capture--get-point)
-         (file "~/github/org/templates/org-roam-leetcode.org")
-         :file-name "leetcode/${slug}"
-         :head "#+TITLE: ${title}\n"
-         :unnarrowed t)))
-(setq org-roam-graph-viewer "/Applications/Firefox.app/Contents/MacOS/firefox")
+;; (setq org-roam-graph-viewer "/Applications/Firefox.app/Contents/MacOS/firefox")
 ;; (use-package! org-roam-server
 ;;   :config
 ;;   (setq org-roam-server-host "127.0.0.1"
