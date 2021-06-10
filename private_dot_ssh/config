@@ -9,7 +9,7 @@ Host *
     ForwardX11 no
     ForwardX11Trusted yes
     #
-    Port 22
+    # Port 22
     Protocol 2
     ServerAliveInterval 60
     ServerAliveCountMax 30
@@ -26,9 +26,9 @@ Host crxgit
     Hostname git.cryptoexperts.net
 
 Host imac
+    HostName cryptoexperts.net
     User junwei
-    Hostname jwang.cryptoexperts.net
-    ProxyJump crx
+    Port 22002
 
 Host crxregistry
     User registry
