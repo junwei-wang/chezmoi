@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2021-06-09 Wed 12:25]
+#+LAST_MODIFIED: [2021-06-10 Thu 19:07]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -297,7 +297,6 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
 #+begin_src emacs-lisp
 ;;;;;;;;;; Org-Roam v2
 (use-package org-roam
-  :ensure t
   :hook
   (after-init . org-roam-mode)
   :custom
@@ -354,6 +353,16 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
          (file+head "biblio/${citekey}.org"
                     "#+TITLE: ${year} - [${citekey}] - ${title} -- ${author}\n")
          :unnarrowed t)))
+
+(defun my/org-id-update-org-roam-files ()
+  "Update Org-ID locations for all Org-roam files."
+  (interactive)
+  (org-id-update-id-locations (org-roam--list-all-files)))
+
+(defun my/org-id-update-id-current-file ()
+  "Scan the current buffer for Org-ID locations and update them."
+  (interactive)
+  (org-id-update-id-locations (list (buffer-file-name (current-buffer)))))
 
 
 ;; (use-package! org-roam

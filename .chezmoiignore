@@ -5,6 +5,7 @@ Downloads
 Music
 Pictures
 Screenshots
+Library
 {{- if eq .chezmoi.os "darwin" }}
 AppData
 Applications
@@ -16,7 +17,6 @@ Public
 AppData
 iCloud Drive (Archive)
 {{- else if eq .chezmoi.os "linux" }}
-Library
 Public
 Templates
 Videos
