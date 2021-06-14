@@ -86,19 +86,12 @@ shift + cmd - r : $HOME/.local/bin/resetwm
 
 
 # focus window
-ctrl + cmd - h : yabai -m window --focus west
-ctrl + cmd - l : yabai -m window --focus east
-ctrl + cmd - j : yabai -m window --focus south
-ctrl + cmd - k : yabai -m window --focus north
+cmd - j : yabai -m window --focus next
+cmd - k : yabai -m window --focus prev
 
 # swap managed window
-shift + alt - h : yabai -m window --swap west
-shift + alt - l : yabai -m window --swap east
-shift + alt - j : yabai -m window --swap south
-shift + alt - k : yabai -m window --swap north
-
-# move managed window
-# shift + cmd - h : yabai -m window --warp east
+shift + cmd - j : yabai -m window --swap next
+shift + cmd - k : yabai -m window --swap prev
 
 # balance size of windows
 shift + alt - 0 : yabai -m space --balance

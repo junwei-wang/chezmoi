@@ -45,5 +45,10 @@ Host crxdocker
 
 Host apidemo
     User admin
-    Hostname 15.236.244.70
+    HostName 15.236.244.70
+    IdentityFile ~/git/admin_passwords/jwang/keypair-wbe-demo-jwang.pem
+
+Host registrydemo
+    User admin
+    HostName 15.236.218.126
     IdentityFile ~/git/admin_passwords/jwang/keypair-wbe-demo-jwang.pem

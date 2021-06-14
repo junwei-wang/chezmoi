@@ -132,3 +132,4 @@ Zotero
 
 ##### misc #####
 .emacs.d
+.doom.d/config.el
