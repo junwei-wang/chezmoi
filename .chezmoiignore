@@ -84,7 +84,7 @@ Zotero
 .config/skhd
 {{- end }}
 #>>> chezmoi
-.config/chezmoi
+#.config/chezmoi
 #>>> Docker
 .docker
 #>>> Dropbox
