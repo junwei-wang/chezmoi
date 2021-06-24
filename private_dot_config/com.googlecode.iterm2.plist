@@ -361,6 +361,10 @@
 	</dict>
 	<key>Default Bookmark Guid</key>
 	<string>F2AE9190-1C23-407A-9817-137D789A6E93</string>
+	<key>DoubleClickPerformsSmartSelection</key>
+	<true/>
+	<key>EnterCopyModeAutomatically</key>
+	<true/>
 	<key>HapticFeedbackForEsc</key>
 	<false/>
 	<key>HideTab</key>
@@ -1606,6 +1610,8 @@
 	<true/>
 	<key>PromptOnQuit</key>
 	<false/>
+	<key>QuitWhenAllWindowsClosed</key>
+	<true/>
 	<key>ShowBookmarkName</key>
 	<false/>
 	<key>ShowFullScreenTabBar</key>
