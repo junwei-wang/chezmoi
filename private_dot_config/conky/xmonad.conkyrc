@@ -21,7 +21,7 @@ conky.config = {
 
 	-- Placement (Conky on MIDDLE of THREE monitors at 1920x1080)
 	alignment = 'top_left',		                -- top_left,top_middle,top_right,bottom_left,bottom_middle,bottom_right,
-	gap_x = 3540,                               -- pixels between right or left border
+	gap_x = 3340,                               -- pixels between right or left border
 	gap_y = 70,									-- pixels between bottom or left border
 
     -- Placement (For SINGLE monitor users!)
@@ -32,7 +32,7 @@ conky.config = {
     -- Size
     minimum_height = 200,						-- minimum height of window
 	minimum_width = 260,						-- minimum height of window
-	maximum_width = 260,						-- maximum height of window
+	maximum_width = 500,						-- maximum height of window
 
 	--Graphical
 	border_inner_margin = 5, 					-- margin between border and text
@@ -127,4 +127,3 @@ ${color1}[S]+[CTRL]+r${alignr}${color2}recompile xmonad${color}
 ${color1}[S]+[SHIFT]+r${alignr}${color2}restart xmonad${color}
 ${color1}[S]+[SHIFT]+q${alignr}${color2}quit xmonad${color}
 ]];
-

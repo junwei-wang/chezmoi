@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2021-06-14 Mon 11:35]
+#+LAST_MODIFIED: [2021-06-25 Fri 15:20]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -81,8 +81,8 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "JetBrains Mono" :size 16 :weight 'semi-light)
-      doom-variable-pitch-font (font-spec :family "Overpass" :size 17)
+(setq doom-font (font-spec :family "JetBrains Mono" :size 18 :weight 'semi-light)
+      doom-variable-pitch-font (font-spec :family "Overpass" :size 19)
       doom-big-font (font-spec :family "JetBrains Mono" :size 23 :weight 'semi-light)
       doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
 (custom-set-faces!

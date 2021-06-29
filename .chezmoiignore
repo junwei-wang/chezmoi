@@ -28,12 +28,13 @@ Videos
 *.log
 LICENSE
 #>>> history
-.lesshst
 .bash_history
 .julia_history
-.python_history
-.zsh_history
+.lesshst
 .gnuplot_history
+.python_history
+.wget-hsts
+.zsh_history
 
 ##### Personal #####
 .cb
@@ -81,7 +82,14 @@ Zotero
 .config/xmobar
 .xmonad
 {{- else if eq .chezmoi.os "linux" }}
+.config/com.googlecode.iterm2.plist
 .config/skhd
+.config/spacebar
+.config/yabai
+
+.xmonad/xmonad.errors
+.xmonad/xmonad.hi
+.xmonad/xmonad.o
 {{- end }}
 #>>> chezmoi
 #.config/chezmoi

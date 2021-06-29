@@ -2,7 +2,9 @@ alias ls lsd
 
 alias pg "ps aux | grep"
 
+{{ if (eq .chezmoi.os "darwin") }}
 alias grep ggrep
+{{ end }}
 
 # editor
 alias ecc "emacsclient -nc"

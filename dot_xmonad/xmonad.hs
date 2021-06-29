@@ -3,7 +3,7 @@ import           XMonad
 import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.ManageDocks
 import qualified XMonad.StackSet               as W
-import           XMonad.Wallpaper
+-- import           XMonad.Wallpape^
 
 import qualified Data.Map                      as M
 import           Data.Maybe                     ( fromJust )
@@ -17,7 +17,8 @@ myModMask :: KeyMask
 myModMask = mod4Mask        -- Sets modkey to super/windows key
 
 myTerminal :: String
-myTerminal = "$HOME/.cargo/bin/alacritty"
+myTerminal = "alacritty"
+-- myTerminal = "xterm"
 
 myBorderWidth :: Dimension
 myBorderWidth = 3           -- Sets border width for windows
@@ -44,6 +45,7 @@ myStartupHook :: X ()
 myStartupHook = do
   spawnOnce "nm-applet &"
   spawnOnce "volumeicon &"
+  spawnOnce "feh --bg-center --randomize /usr/share/backgrounds/archlinux/"
   spawnOnce "blueman-applet &"
   spawnOnce "conky -c $HOME/.config/conky/xmonad.conkyrc"
   spawnOnce
@@ -77,22 +79,22 @@ myKeys =
 
     -- Run Prompt
   , ("M-d"       , spawn "dmenu_run -i -p \"Run: \"") -- Dmenu
-  , ("M-S-d"     , spawn "rofi -show drun")    -- Dmenu
-  , ("M-<Return>", spawn (myTerminal)) -- Dmenu
+  , ("M-S-d"     , spawn "rofi -show drun")           -- Rofi
+  , ("M-<Return>", spawn (myTerminal))                -- Terminal
   ]
 
 main :: IO ()
 main = do
   xmproc0 <- spawnPipe "xmobar -x 0 $HOME/.config/xmobar/xmobarrc0"
   xmproc1 <- spawnPipe "xmobar -x 1 $HOME/.config/xmobar/xmobarrc1"
-  setRandomWallpaper ["$HOME/Wallpapers", "$HOME/Pictures/Wallpapers"]
+  -- setRandomWallpaper ["$HOME/Wallpapers", "$HOME/Pictures/Wallpapers"]
   xmonad
-    $                 docks defaultConfig
+    $                 docks def
                         { modMask            = myModMask -- Use Super instead of Alt
-                        , manageHook = manageDocks <+> manageHook defaultConfig
-                        , layoutHook = avoidStruts $ layoutHook defaultConfig
+                        , manageHook = manageDocks <+> manageHook def
+                        , layoutHook = avoidStruts $ layoutHook def
      -- this must be in this order, docksEventHook must be last
-                        , handleEventHook = handleEventHook defaultConfig <+> docksEventHook
+                        , handleEventHook = handleEventHook def <+> docksEventHook
                         , startupHook        = myStartupHook
                         , terminal           = myTerminal
                         , workspaces         = myWorkspaces
