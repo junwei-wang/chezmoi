@@ -4,7 +4,13 @@ function update -d "System update"
         brew update
         brew upgrade
         brew cleanup
+    else if type -q pacman
+        echo "Update pacman"
+        sudo pacman -Syu
+        echo "Clean pacman"
+        sudo pacman -R (pacman -Qtdq)
     end
+
     echo ""
 
     if type -q doom

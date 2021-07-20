@@ -1,3 +1,3 @@
 function crxgc -d "Clone CRX git repo"
-    git clone ssh://crxgit/$argv
+    git clone git@git.cryptoexperts.net:$argv.git
 end
