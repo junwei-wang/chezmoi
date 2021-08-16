@@ -1622,12 +1622,18 @@
 	<integer>1</integer>
 	<key>StretchTabsToFillBar</key>
 	<true/>
+	<key>SwitchPaneModifier</key>
+	<integer>9</integer>
+	<key>SwitchTabModifier</key>
+	<integer>5</integer>
 	<key>TabStyle</key>
 	<integer>1</integer>
 	<key>TabStyleWithAutomaticOption</key>
 	<integer>5</integer>
 	<key>TabViewType</key>
 	<integer>0</integer>
+	<key>UseBorder</key>
+	<false/>
 	<key>VisualIndicatorForEsc</key>
 	<false/>
 	<key>WordCharacters</key>
