@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2021-06-25 Fri 15:20]
+#+LAST_MODIFIED: [2021-08-10 Tue 14:28]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -193,9 +193,7 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
 ;;   (setq-default TeX-master nil))
 (after! latex
   (setq LaTeX-indent-level 2
-        LaTeX-item-indent -2
-        ;;  TeX-error-overview-open-after-TeX-run t
-        ))
+        LaTeX-item-indent -2))
 (mapc (lambda (mode) (add-hook 'LaTeX-mode-hook mode))
       (list 'auto-fill-mode
             'display-fill-column-indicator-mode))
@@ -296,6 +294,17 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
 
 #+begin_src emacs-lisp
 ;;;;;;;;;; Org-Roam v2
+(setq org-roam-v2-ack t)
+
+(use-package! org-roam-ui
+  :after org-roam ;; or :after org
+  :hook (after-init . org-roam-ui-mode)
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start t))
+
 (use-package org-roam
   :hook
   (after-init . org-roam-mode)
@@ -718,10 +727,10 @@ chinese
 
 #+name: doom-completion
 #+begin_src emacs-lisp
-company           ; the ultimate code completion backend
+company             ; the ultimate code completion backend
 ;;helm              ; the *other* search engine for love and life
 ;;ido               ; the other *other* search engine...
-ivy               ; a search engine for love and life
+ivy                 ; a search engine for love and life
 #+end_src
 
 #+name: doom-ui
@@ -731,14 +740,13 @@ doom                ; what makes DOOM look the way it does
 doom-dashboard      ; a nifty splash screen for Emacs
 doom-quit           ; DOOM quit-message prompts when you quit Emacs
 (emoji +unicode)    ; 🙂
-fill-column         ; a `fill-column' indicator
 hl-todo             ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
 ;;hydra
-;;indent-guides     ; highlighted indent columns
-;;ligatures         ; ligatures and symbols to make your code pretty again
+indent-guides       ; highlighted indent columns
+ligatures           ; ligatures and symbols to make your code pretty again
 minimap             ; show a map of the code on the side
 modeline            ; snazzy, Atom-inspired modeline, plus API
-;;nav-flash         ; blink cursor line after big motions
+nav-flash           ; blink cursor line after big motions
 neotree             ; a project drawer, like NERDTree for vim
 ophints             ; highlight the region an operation acts on
 (popup +defaults)   ; tame sudden yet inevitable temporary windows

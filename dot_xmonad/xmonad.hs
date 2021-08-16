@@ -1,5 +1,7 @@
 import           System.IO
 import           XMonad
+import           XMonad.Hooks.EwmhDesktops
+import           XMonad.Layout.Spacing
 import           XMonad.Hooks.DynamicLog
 import           XMonad.Hooks.ManageDocks
 import qualified XMonad.StackSet               as W
@@ -21,13 +23,13 @@ myTerminal = "alacritty"
 -- myTerminal = "xterm"
 
 myBorderWidth :: Dimension
-myBorderWidth = 3           -- Sets border width for windows
+myBorderWidth = 4           -- Sets border width for windows
 
 myNormColor :: String
-myNormColor = "#9d91bb"   -- Border color of normal windows
+myNormColor = "#a3be8c"   -- Border color of normal windows
 
 myFocusColor :: String
-myFocusColor = "#46d9ff"   -- Border color of focused windows
+myFocusColor = "#bf616a"   -- Border color of focused windows
 
 windowCount :: X (Maybe String)
 windowCount =
@@ -44,10 +46,11 @@ windowCount =
 myStartupHook :: X ()
 myStartupHook = do
   spawnOnce "nm-applet &"
+  spawnOnce "blueman-applet &"
+  spawnOnce "fcitx5 &"
+  spawnOnce "conky -c $HOME/.config/conky/xmonad.conkyrc &"
   spawnOnce "volumeicon &"
   spawnOnce "feh --bg-center --randomize /usr/share/backgrounds/archlinux/"
-  spawnOnce "blueman-applet &"
-  spawnOnce "conky -c $HOME/.config/conky/xmonad.conkyrc"
   spawnOnce
     "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 --tint 0x282c34  --height 30 &"
 
@@ -79,7 +82,7 @@ myKeys =
 
     -- Run Prompt
   , ("M-d"       , spawn "dmenu_run -i -p \"Run: \"") -- Dmenu
-  , ("M-S-d"     , spawn "rofi -show drun")           -- Rofi
+  , ("M-S-d"     , spawn "rofi -show combi")           -- Rofi
   , ("M-<Return>", spawn (myTerminal))                -- Terminal
   ]
 
@@ -89,10 +92,10 @@ main = do
   xmproc1 <- spawnPipe "xmobar -x 1 $HOME/.config/xmobar/xmobarrc1"
   -- setRandomWallpaper ["$HOME/Wallpapers", "$HOME/Pictures/Wallpapers"]
   xmonad
-    $                 docks def
+    $                 ewmh def
                         { modMask            = myModMask -- Use Super instead of Alt
                         , manageHook = manageDocks <+> manageHook def
-                        , layoutHook = avoidStruts $ layoutHook def
+                        , layoutHook = avoidStruts $ spacingRaw False (Border 0 10 0 10) True (Border 10 0 10 0) True $ layoutHook def
      -- this must be in this order, docksEventHook must be last
                         , handleEventHook = handleEventHook def <+> docksEventHook
                         , startupHook        = myStartupHook

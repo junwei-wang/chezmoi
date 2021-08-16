@@ -15,31 +15,30 @@
 ;;;; Python
 (package! py-autopep8)
 
+;;;; Sage
+(package! sage-shell-mode)
+
 ;;;; email
 (package! org-mime)
 
 
 ;;; org-roam
-;; (package! org-roam
-;;   :recipe (:host github
-;;            :repo "org-roam/org-roam"
-;;            :branch "v2"))
 (package! org-roam
   :recipe (:host github :repo "org-roam/org-roam"))
-
-;;; org-roam-server
-(package! org-roam-server)
+;;; org-roam-ui
+(package! websocket)
+(package! org-roam-ui :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out")))
 
 ;;;;;;;;; org-roam-bibtex (ORB)
 (package! org-roam-bibtex
   :recipe (:host github
-           :repo "org-roam/org-roam-bibtex"
-           :branch "org-roam-v2"))
+           :repo "org-roam/org-roam-bibtex"))
 
 ;; When using org-roam via the `+roam` flag
 (unpin! org-roam company-org-roam)
 ;; When using bibtex-completion via the `biblio` module
 (unpin! bibtex-completion helm-bibtex ivy-bibtex)
+
 
 ;;; ORB dependencies
 (package! org-ref)
