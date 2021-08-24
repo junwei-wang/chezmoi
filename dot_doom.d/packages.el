@@ -22,9 +22,6 @@
 (package! org-mime)
 
 
-;;; org-roam
-(package! org-roam
-  :recipe (:host github :repo "org-roam/org-roam"))
 ;;; org-roam-ui
 (package! websocket)
 (package! org-roam-ui :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out")))
