@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2021-08-25 Wed 10:10]
+#+LAST_MODIFIED: [2021-08-25 Wed 20:47]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -817,7 +817,13 @@ markdown            ; writing docs for people to ignore
 ;;nim               ; python + lisp at the speed of c
 ;;nix               ; I hereby declare "nix geht mehr!"
 ;;ocaml             ; an objective camel
-(org +gnuplot +pomodoro +present +pretty +noter)   ; organize your plain life in plain text
+(org                ; organize your plain life in plain text
+ +gnuplot
+ +noter
+ +pomodoro
+ +present
+ +pretty
+ +roam2)
 ;;php               ; perl's insecure younger brother
 plantuml            ; diagrams for confusing people more
 ;;purescript        ; javascript, but functional

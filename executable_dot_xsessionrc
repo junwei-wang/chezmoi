@@ -1,9 +1,9 @@
 # key modifier
-xmodmap ~/.xmodmaprc
+# xmodmap ~/.xmodmaprc
 
 # AMD/NVIDIA dual GPU
-xrandr --setprovideroutputsource modesetting NVIDIA-0
-xrandr --output HDMI-0 --auto --output eDP-1-1 --auto --left-of HDMI-0
+# xrandr --setprovideroutputsource modesetting NVIDIA-0
+xrandr --output HDMI-0 --auto --output eDP-1-0 --auto --left-of HDMI-0
 xrandr --dpi 96
 
 # get a random wallpaper
