@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2021-08-25 Wed 20:47]
+#+LAST_MODIFIED: [2021-08-25 Wed 20:49]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -159,7 +159,11 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
 
 ;;;;;;;;;;;;; spelling
 ;; overwriting the value set by doom
-(setq ispell-dictionary "en_US"
+{{ if (eq .chezmoi.hostname "neo") -}}
+(setq
+{{- else -}}
+(setq ;; ispell-dictionary "en_US"
+{{ end }}
       ispell-personal-dictionary "~/.aspell.en.pws")
 
 ;;;;;;;;;;; neotree
