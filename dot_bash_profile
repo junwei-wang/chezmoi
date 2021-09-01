@@ -4,4 +4,3 @@
 
 export GPG_TTY=$(tty)
 [[ -f ~/.bashrc ]] && . ~/.bashrc
-if [ -e /Users/junwei/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/junwei/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

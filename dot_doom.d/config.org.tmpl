@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2021-08-25 Wed 20:49]
+#+LAST_MODIFIED: [2021-08-30 Mon 09:41]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -337,7 +337,8 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
 
 (use-package! org-roam-bibtex
   :after org-roam
-  :hook (org-roam-mode . org-roam-bibtex-mode))
+  :config
+  (require 'org-ref))
 
 (setq orb-preformat-keywords '("year" "citekey" "title" "author" "file"))
 (setq org-roam-capture-templates

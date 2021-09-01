@@ -2,7 +2,7 @@
 # https://github.com/mathiasbynens/dotfiles/blob/master/.gitconfig
 [user]
     name        = Junwei Wang
-{{ if (eq .chezmoi.hostname "jwang-imac") }}
+{{- if (eq .chezmoi.hostname "jwang-imac") -}}
     email       = junwei.wang@cryptoexperts.com
     signingkey  = 9F288BD7E2BD84AA
 {{ else if (eq .chezmoi.hostname "neo") }}

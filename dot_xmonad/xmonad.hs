@@ -51,8 +51,7 @@ myStartupHook = do
   spawnOnce "conky -c $HOME/.config/conky/xmonad.conkyrc &"
   spawnOnce "volumeicon &"
   spawnOnce "feh --bg-center --randomize /usr/share/backgrounds/archlinux/"
-  spawnOnce
-    "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 --tint 0x282c34  --height 30 &"
+  spawnOnce "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 --tint 0x282c34  --height 30 &"
   spawnOnce "xrandr --output HDMI-0 --auto --output eDP-1-0 --auto --left-of HDMI-0 &"
 
 
