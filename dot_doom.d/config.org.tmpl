@@ -265,11 +265,20 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
                                        time-stamp-end "$"
                                        time-stamp-format "\[%Y-%02m-%02d %3a %02H:%02M\]")
                            (add-hook 'before-save-hook 'time-stamp nil 'local)))
+
+(setq org-blank-before-new-entry (quote ((heading) (plain-list-item))))
+(setq org-enforce-todo-dependencies t)
+(setq org-log-done (quote time))
+(setq org-log-redeadline (quote time))
+(setq org-log-reschedule (quote time))
 #+end_src
 
 *** Agenda
 
 #+begin_src emacs-lisp
+(setq org-agenda-files (list "~/github/org"
+                             "~/github/org/roam/daily"
+                             "~/github/org/roam/to_handle_over.org"))
 (setq org-agenda-custom-commands
       '(("B" "Biweekly Team Meeting"
          ((agenda "" ((org-agenda-span 14)
@@ -278,7 +287,36 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
         ("d" "today's agenda"
          ((agenda "" ((org-agenda-span 1)
                       (org-agenda-start-day "0d"))))
-         ((org-agenda-compact-blocks t)))))
+         ((org-agenda-compact-blocks t)))
+        ("c" "Simple agenda view"
+         ((tags "PRIORITY=\"A\""
+                ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo '("DONE")))
+                 (org-agenda-overriding-header "High-priority unfinished tasks:")))
+          (agenda "")
+          (alltodo ""
+                   ((org-agenda-skip-function
+                     '(or (jwang-org-skip-subtree-if-priority ?A)
+                          ;; (org-agenda-skip-if nil '(scheduled deadline))
+                          ))))
+          ))))
+
+(defun jwang-org-skip-subtree-if-habit ()
+  "Skip an agenda entry if it has a STYLE property equal to \"habit\"."
+  (let ((subtree-end (save-excursion (org-end-of-subtree t))))
+    (if (string= (org-entry-get nil "STYLE") "habit")
+        subtree-end
+      nil)))
+
+(defun jwang-org-skip-subtree-if-priority (priority)
+  "Skip an agenda subtree if it has a priority of PRIORITY.
+
+PRIORITY may be one of the characters ?A, ?B, or ?C."
+  (let ((subtree-end (save-excursion (org-end-of-subtree t)))
+        (pri-value (* 1000 (- org-lowest-priority priority)))
+        (pri-current (org-get-priority (thing-at-point 'line t))))
+    (if (= pri-value pri-current)
+        subtree-end
+      nil)))
 #+end_src
 
 *** Noter
@@ -299,6 +337,7 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
 #+begin_src emacs-lisp
 ;;;;;;;;;; Org-Roam v2
 (setq org-roam-v2-ack t)
+(setq org-roam-directory (file-truename "~/github/org/roam"))
 
 (use-package! org-roam-ui
   :after org-roam ;; or :after org
@@ -309,27 +348,7 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t))
 
-(use-package org-roam
-  :hook
-  (after-init . org-roam-mode)
-  :custom
-  (org-roam-directory (file-truename "~/github/org/roam"))
-  ;; :init
-  ;; (map! :after org
-  ;;       :map org-mode-map
-  ;;       :localleader
-  ;;       :prefix ("m" . "org-roam")
-  ;;       ;; "b" #'org-roam-switch-to-buffer
-  ;;       "f" #'org-roam-node-find
-  ;;       ;; "g" #'org-roam-graph
-  ;;       "i" #'org-roam-node-insert
-  ;;       ;; "I" #'org-roam-insert-immediate
-  ;;       ;; "m" #'org-roam
-  ;;       ;; "t" #'org-roam-tag-add
-  ;;       ;; "T" #'org-roam-tag-delete
-  ;;       ;; (:prefix ("d" . "by date")
-  ;;       )
-  )
+
 (map! :leader
       (:prefix ("r" . "Org Roam")
        :desc "Find roam node" "f" #'org-roam-node-find
@@ -342,9 +361,9 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
 
 (setq orb-preformat-keywords '("year" "citekey" "title" "author" "file"))
 (setq org-roam-capture-templates
-      '(("d" "default" plain "?"
+      '(("d" "default" plain "%?"
          :if-new (file+head "${slug}.org"
-                            "#+TITLE: ${title}\n#+CREATED: %U\n#+LAST_MODIFIED: %U\n#+ROAM_ALIAS: ${roam_alias}\n#+ROAM_TAGS: ${roam_tags}\n\n")
+                            "#+TITLE: ${title}\n#+CREATED: %U\n#+LAST_MODIFIED: %U\n#+filetags: ${tags}\n\n")
          :unnarrowed t)
         ("l" "LeetCode" plain
          (function org-roam-capture--get-point)
@@ -684,7 +703,7 @@ ivy                 ; a search engine for love and life
 
 #+name: doom-ui
 #+begin_src emacs-lisp
-;;deft              ; notational velocity for Emacs
+deft                ; notational velocity for Emacs
 doom                ; what makes DOOM look the way it does
 doom-dashboard      ; a nifty splash screen for Emacs
 doom-quit           ; DOOM quit-message prompts when you quit Emacs
@@ -874,6 +893,94 @@ yaml                ; JSON, but readable
 
 
 *** Packages
+
+#+name: packages.el
+#+begin_src emacs-lisp :tangle "packages.el" :noweb no-export :comments none
+;; -*- no-byte-compile: t; -*-
+;;; $DOOMDIR/packages.el
+
+;; To install a package with Doom you must declare them here and run 'doom sync'
+;; on the command line, then restart Emacs for the changes to take effect -- or
+;; use 'M-x doom/reload'.
+
+
+;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
+;(package! some-package)
+
+;;;; UI
+(package! beacon)
+
+;;;; Python
+(package! py-autopep8)
+
+;;;; Sage
+(package! sage-shell-mode)
+
+;;;; email
+(package! org-mime)
+
+
+;;; org-roam-ui
+(package! websocket)
+(package! org-roam-ui :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out")))
+
+;;;;;;;;; org-roam-bibtex (ORB)
+(package! org-roam-bibtex
+  :recipe (:host github
+           :repo "org-roam/org-roam-bibtex"))
+
+;; When using org-roam via the `+roam` flag
+(unpin! org-roam company-org-roam)
+;; When using bibtex-completion via the `biblio` module
+(unpin! bibtex-completion helm-bibtex ivy-bibtex)
+
+
+;;; ORB dependencies
+(package! org-ref)
+(package! helm-bibtex)
+(package! ivy-bibtex)
+
+;; To install a package directly from a remote git repo, you must specify a
+;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
+;; https://github.com/raxod502/straight.el#the-recipe-format
+;(package! another-package
+;  :recipe (:host github :repo "username/repo"))
+
+;; If the package you are trying to install does not contain a PACKAGENAME.el
+;; file, or is located in a subdirectory of the repo, you'll need to specify
+;; `:files' in the `:recipe':
+;(package! this-package
+;  :recipe (:host github :repo "username/repo"
+;           :files ("some-file.el" "src/lisp/*.el")))
+
+;; If you'd like to disable a package included with Doom, you can do so here
+;; with the `:disable' property:
+;(package! builtin-package :disable t)
+
+;; You can override the recipe of a built in package without having to specify
+;; all the properties for `:recipe'. These will inherit the rest of its recipe
+;; from Doom or MELPA/ELPA/Emacsmirror:
+;(package! builtin-package :recipe (:nonrecursive t))
+;(package! builtin-package-2 :recipe (:repo "myfork/package"))
+
+;; Specify a `:branch' to install a package from a particular branch or tag.
+;; This is required for some packages whose default branch isn't 'master' (which
+;; our package manager can't deal with; see raxod502/straight.el#279)
+;(package! builtin-package :recipe (:branch "develop"))
+
+;; Use `:pin' to specify a particular commit to install.
+;(package! builtin-package :pin "1a2b3c4d5e")
+
+
+;; Doom's packages are pinned to a specific commit and updated from release to
+;; release. The `unpin!' macro allows you to unpin single packages...
+;(unpin! pinned-package)
+;; ...or multiple packages
+;(unpin! pinned-package another-pinned-package)
+;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
+;(unpin! t)
+#+end_src
+
 
 ** Extra configurations
 
