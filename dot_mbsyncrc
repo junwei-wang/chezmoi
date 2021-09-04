@@ -9,13 +9,12 @@
 IMAPAccount gmail-wakemecn
 # Address to connect to
 Host imap.gmail.com
-User wakemecn@gmail.com 
-#PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.emacs.d/mu4e/.mbsyncpass-wakemecn.gpg"
-PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mu4e/.mbsyncpass-wakemecn.gpg"
+User wakemecn@gmail.com
+PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.authinfo.gpg | awk '/machine imap.gmail.com login wakemecn/ {print $NF}'"
 AuthMechs LOGIN
 SSLType IMAPS
-SSLVersions SSLv3
-#CertificateFile /opt/local/share/curl/curl-ca-bundle.crt
+# SSLVersions SSLv3
+# CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 # THEN WE SPECIFY THE LOCAL AND REMOTE STORAGE
 # - THE REMOTE STORAGE IS WHERE WE GET THE MAIL FROM (E.G., THE
@@ -97,12 +96,11 @@ Channel gmail-wakemecn-starred
 IMAPAccount CRX
 # Address to connect to
 Host imap.gmail.com
-User junwei.wang@cryptoexperts.com 
-#PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.emacs.d/mu4e/.mbsyncpass-CRX.gpg"
-PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mu4e/.mbsyncpass-CRX.gpg"
+User junwei.wang@cryptoexperts.com
+PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.authinfo.gpg | awk '/machine imap.gmail.com login junwei.wang@cryptoexperts.com/ {print $NF}'"
 AuthMechs LOGIN
 SSLType IMAPS
-SSLVersions SSLv3
+#SSLVersions SSLv3
 #CertificateFile /opt/local/share/curl/curl-ca-bundle.crt
 
 # THEN WE SPECIFY THE LOCAL AND REMOTE STORAGE
@@ -176,3 +174,31 @@ Channel CRX-sent
 Channel CRX-trash
 Channel CRX-all
 Channel CRX-starred
+
+
+###################################################################
+# me@jwa.ng
+
+IMAPStore JWANG
+Host imap.mailbox.org
+User jwang@mailbox.org # alias
+PassCmd "echo ${PASSWORD:-$(gpg2 -q --for-your-eyes-only --no-tty -d ~/.authinfo.gpg | awk '/machine imap.mailbox.org login jwang/ {print $NF}')}"
+SSLType IMAPS
+SSLVersions TLSv1.3
+
+# # REMOTE STORAGE (USE THE IMAP ACCOUNT SPECIFIED ABOVE)
+# IMAPStore JWANG
+# Account CRX
+
+MaildirStore JWANG-local
+Path ~/.mbsync/JWA.NG/
+Inbox ~/.mbsync/JWA.NG/INBOX
+SubFolders Verbatim
+
+Channel mailbox
+Master :JWANG:
+Slave :JWANG-local:
+Patterns * !Archives
+Create Both
+Expunge Both
+SyncState *

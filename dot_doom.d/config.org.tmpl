@@ -1,14 +1,24 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2021-08-30 Mon 09:41]
+#+LAST_MODIFIED: [2021-09-04 Sat 17:19]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
 
-This liberate configuration for [[https://github.com/hlissner/doom-emacs][Doom Emacs]] is inspired by (aka. stolen from) [[https://tecosaur.github.io/emacs-config/config.html][tecosaur]].
+This is a liberate configuration for [[https://github.com/hlissner/doom-emacs][Doom Emacs]].
+
+* Emacs configurations from others
+
+** With Doom
+
+- [[https://tecosaur.github.io/emacs-config/config.html][tecosaur]]
+
+** Without Doom
 
 * Prerequisites
 
 ** Install necessary softwares
+
+*** For MacOS
 
 #+begin_src shell
 brew install tidy-html5   # format html
@@ -16,7 +26,14 @@ brew install clang-format # format c/cpp
 brew install stfmt        # format shell
 #+end_src
 
+*** For Arch Linux
+
+#+begin_src shell
+yay -S mu mbsync-git     # for mu4e
+#+end_src
+
 ** Refresh environment
+
 #+begin_src shell
 doom env refresh
 #+end_src
@@ -32,6 +49,7 @@ doom env refresh
 #+begin_src bash
 cmake -DCMAKE_INSTALL_PREFIX\=/Users/junwei/.emacs.d/.local/etc/irony-server/ -DLIBCLANG_LIBRARY\=/usr/local/opt/llvm/lib/libclang.dylib -DLIBCLANG_INCLUDE_DIR\=/usr/local/opt/llvm/include /Users/junwei/.emacs.d/.local/straight/build-27.1/irony/server && cmake --build . --use-stderr --config Release --target install
 #+end_src
+
 
 * Rudimentary configuration
 :LOGBOOK:
@@ -157,26 +175,25 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
 (setq show-trailing-whitespace 1)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-;;;;;;;;;;;;; spelling
 ;; overwriting the value set by doom
-{{ if (eq .chezmoi.hostname "neo") -}}
 (setq
-{{- else -}}
-(setq ;; ispell-dictionary "en_US"
+ ;;  spelling
+{{- if not (eq .chezmoi.hostname "neo") -}}
+ ispell-dictionary "en_US"
 {{ end }}
-      ispell-personal-dictionary "~/.aspell.en.pws")
+ ispell-personal-dictionary "~/.aspell.en.pws"
 
-;;;;;;;;;;; neotree
-(setq neo-hidden-regexp-list '("^\\." "\\.cs\\.meta$"
-                               ;; Python
-                               "\\.pyc$" "__pycache__" "\\.egg-info"
-                               "~$" "^#.*#$" "\\.elc$"
-                               ;; Latex
-                               "\\.aux$" "\\.synctex\\.gz$" "\\.fls$" "\\.tdo$" "\\.bbl$" "\\.blg$")
-      neo-window-fixed-size nil)
+ ;; neotree
+ neo-hidden-regexp-list '("^\\." "\\.cs\\.meta$"
+                          ;; Python
+                          "\\.pyc$" "__pycache__" "\\.egg-info"
+                          "~$" "^#.*#$" "\\.elc$"
+                          ;; Latex
+                          "\\.aux$" "\\.synctex\\.gz$" "\\.fls$" "\\.tdo$" "\\.bbl$" "\\.blg$")
+ neo-window-fixed-size nil
 
-;;;;;;;;;;;;;;; calendar
-(setq calendar-week-start-day 1)
+ ;; calendar
+ calendar-week-start-day 1)
 
 ;;;;;;;;;;;;;;; format
 (setq +format-on-save-enabled-modes
@@ -233,6 +250,7 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
 (setq org-directory "~/github/org/")
 (setq org-image-actual-width nil)
 
+;; add new link types
 (defun make-leetcode-link (leetcode-problem-name)
   (browse-url (concat "https://leetcode.com/problems/" leetcode-problem-name)))
 (defun make-leetcode-submission-link (leetcode-problem-name)
@@ -241,10 +259,7 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
   (browse-url (concat "https://leetcode.com/problems/" leetcode-problem-name "/solution/")))
 (defun make-eprint-link (eprint-id)
   (browse-url (concat "https://eprint.iacr.org/" eprint-id)))
-
-
 (after! org
-
   (org-add-link-type "leetcode" #'make-leetcode-link)
   (org-add-link-type "leetcode-submission" #'make-leetcode-submission-link)
   (org-add-link-type "eprint" #'make-eprint-link))
@@ -266,11 +281,11 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
                                        time-stamp-format "\[%Y-%02m-%02d %3a %02H:%02M\]")
                            (add-hook 'before-save-hook 'time-stamp nil 'local)))
 
-(setq org-blank-before-new-entry (quote ((heading) (plain-list-item))))
-(setq org-enforce-todo-dependencies t)
-(setq org-log-done (quote time))
-(setq org-log-redeadline (quote time))
-(setq org-log-reschedule (quote time))
+(setq org-blank-before-new-entry (quote ((heading) (plain-list-item)))
+      org-enforce-todo-dependencies t
+      org-log-done (quote time)
+      org-log-redeadline (quote time)
+      org-log-reschedule (quote time))
 #+end_src
 
 *** Agenda
@@ -472,8 +487,27 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 
 ** Email
 
+
+Create folder for ~mbsync~
+#+begin_src shell
+mkdir ~/.mbsync && cd .mbsync
+mkdir gmail-wakemecn && mkdir CRX && mkdir JWA.NG
+mbsync -a
+#+end_src
+Then index them by
+#+begin_src shell
+mu init --maildir=~/.mbsync \
+    --my-address=junwei.wang@cryptoexperts.com \
+    --my-address=wakemecn@gmail.com \
+    --my-address=me@jwa.ng
+mu index
+#+end_src
+
 #+begin_src emacs-lisp
 ;;;;;;;;; MU4E
+{{ if (eq .chezmoi.hostname "neo") -}}
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+{{ end }}
 (setq mu4e-maildir (expand-file-name "~/.mbsync"))
 (setq +mu4e-mu4e-mail-path (expand-file-name "~/.mbsync"))
 
@@ -585,7 +619,39 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
                                               ("/gmail-wakemecn/drafts"    . ?d)
                                               ))))
          (make-mu4e-context
-          :name "CRX" ;; for CRX mail
+          :name "ME" ;; for me@jwa.ng
+          :enter-func (lambda () (mu4e-message "Entering context [ME]"))
+          :leave-func (lambda () (mu4e-message "Leaving context [ME]"))
+          :match-func (lambda (msg)
+                        (when msg
+                          (mu4e-message-contact-field-matches
+                           msg '(:from :to :cc :bcc) "me@jwa.ng")))
+          :vars '((user-mail-address . "me@jwa.ng")
+                  (user-full-name . "Junwei Wang")
+                  (mu4e-sent-folder . "/JWA.NG/Sent Mail")
+                  (mu4e-drafts-folder . "/JWA.NG/drafts")
+                  (mu4e-trash-folder . "/JWA.NG/Trash")
+                  (mu4e-compose-signature . (concat "Formal Signature\n" "Emacs 27.1, org-mode 10, mu4e 1.4\n"))
+                  (mu4e-compose-format-flowed . t)
+                  (smtpmail-queue-dir . "~/.maildir/JWA.NG/queue/cur")
+                  (message-send-mail-function . smtpmail-send-it)
+                  (smtpmail-smtp-user . "jwang@mailbox.org")
+                  (smtpmail-starttls-credentials . (("smtp.mailbox.org" 587 nil nil)))
+                  (smtpmail-auth-credentials . (expand-file-name "~/.authinfo.gpg"))
+                  (smtpmail-default-smtp-server . "smtp.mailbox.org")
+                  (smtpmail-smtp-server . "smtp.mailbox.org")
+                  (smtpmail-smtp-service . 587)
+                  (smtpmail-debug-info . t)
+                  (smtpmail-debug-verbose . t)
+                  (mu4e-maildir-shortcuts . ( ("/JWA.NG/INBOX"     . ?i)
+                                              ("/JWA.NG/Sent Mail" . ?s)
+                                              ("/JWA.NG/Trash"     . ?t)
+                                              ("/JWA.NG/All Mail"  . ?a)
+                                              ("/JWA.NG/Starred"   . ?r)
+                                              ("/JWA.NG/drafts"    . ?d)
+                                              ))))
+         (make-mu4e-context
+          :name "work" ;; for CRX mail
           :enter-func (lambda () (mu4e-message "Entering context [CRX]"))
           :leave-func (lambda () (mu4e-message "Leaving context [CRX]"))
           :match-func (lambda (msg)
