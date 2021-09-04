@@ -41,7 +41,6 @@ LICENSE
 
 ##### Security #####
 .aws
-.authinfo.gpg
 .borg-passphrase
 .gnupg
 .ssh/cache-*
