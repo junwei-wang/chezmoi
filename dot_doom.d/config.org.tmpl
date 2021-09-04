@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2021-09-04 Sat 17:19]
+#+LAST_MODIFIED: [2021-09-04 Sat 19:08]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -10,7 +10,11 @@ This is a liberate configuration for [[https://github.com/hlissner/doom-emacs][D
 
 ** With Doom
 
-- [[https://tecosaur.github.io/emacs-config/config.html][tecosaur]]
+*** [#A] [[https://tecosaur.github.io/emacs-config/config.html][tecosaur]]
+*** [[https://www.cheng92.com/emacs/doom-emacs-with-org/][若叶知秋]]
+*** [[https://github.com/zzamboni/dot-doom/blob/master/doom.org][zzamboni/dot-doom]]
+*** [[http://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua]]
+*** [[https://www.gtrun.org/custom/config.html][GuangTao]]
 
 ** Without Doom
 
@@ -76,6 +80,11 @@ It's useful to have some basic personal information
 
 Apparently this is used by ~GPG~, and all sorts of other things.
 
+#+begin_src emacs-lisp
+(setq auth-sources '("~/.authinfo.gpg")
+      auth-source-cache-expiry 14400)             ; default is 7200 (2h)
+#+end_src
+
 ** Appearance
 :LOGBOOK:
 CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
@@ -100,13 +109,57 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
 (setq doom-font (font-spec :family "JetBrains Mono" :size 18 :weight 'semi-light)
-      doom-variable-pitch-font (font-spec :family "Overpass" :size 19)
       doom-big-font (font-spec :family "JetBrains Mono" :size 23 :weight 'semi-light)
+      doom-variable-pitch-font (font-spec :family "Overpass" :size 19)
+      doom-unicode-font (font-spec :family "JuliaMono" :size 24)
       doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
 (custom-set-faces!
   '(font-lock-comment-face :slant italic)
   '(font-lock-keyword-face :weight bold))
+#+end_src
 
+Whenever fonts are missing, after Doom's UI has initialized, a warning
+listing the missing fonts should appear for at least half a second.
+
+#+name: detect-missing-fonts
+#+begin_src emacs-lisp :tangle no
+(defvar required-fonts '("JetBrainsMono.*" "Overpass" "JuliaMono" "IBM Plex Mono" "Merriweather" "Alegreya"))
+
+(defvar available-fonts
+  (delete-dups (or (font-family-list)
+                   (split-string (shell-command-to-string "fc-list : family")
+                                 "[,\n]"))))
+
+(defvar missing-fonts
+  (delq nil (mapcar
+             (lambda (font)
+               (unless (delq nil (mapcar (lambda (f)
+                                           (string-match-p (format "^%s$" font) f))
+                                         available-fonts))
+                 font))
+             required-fonts)))
+
+(if missing-fonts
+    (pp-to-string
+     `(unless noninteractive
+        (add-hook! 'doom-init-ui-hook
+          (run-at-time nil nil
+                       (lambda ()
+                         (message "%s missing the following fonts: %s"
+                                  (propertize "Warning!" 'face '(bold warning))
+                                  (mapconcat (lambda (font)
+                                               (propertize font 'face 'font-lock-variable-name-face))
+                                             ',missing-fonts
+                                             ", "))
+                         (sleep-for 0.5))))))
+  ";; No missing fonts detected")
+#+end_src
+
+#+begin_src emacs-lisp :noweb no-export
+<<detect-missing-fonts()>>
+#+end_src
+
+#+begin_src emacs-lisp
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
@@ -156,7 +209,10 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
               tab-width 4                         ; Set width for tabs
               uniquify-buffer-name-style 'forward ; Uniquify buffer names
               window-combination-resize t         ; take new window space from all other windows (not just current)
-              x-stretch-cursor t)                 ; Stretch cursor to the glyph width
+              x-stretch-cursor t                  ; Stretch cursor to the glyph width
+              password-cache-expiry 3600          ; I can trust my computers ... can't I?
+              scroll-margin 2                     ; It's nice to maintain a little margin
+              )
 
 (setq undo-limit 80000000                         ; Raise undo-limit to 80Mb
       evil-want-fine-undo t                       ; By default while in insert all changes are one big blob. Be more granular
@@ -164,10 +220,8 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
       inhibit-compacting-font-caches t            ; When there are lots of glyphs, keep them in memory
       truncate-string-ellipsis "…")               ; Unicode ellispis are nicer than "...", and also save /precious/ space
 
-(delete-selection-mode 1)                         ; Replace selection when inserting text
 (display-time-mode 1)                             ; Enable time in the mode-line
-(unless (equal "Battery status not available"
-               (battery))
+(unless (string-match-p "^Power N/A" (battery))
   (display-battery-mode 1))                       ; On laptops it's nice to know how much power you have
 (global-subword-mode 1)                           ; Iterate through CamelCase words
 
@@ -508,33 +562,39 @@ mu index
 {{ if (eq .chezmoi.hostname "neo") -}}
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
 {{ end }}
-(setq mu4e-maildir (expand-file-name "~/.mbsync"))
-(setq +mu4e-mu4e-mail-path (expand-file-name "~/.mbsync"))
 
 (after! mu4e
   ;; get mail
   (setq
+   mu4e-maildir (expand-file-name "~/.mbsync")
+   +mu4e-mu4e-mail-path (expand-file-name "~/.mbsync")
    ;; mu4e-get-mail-command "mbsync -c ~/.mbsyncrc -a"
    ;; mu4e-html2text-command "w3m -T text/html" ;;using the default mu4e-shr2text
+
    mu4e-view-prefer-html t
    mu4e-update-interval 180
    mu4e-headers-auto-update t
+
    ;; mu4e-compose-signature-auto-include nil
-   mu4e-compose-format-flowed t)
-  (add-to-list 'mu4e-view-actions
-               '("ViewInBrowser" . mu4e-action-view-in-browser) t))
-;; enable inline images
-(setq mu4e-view-show-images t)
+   mu4e-compose-format-flowed t
+   mu4e-compose-in-new-frame t             ;; every new email composition gets its own frame!
+   mu4e-view-show-images t                 ;; enable inline images
+   org-mu4e-convert-to-html t              ;; convert org mode to HTML automatically
+
+   mu4e-change-filenames-when-moving t     ;; avoid mail syncing issue when using mbsync
+   mu4e-sent-messages-behavior 'delete     ;; don't save message to Sent Messages, IMAP takes care of this
+
+   ;; mu4e-context
+   mu4e-context-policy 'pick-first
+   mu4e-compose-context-policy 'always-ask
+  )
+
+(add-to-list 'mu4e-view-actions
+             '("ViewInBrowser" . mu4e-action-view-in-browser) t))
+
 ;; use imagemagick, if available
 (when (fboundp 'imagemagick-register-types)
   (imagemagick-register-types))
-
-
-;; every new email composition gets its own frame!
-(setq mu4e-compose-in-new-frame t)
-
-;; don't save message to Sent Messages, IMAP takes care of this
-(setq mu4e-sent-messages-behavior 'delete)
 
 (add-hook 'mu4e-view-mode-hook #'visual-line-mode)
 
@@ -546,25 +606,6 @@ mu index
             (local-set-key (kbd "<tab>") 'shr-next-link)
             (local-set-key (kbd "<backtab>") 'shr-previous-link)))
 
-;; (set-email-account! "gmail-wakemecn"
-;;                     '((mu4e-sent-folder       . "/gmail-wakemecn/Sent Mail")
-;;                       (mu4e-drafts-folder     . "/gmail-wakemecn/Drafts")
-;;                       (mu4e-trash-folder      . "/gmail-wakemecn/Trash")
-;;                       (mu4e-refile-folder     . "/gmail-wakemecn/All Mail")
-;;                       (smtpmail-smtp-user     . "wakemecn@gmail.com")
-;;                       (mu4e-compose-signature . "\n\nBest regards,\nJunwei Wang"))
-;;                     t)
-
-;; (set-email-account! "CRX"
-;;                     '((mu4e-sent-folder       . "/CRX/Sent Mail")
-;;                       (mu4e-drafts-folder     . "/CRX/Drafts")
-;;                       (mu4e-trash-folder      . "/CRX/Trash")
-;;                       (mu4e-refile-folder     . "/CRX/All Mail")
-;;                       (smtpmail-smtp-user     . "junwei.wang@cryptoexperts.com")
-;;                       (mu4e-compose-signature . "\n\nBest regards,\nJunwei Wang"))
-;;                     nil)
-;; convert org mode to HTML automatically
-(setq org-mu4e-convert-to-html t)
 
 ;;from vxlabs config
 ;; show full addresses in view message (instead of just names)
@@ -574,9 +615,6 @@ mu index
 ;; don't ask when quitting
 (setq mu4e-confirm-quit nil)
 
-;; mu4e-context
-(setq mu4e-context-policy 'pick-first)
-(setq mu4e-compose-context-policy 'always-ask)
 
 ;;set up queue for offline email
 ;;use mu mkdir  ~/.maildir/$ACCOUNT/queue to set up first
@@ -587,7 +625,39 @@ mu index
   (setq mu4e-contexts
         (list
          (make-mu4e-context
-          :name "wakemecn" ;;for gmail-wakemecn
+          :name "CRX" ;; for CRX mail
+          :enter-func (lambda () (mu4e-message "Entering context [CRX]"))
+          :leave-func (lambda () (mu4e-message "Leaving context [CRX]"))
+          :match-func (lambda (msg)
+                        (when msg
+                          (mu4e-message-contact-field-matches
+                           msg '(:from :to :cc :bcc) "junwei.wang@cryptoexperts.com")))
+          :vars '((user-mail-address . "junwei.wang@cryptoexperts.com")
+                  (user-full-name . "Junwei Wang")
+                  (mu4e-sent-folder . "/CRX/Sent Mail")
+                  (mu4e-drafts-folder . "/CRX/drafts")
+                  (mu4e-trash-folder . "/CRX/Trash")
+                  (mu4e-compose-signature . (concat "Informal Signature\n" "Emacs is awesome!\n"))
+                  (mu4e-compose-format-flowed . t)
+                  (smtpmail-queue-dir . "~/.maildir/CRX/queue/cur")
+                  (message-send-mail-function . smtpmail-send-it)
+                  (smtpmail-smtp-user . "junwei.wang@cryptoexperts.com")
+                  (smtpmail-starttls-credentials . (("smtp.gmail.com" 587 nil nil)))
+                  (smtpmail-auth-credentials . (expand-file-name "~/.authinfo.gpg"))
+                  (smtpmail-default-smtp-server . "smtp.gmail.com")
+                  (smtpmail-smtp-server . "smtp.gmail.com")
+                  (smtpmail-smtp-service . 587)
+                  (smtpmail-debug-info . t)
+                  (smtpmail-debug-verbose . t)
+                  (mu4e-maildir-shortcuts . ( ("/CRX/INBOX"     . ?i)
+                                              ("/CRX/Sent Mail" . ?s)
+                                              ("/CRX/Trash"     . ?t)
+                                              ("/CRX/All Mail"  . ?a)
+                                              ("/CRX/Starred"   . ?r)
+                                              ("/CRX/drafts"    . ?d)
+                                              ))))
+         (make-mu4e-context
+          :name "WAKEMECN" ;;for gmail-wakemecn
           :enter-func (lambda () (mu4e-message "Entering context [wakemecn]"))
           :leave-func (lambda () (mu4e-message "Leaving context [wakemecn]"))
           :match-func (lambda (msg)
@@ -650,38 +720,7 @@ mu index
                                               ("/JWA.NG/Starred"   . ?r)
                                               ("/JWA.NG/drafts"    . ?d)
                                               ))))
-         (make-mu4e-context
-          :name "work" ;; for CRX mail
-          :enter-func (lambda () (mu4e-message "Entering context [CRX]"))
-          :leave-func (lambda () (mu4e-message "Leaving context [CRX]"))
-          :match-func (lambda (msg)
-                        (when msg
-                          (mu4e-message-contact-field-matches
-                           msg '(:from :to :cc :bcc) "junwei.wang@cryptoexperts.com")))
-          :vars '((user-mail-address . "junwei.wang@cryptoexperts.com")
-                  (user-full-name . "Junwei Wang")
-                  (mu4e-sent-folder . "/CRX/Sent Mail")
-                  (mu4e-drafts-folder . "/CRX/drafts")
-                  (mu4e-trash-folder . "/CRX/Trash")
-                  (mu4e-compose-signature . (concat "Informal Signature\n" "Emacs is awesome!\n"))
-                  (mu4e-compose-format-flowed . t)
-                  (smtpmail-queue-dir . "~/.maildir/CRX/queue/cur")
-                  (message-send-mail-function . smtpmail-send-it)
-                  (smtpmail-smtp-user . "junwei.wang@cryptoexperts.com")
-                  (smtpmail-starttls-credentials . (("smtp.gmail.com" 587 nil nil)))
-                  (smtpmail-auth-credentials . (expand-file-name "~/.authinfo.gpg"))
-                  (smtpmail-default-smtp-server . "smtp.gmail.com")
-                  (smtpmail-smtp-server . "smtp.gmail.com")
-                  (smtpmail-smtp-service . 587)
-                  (smtpmail-debug-info . t)
-                  (smtpmail-debug-verbose . t)
-                  (mu4e-maildir-shortcuts . ( ("/CRX/INBOX"     . ?i)
-                                              ("/CRX/Sent Mail" . ?s)
-                                              ("/CRX/Trash"     . ?t)
-                                              ("/CRX/All Mail"  . ?a)
-                                              ("/CRX/Starred"   . ?r)
-                                              ("/CRX/drafts"    . ?d)
-                                              )))))))
+         )))
 #+end_src
 
 
@@ -761,10 +800,13 @@ chinese
 
 #+name: doom-completion
 #+begin_src emacs-lisp
-company             ; the ultimate code completion backend
+(company             ; the ultimate code completion backend
+ ;; +childframe
+ )
 ;;helm              ; the *other* search engine for love and life
 ;;ido               ; the other *other* search engine...
 ivy                 ; a search engine for love and life
+(vertico +icons)    ; the search engine of the future
 #+end_src
 
 #+name: doom-ui
@@ -789,9 +831,11 @@ ophints             ; highlight the region an operation acts on
 unicode             ; extended unicode support for various languages
 vc-gutter           ; vcs diff in the fringe
 vi-tilde-fringe     ; fringe tildes to mark beyond EOB
+(window-select      ; visually switch windows
+ +numbers)
 ;;window-select     ; visually switch windows
 workspaces          ; tab emulation, persistence & separate workspaces
-;;zen               ; distraction-free coding or writing
+zen                 ; distraction-free coding or writing
 #+end_src
 
 #+name: doom-editor
@@ -802,10 +846,10 @@ fold                ; (nigh) universal code folding
 (format +onsave)    ; automated prettiness
 ;;god               ; run Emacs commands without modifier keys
 ;;lispy             ; vim for lisp, for people who don't like vim
-;;multiple-cursors  ; editing in many places at once
+multiple-cursors    ; editing in many places at once
 ;;objed             ; text object editing for the innocent
 ;;parinfer          ; turn lisp into python, sort of
-;;rotate-text       ; cycle region at point between text candidates
+rotate-text         ; cycle region at point between text candidates
 snippets            ; my elves. They type so I don't have to
 ;;word-wrap         ; soft wrapping with language-aware indent
 #+end_src
@@ -815,7 +859,7 @@ snippets            ; my elves. They type so I don't have to
 (dired +icons)      ; making dired pretty [functional]
 electric            ; smarter, keyword-based electric-indent
 (ibuffer +icons)    ; interactive buffer management
-undo                ; persistent, smarter undo for your inevitable mistakes
+(undo +tree)        ; persistent, smarter undo for your inevitable mistakes
 vc                  ; version-control and Emacs, sitting in a tree
 #+end_src
 
@@ -855,11 +899,11 @@ make                ; run make tasks from Emacs
 pass                ; password manager for nerds
 pdf                 ; pdf enhancements
 ;;prodigy           ; FIXME managing external services & code builders
-;;rgb               ; creating color strings
+rgb               ; creating color strings
 ;;taskrunner        ; taskrunner for all your projects
 ;;terraform         ; infrastructure as code
 ;;tmux              ; an API for interacting with tmux
-;;upload            ; map local to remote projects via ssh/ftp
+upload            ; map local to remote projects via ssh/ftp
 #+end_src
 
 #+name: doom-os
@@ -890,15 +934,15 @@ emacs-lisp          ; drown in parentheses
 ;;fsharp            ; ML stands for Microsoft's Language
 ;;fstar             ; (dependent) types and (monadic) effects and Z3
 ;;gdscript          ; the language you waited for
-(go +lsp)           ; the hipster dialect
-(haskell +dante)    ; a language that's lazier than I am
+;;(go +lsp)         ; the hipster dialect
+;;(haskell +dante)  ; a language that's lazier than I am
 ;;hy                ; readability of scheme w/ speed of python
 ;;idris             ; a language you can depend on
 json                ; At least it ain't XML
 ;;(java +meghanada) ; the poster child for carpal tunnel syndrome
 javascript          ; all(hope(abandon(ye(who(enter(here))))))
 ;;julia             ; a better, faster MATLAB
-kotlin              ; a better, slicker Java(Script)
+;;kotlin            ; a better, slicker Java(Script)
 latex               ; writing papers in Emacs has never been so fun
 ;;lean              ; for folks with too much to prove
 ;;ledger            ; an accounting system in Emacs
@@ -908,7 +952,9 @@ markdown            ; writing docs for people to ignore
 ;;nix               ; I hereby declare "nix geht mehr!"
 ;;ocaml             ; an objective camel
 (org                ; organize your plain life in plain text
+ +dragndrop
  +gnuplot
+ +jupyter
  +noter
  +pomodoro
  +present
@@ -919,7 +965,8 @@ plantuml            ; diagrams for confusing people more
 ;;purescript        ; javascript, but functional
 (python             ; beautiful is better than ugly
  +lsp
- +pyenv)
+ +pyenv
+ +pyright)
 ;;qt                ; the 'cutest' gui framework ever
 ;;racket            ; a DSL for DSLs
 ;;raku              ; the artist formerly known as perl6
