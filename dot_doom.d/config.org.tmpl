@@ -436,8 +436,8 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 (setq orb-preformat-keywords '("year" "citekey" "title" "author" "file"))
 (setq org-roam-capture-templates
       '(("d" "default" plain "%?"
-         :if-new (file+head "${slug}.org"
-                            "#+TITLE: ${title}\n#+CREATED: %U\n#+LAST_MODIFIED: %U\n#+filetags: ${tags}\n\n")
+         :target (file+head "${slug}.org"
+                            "#+TITLE: ${title}\n#+CREATED: %U\n#+LAST_MODIFIED: %U\n#+FILETAGS: ${filetags}\n\n")
          :unnarrowed t)
         ("l" "LeetCode" plain
          (function org-roam-capture--get-point)
