@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2021-09-04 Sat 19:08]
+#+LAST_MODIFIED: [2021-09-07 Tue 13:12]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -9,13 +9,11 @@ This is a liberate configuration for [[https://github.com/hlissner/doom-emacs][D
 * Emacs configurations from others
 
 ** With Doom
-
 *** [#A] [[https://tecosaur.github.io/emacs-config/config.html][tecosaur]]
 *** [[https://www.cheng92.com/emacs/doom-emacs-with-org/][若叶知秋]]
 *** [[https://github.com/zzamboni/dot-doom/blob/master/doom.org][zzamboni/dot-doom]]
 *** [[http://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua]]
 *** [[https://www.gtrun.org/custom/config.html][GuangTao]]
-
 ** Without Doom
 
 * Prerequisites
@@ -108,11 +106,19 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
+{{ if (eq .chezmoi.hostname "neo") -}}
+(setq doom-font (font-spec :family "JetBrains Mono" :size 19 :weight 'semi-light)
+      doom-big-font (font-spec :family "JetBrains Mono" :size 24 :weight 'semi-light)
+      doom-variable-pitch-font (font-spec :family "Overpass" :size 20)
+      doom-unicode-font (font-spec :family "JuliaMono" :size 24)
+      doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
+{{ else  }}
 (setq doom-font (font-spec :family "JetBrains Mono" :size 18 :weight 'semi-light)
       doom-big-font (font-spec :family "JetBrains Mono" :size 23 :weight 'semi-light)
       doom-variable-pitch-font (font-spec :family "Overpass" :size 19)
       doom-unicode-font (font-spec :family "JuliaMono" :size 24)
       doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
+{{ end -}}
 (custom-set-faces!
   '(font-lock-comment-face :slant italic)
   '(font-lock-keyword-face :weight bold))
@@ -123,7 +129,7 @@ listing the missing fonts should appear for at least half a second.
 
 #+name: detect-missing-fonts
 #+begin_src emacs-lisp :tangle no
-(defvar required-fonts '("JetBrainsMono.*" "Overpass" "JuliaMono" "IBM Plex Mono" "Merriweather" "Alegreya"))
+(defvar required-fonts '("JetBrains Mono.*" "Overpass" "JuliaMono" "IBM Plex Mono" "Merriweather" "Alegreya"))
 
 (defvar available-fonts
   (delete-dups (or (font-family-list)
@@ -168,15 +174,6 @@ listing the missing fonts should appear for at least half a second.
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
-
-;;;;;;;;;; beacon
-(beacon-mode 1)
-(setq beacon-color "#bf616a"
-      beacon-size 80
-      beacon-blink-delay 0.5
-      beacon-blink-duration 0.5
-      beacon-blink-when-focused t
-      beacon-blink-when-point-moves-vertically t)
 #+end_src
 
 ** Others
@@ -212,6 +209,7 @@ listing the missing fonts should appear for at least half a second.
               x-stretch-cursor t                  ; Stretch cursor to the glyph width
               password-cache-expiry 3600          ; I can trust my computers ... can't I?
               scroll-margin 2                     ; It's nice to maintain a little margin
+              show-trailing-whitespace 1
               )
 
 (setq undo-limit 80000000                         ; Raise undo-limit to 80Mb
@@ -226,7 +224,6 @@ listing the missing fonts should appear for at least half a second.
 (global-subword-mode 1)                           ; Iterate through CamelCase words
 
 ;; editing
-(setq show-trailing-whitespace 1)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; overwriting the value set by doom
@@ -301,8 +298,14 @@ listing the missing fonts should appear for at least half a second.
 
 #+begin_src emacs-lisp
 ;;;;;;;;;; Orgmode
-(setq org-directory "~/github/org/")
-(setq org-image-actual-width nil)
+(setq org-directory "~/github/org/"
+
+      org-enforce-todo-dependencies t
+      org-log-done (quote time)
+      org-log-redeadline (quote time)
+      org-log-reschedule (quote time)
+
+      org-image-actual-width nil)
 
 ;; add new link types
 (defun make-leetcode-link (leetcode-problem-name)
@@ -328,46 +331,42 @@ listing the missing fonts should appear for at least half a second.
 ;;               time-stamp-format "\[%Y-%02m-%02d %3a %02H:%02M\]")
 ;;   (add-hook 'before-save-hook 'time-stamp))
 
-(add-hook 'org-mode-hook (lambda ()
-                           (setq-local time-stamp-active t
-                                       time-stamp-start "#\\+LAST_MODIFIED:[ \t]*"
-                                       time-stamp-end "$"
-                                       time-stamp-format "\[%Y-%02m-%02d %3a %02H:%02M\]")
-                           (add-hook 'before-save-hook 'time-stamp nil 'local)))
-
-(setq org-blank-before-new-entry (quote ((heading) (plain-list-item)))
-      org-enforce-todo-dependencies t
-      org-log-done (quote time)
-      org-log-redeadline (quote time)
-      org-log-reschedule (quote time))
+(add-hook! org-mode
+  (defun update-modification-time ()
+    (setq-local time-stamp-active t
+                time-stamp-start "#\\+LAST_MODIFIED:[ \t]*"
+                time-stamp-end "$"
+                time-stamp-format "\[%Y-%02m-%02d %3a %02H:%02M\]")
+    (add-hook 'before-save-hook 'time-stamp nil 'local)))
 #+end_src
 
 *** Agenda
 
 #+begin_src emacs-lisp
-(setq org-agenda-files (list "~/github/org"
-                             "~/github/org/roam/daily"
-                             "~/github/org/roam/to_handle_over.org"))
-(setq org-agenda-custom-commands
-      '(("B" "Biweekly Team Meeting"
-         ((agenda "" ((org-agenda-span 14)
-                      (org-agenda-start-day "-13d"))))
-         ((org-agenda-compact-blocks t))) ;; options set here apply to the entire block
-        ("d" "today's agenda"
-         ((agenda "" ((org-agenda-span 1)
-                      (org-agenda-start-day "0d"))))
-         ((org-agenda-compact-blocks t)))
-        ("c" "Simple agenda view"
-         ((tags "PRIORITY=\"A\""
-                ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo '("DONE")))
-                 (org-agenda-overriding-header "High-priority unfinished tasks:")))
-          (agenda "")
-          (alltodo ""
-                   ((org-agenda-skip-function
-                     '(or (jwang-org-skip-subtree-if-priority ?A)
-                          ;; (org-agenda-skip-if nil '(scheduled deadline))
-                          ))))
-          ))))
+(setq
+ org-agenda-files (list "~/github/org"
+                        "~/github/org/roam/daily"
+                        "~/github/org/roam/to_handle_over.org")
+ org-agenda-custom-commands
+ '(("B" "Biweekly Team Meeting"
+    ((agenda "" ((org-agenda-span 14)
+                 (org-agenda-start-day "-13d"))))
+    ((org-agenda-compact-blocks t))) ;; options set here apply to the entire block
+   ("d" "today's agenda"
+    ((agenda "" ((org-agenda-span 1)
+                 (org-agenda-start-day "0d"))))
+    ((org-agenda-compact-blocks t)))
+   ("c" "Simple agenda view"
+    ((tags "PRIORITY=\"A\""
+           ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo '("DONE")))
+            (org-agenda-overriding-header "High-priority unfinished tasks:")))
+     (agenda "")
+     (alltodo ""
+              ((org-agenda-skip-function
+                '(or (jwang-org-skip-subtree-if-priority ?A)
+                     ;; (org-agenda-skip-if nil '(scheduled deadline))
+                     ))))
+     ))))
 
 (defun jwang-org-skip-subtree-if-habit ()
   "Skip an agenda entry if it has a STYLE property equal to \"habit\"."
@@ -405,8 +404,14 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 
 #+begin_src emacs-lisp
 ;;;;;;;;;; Org-Roam v2
-(setq org-roam-v2-ack t)
-(setq org-roam-directory (file-truename "~/github/org/roam"))
+(setq org-roam-v2-ack t
+      org-roam-directory (file-truename "~/github/org/roam")
+
+      org-roam-dailies-capture-templates
+      '(("d" "default" entry "* %<%I:%M %p>: %?"
+         :target (file+head "%<%Y-%m-%d>.org"
+                            "#+title: %<%Y-%m-%d>\n")))
+      )
 
 (use-package! org-roam-ui
   :after org-roam ;; or :after org
@@ -564,33 +569,50 @@ mu index
 {{ end }}
 
 (after! mu4e
-  ;; get mail
   (setq
+   ;; basic
    mu4e-maildir (expand-file-name "~/.mbsync")
    +mu4e-mu4e-mail-path (expand-file-name "~/.mbsync")
    ;; mu4e-get-mail-command "mbsync -c ~/.mbsyncrc -a"
-   ;; mu4e-html2text-command "w3m -T text/html" ;;using the default mu4e-shr2text
-
-   mu4e-view-prefer-html t
    mu4e-update-interval 180
-   mu4e-headers-auto-update t
 
+
+   ;; view
+   mu4e-view-prefer-html t
+   mu4e-headers-auto-update t
+   mu4e-view-show-images t                 ;; enable inline images
+   mu4e-view-show-addresses 't             ;; show full addresses in view message (instead of just names)
+                                           ;; toggle per name with M-RET
+
+   mu4e-headers-fields '((:account-stripe . 1)
+                         (:human-date     . 12)
+                         (:flags          . 6)
+                         (:from-or-to     . 22)
+                         (:subject        . nil) ;; alternatively, use :thread-subject
+                        )
+
+
+   ;; compose
+   ;; mu4e-html2text-command "w3m -T text/html" ;;using the default mu4e-shr2text
    ;; mu4e-compose-signature-auto-include nil
    mu4e-compose-format-flowed t
    mu4e-compose-in-new-frame t             ;; every new email composition gets its own frame!
-   mu4e-view-show-images t                 ;; enable inline images
    org-mu4e-convert-to-html t              ;; convert org mode to HTML automatically
+   mu4e-sent-messages-behavior 'delete     ;; don't save message to Sent Messages, IMAP takes care of this
 
+   ;; move
    mu4e-change-filenames-when-moving t     ;; avoid mail syncing issue when using mbsync
    mu4e-sent-messages-behavior 'delete     ;; don't save message to Sent Messages, IMAP takes care of this
 
    ;; mu4e-context
    mu4e-context-policy 'pick-first
    mu4e-compose-context-policy 'always-ask
-  )
 
-(add-to-list 'mu4e-view-actions
-             '("ViewInBrowser" . mu4e-action-view-in-browser) t))
+   mu4e-confirm-quit nil                   ;; don't ask when quitting
+   )
+
+  (add-to-list 'mu4e-view-actions
+               '("ViewInBrowser" . mu4e-action-view-in-browser) t))
 
 ;; use imagemagick, if available
 (when (fboundp 'imagemagick-register-types)
@@ -607,13 +629,6 @@ mu index
             (local-set-key (kbd "<backtab>") 'shr-previous-link)))
 
 
-;;from vxlabs config
-;; show full addresses in view message (instead of just names)
-;; toggle per name with M-RET
-(setq mu4e-view-show-addresses 't)
-
-;; don't ask when quitting
-(setq mu4e-confirm-quit nil)
 
 
 ;;set up queue for offline email
@@ -892,7 +907,9 @@ editorconfig        ; let someone else argue about tabs vs spaces
 ;;ein               ; tame Jupyter notebooks with emacs
 (eval +overlay)     ; run code, run (also, repls)
 ;;gist              ; interacting with github gists
-lookup              ; navigate your code and its documentation
+(lookup             ; navigate your code and its documentation
+ +dictionary        ; enable word definition and thesaurus lookup functionality
+ +docsets)          ; enable integration with Dash.app docsets
 lsp
 magit               ; a git porcelain for Emacs
 make                ; run make tasks from Emacs
@@ -1019,9 +1036,6 @@ yaml                ; JSON, but readable
 
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
 ;(package! some-package)
-
-;;;; UI
-(package! beacon)
 
 ;;;; Python
 (package! py-autopep8)

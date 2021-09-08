@@ -100,7 +100,9 @@
        ;;ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)     ; run code, run (also, repls)
        ;;gist              ; interacting with github gists
-       lookup              ; navigate your code and its documentation
+       (lookup             ; navigate your code and its documentation
+        +dictionary        ; enable word definition and thesaurus lookup functionality
+        +docsets)          ; enable integration with Dash.app docsets
        lsp
        magit               ; a git porcelain for Emacs
        make                ; run make tasks from Emacs
