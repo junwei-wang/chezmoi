@@ -758,10 +758,18 @@ To add google search of selected texts
       (counsel-search-action (buffer-substring start end))
     (counsel-search)))
 
+(defun jwang/search-org-heading ()
+  (interactive)
+  (if (string= mode-name "Org")
+      (counsel-search-action (org-get-heading t t t t))
+    (counsel-search)))
+
 (map! :leader
       (:prefix "s"
       :desc "Google selected or type"
-       "g" #'jwang/search-selected-or-type))
+       "g" #'jwang/search-selected-or-type
+      :desc "Google org heading"
+       "h" #'jwang/search-org-heading))
 #+end_src
 
 ** Doom configuration
