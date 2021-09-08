@@ -112,7 +112,7 @@ CLOCK: [2021-01-08 Fri 10:25]--[2021-01-08 Fri 10:50] =>  0:25
       doom-variable-pitch-font (font-spec :family "Overpass" :size 20)
       doom-unicode-font (font-spec :family "JuliaMono" :size 24)
       doom-serif-font (font-spec :family "IBM Plex Mono" :weight 'light))
-{{ else  }}
+{{ else -}}
 (setq doom-font (font-spec :family "JetBrains Mono" :size 18 :weight 'semi-light)
       doom-big-font (font-spec :family "JetBrains Mono" :size 23 :weight 'semi-light)
       doom-variable-pitch-font (font-spec :family "Overpass" :size 19)
@@ -229,7 +229,7 @@ listing the missing fonts should appear for at least half a second.
 ;; overwriting the value set by doom
 (setq
  ;;  spelling
-{{- if not (eq .chezmoi.hostname "neo") -}}
+{{- if not (eq .chezmoi.hostname "neo") }}
  ispell-dictionary "en_US"
 {{ end }}
  ispell-personal-dictionary "~/.aspell.en.pws"
@@ -558,7 +558,8 @@ Then index them by
 mu init --maildir=~/.mbsync \
     --my-address=junwei.wang@cryptoexperts.com \
     --my-address=wakemecn@gmail.com \
-    --my-address=me@jwa.ng
+    --my-address=me@jwa.ng \
+    --my-address=i.junwei.wang@gmail.com
 mu index
 #+end_src
 
@@ -566,7 +567,7 @@ mu index
 ;;;;;;;;; MU4E
 {{ if (eq .chezmoi.hostname "neo") -}}
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
-{{ end }}
+{{ end -}}
 
 (after! mu4e
   (setq

@@ -181,14 +181,10 @@ Channel CRX-starred
 
 IMAPStore JWANG
 Host imap.mailbox.org
-User jwang@mailbox.org # alias
+User jwang@mailbox.org # alias of me@jwa.ng
 PassCmd "echo ${PASSWORD:-$(gpg2 -q --for-your-eyes-only --no-tty -d ~/.authinfo.gpg | awk '/machine imap.mailbox.org login jwang/ {print $NF}')}"
 SSLType IMAPS
 SSLVersions TLSv1.3
-
-# # REMOTE STORAGE (USE THE IMAP ACCOUNT SPECIFIED ABOVE)
-# IMAPStore JWANG
-# Account CRX
 
 MaildirStore JWANG-local
 Path ~/.mbsync/JWA.NG/
