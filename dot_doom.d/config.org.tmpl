@@ -739,6 +739,31 @@ mu index
 #+end_src
 
 
+** TODO Web searching
+
+To add google search of selected texts
+
+#+begin_src emacs-lisp
+;; use google instead duckduckgo for searching
+(setq counsel-search-engine 'google)
+
+(defun jwang/get-selected-text (start end)
+  (interactive "r")
+  (if (use-region-p)
+      (buffer-substring start end)))
+
+(defun jwang/search-selected-or-type (start end)
+  (interactive "r")
+  (if (use-region-p)
+      (counsel-search-action (buffer-substring start end))
+    (counsel-search)))
+
+(map! :leader
+      (:prefix "s"
+      :desc "Google selected or type"
+       "g" #'jwang/search-selected-or-type))
+#+end_src
+
 ** Doom configuration
 
 *** Modules
