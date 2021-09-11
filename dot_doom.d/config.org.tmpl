@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2021-09-07 Tue 13:12]
+#+LAST_MODIFIED: [2021-09-09 Thu 12:06]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -23,9 +23,16 @@ This is a liberate configuration for [[https://github.com/hlissner/doom-emacs][D
 *** For MacOS
 
 #+begin_src shell
-brew install tidy-html5   # format html
-brew install clang-format # format c/cpp
-brew install stfmt        # format shell
+# formatting
+brew install tidy-html5          # html
+brew install clang-format        # c/cpp
+brew install stfmt               # shell
+
+# mail
+brew install isync mu
+
+# fonts
+brew install font-jetbrains-mono
 #+end_src
 
 *** For Arch Linux
@@ -322,17 +329,8 @@ listing the missing fonts should appear for at least half a second.
   (org-add-link-type "eprint" #'make-eprint-link))
 
 
-;;  I don't know whey the following does not work
-
-;; (after! org
-;;   (setq-local time-stamp-active t
-;;               time-stamp-start "#\\+LAST_MODIFIED:[ \t]*"
-;;               time-stamp-end "$"
-;;               time-stamp-format "\[%Y-%02m-%02d %3a %02H:%02M\]")
-;;   (add-hook 'before-save-hook 'time-stamp))
-
 (add-hook! org-mode
-  (defun update-modification-time ()
+  (defun jwang/update-modification-time ()
     (setq-local time-stamp-active t
                 time-stamp-start "#\\+LAST_MODIFIED:[ \t]*"
                 time-stamp-end "$"
@@ -523,23 +521,6 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
     <link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css\">
     <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/brands.min.css\">
     <link rel=\"stylesheet\" href=\"https://jwa.ng/sass/researcher.min.css\">"
-
-
-
-         ;; <meta name=\"viewport\" content=\"width=device-width, initpial-scale=1\">\n
-         ;; <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">
-         ;; <link rel=\"stylesheet\" type=\"text/css\" href=\"themes/readtheorg/css/htmlize.css\"/>\n
-         ;; <link rel=\"stylesheet\" type=\"text/css\" href=\"themes/readtheorg/css/rtd-full.css\"/>\n
-         ;; <link rel=\"stylesheet\" type=\"text/css\" href=\"themes/readtheorg/css/readtheorg.css\"/>\n
-         ;; <script src=\"https://code.jquery.com/jquery-3.2.1.slim.min.js\" integrity=\"sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN\" crossorigin=\"anonymous\"></script>
-         ;; <script src=\"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js\" integrity=\"sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q\" crossorigin=\"anonymous\"></script>
-         ;; <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js\" integrity=\"sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl\" crossorigin=\"anonymous\"></script>
-         ;; <scRipt type=\"text/javascript\" src=\"themes/lib/js/jquery-3.2.1.min.js\"></script>
-         ;; <script type=\"text/javascript\" src=\"themes/lib/js/jquery.stickytableheaders.min.js\"></script>
-         ;; <script type=\"text/javascript\" src=\"themes/readtheorg/js/readtheorg.js\"></script>"
-         ;; ;; :style "<link rel=\"stylesheet\"
-         ;;        href=\"../other/mystyle.css\"
-         ;;        type=\"text/css\"/>"
          )))
 #+end_src
 
@@ -565,8 +546,10 @@ mu index
 
 #+begin_src emacs-lisp
 ;;;;;;;;; MU4E
-{{ if (eq .chezmoi.hostname "neo") -}}
+{{- if (eq .chezmoi.hostname "neo") -}}
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+{{- else if (eq .chezmoi.os "darwin") }}
+(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu/mu4e")
 {{ end -}}
 
 (after! mu4e

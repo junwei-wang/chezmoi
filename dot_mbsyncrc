@@ -188,7 +188,7 @@ SSLVersions TLSv1.3
 
 MaildirStore JWANG-local
 Path ~/.mbsync/JWA.NG/
-Inbox ~/.mbsync/JWA.NG/INBOX
+Inbox ~/.mbsync/JWA.NG/INBOX/
 SubFolders Verbatim
 
 Channel mailbox
