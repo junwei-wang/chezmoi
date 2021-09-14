@@ -534,6 +534,20 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          )))
 #+end_src
 
+*** Org Export
+**** HTML
+***** MathJax
+
+
+#+begin_src emacs-lisp
+(setq org-html-mathjax-options
+      '((path "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" )
+        (scale "1")
+        (autonumber "ams")
+        (multlinewidth "85%")
+        (tagindent ".8em")
+        (tagside "right")))
+#+end_src
 
 ** Email
 
