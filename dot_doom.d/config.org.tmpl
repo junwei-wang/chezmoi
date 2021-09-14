@@ -399,6 +399,15 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 ;;;; (add-to-list 'org-latex-packages-alist "~/github/org/latex/mymacros.sty")
 #+end_src
 
+**** Export
+
+#+begin_src emacs-lisp
+(setq
+ org-latex-compiler "lualatex"
+ ;;org-latex-pdf-process '("latexmk -f -pdflua -%latex -interaction=nonstopmode -output-directory=%o %f"))
+ )
+#+end_src
+
 *** Org Roam
 
 #+begin_src emacs-lisp
@@ -547,11 +556,11 @@ mu index
 
 #+begin_src emacs-lisp
 ;;;;;;;;; MU4E
-{{- if (eq .chezmoi.hostname "neo") -}}
+{{ if (eq .chezmoi.hostname "neo") -}}
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
 {{- else if (eq .chezmoi.os "darwin") }}
 (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu/mu4e")
-{{ end -}}
+{{ end }}
 
 (after! mu4e
   (setq
@@ -970,7 +979,7 @@ emacs-lisp          ; drown in parentheses
 ;;fstar             ; (dependent) types and (monadic) effects and Z3
 ;;gdscript          ; the language you waited for
 ;;(go +lsp)         ; the hipster dialect
-;;(haskell +dante)  ; a language that's lazier than I am
+(haskell +dante)    ; a language that's lazier than I am
 ;;hy                ; readability of scheme w/ speed of python
 ;;idris             ; a language you can depend on
 json                ; At least it ain't XML
