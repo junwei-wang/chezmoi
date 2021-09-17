@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2021-09-09 Thu 12:06]
+#+LAST_MODIFIED: [2021-09-16 Thu 21:57]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -7,7 +7,6 @@
 This is a liberate configuration for [[https://github.com/hlissner/doom-emacs][Doom Emacs]].
 
 * Emacs configurations from others
-
 ** With Doom
 *** [#A] [[https://tecosaur.github.io/emacs-config/config.html][tecosaur]]
 *** [[https://www.cheng92.com/emacs/doom-emacs-with-org/][若叶知秋]]
@@ -59,7 +58,6 @@ doom env refresh
 #+begin_src bash
 cmake -DCMAKE_INSTALL_PREFIX\=/Users/junwei/.emacs.d/.local/etc/irony-server/ -DLIBCLANG_LIBRARY\=/usr/local/opt/llvm/lib/libclang.dylib -DLIBCLANG_INCLUDE_DIR\=/usr/local/opt/llvm/include /Users/junwei/.emacs.d/.local/straight/build-27.1/irony/server && cmake --build . --use-stderr --config Release --target install
 #+end_src
-
 
 * Rudimentary configuration
 :LOGBOOK:
@@ -253,16 +251,30 @@ listing the missing fonts should appear for at least half a second.
 
  ;; calendar
  calendar-week-start-day 1)
+#+end_src
 
-;;;;;;;;;;;;;;; format
+** Formatting
+#+begin_src emacs-lisp
+        ;;;;;;;;;;;;;;; format
 (setq +format-on-save-enabled-modes
       '(not emacs-lisp-mode  ; elisp's mechanisms are good enough
             sql-mode         ; sqlformat is currently broken
-            web-mode         ; html-tidy is not nice
+            ;; web-mode         ; html-tidy is not nice
             ))
+
+(set-formatter! 'html-tidy  ; overwrite predefined html-tidy formatter
+  '("tidy" "-q" "-indent"
+    "--tidy-mark" "no"
+    "--drop-empty-elements" "no"
+    "--show-body-only" "auto"
+    "--mute" "NESTED_EMPHASIS"
+    ("--indent-spaces" "%d" tab-width)
+    ("--indent-with-tabs" "%s" (if indent-tabs-mode "yes" "no"))
+    ("-xml" (memq major-mode '(nxml-mode xml-mode))))
+  :ok-statuses '(0 1))
+
 (setq-hook! 'web-mode-hook +format-with 'prettier-prettify)
 #+end_src
-
 
 ** LaTeX
 
@@ -436,6 +448,9 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
        :desc "Find roam node" "f" #'org-roam-node-find
        :desc "Insert roam node" "i" #'org-roam-node-insert))
 
+(use-package! websocket
+    :after org-roam)
+
 (use-package! org-roam-bibtex
   :after org-roam
   :config
@@ -486,6 +501,11 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 
 ;;;;;;;;; Bibliography
 ;;; helm-bibtex
+
+(defun bibtex-completion-format-citation-orb-cite (keys)
+  "Format org-roam-bibtex cite references for keys in KEYS."
+  (s-join ", "
+          (--map (format "cite:%s" it) keys)))
 (setq bibtex-completion-bibliography '("~/.cb/cryptobib/crypto.bib"
                                        "~/github/org/biblio/thesis.bib"
                                        "~/github/org/biblio/book.bib"
@@ -494,7 +514,16 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
                                        "~/github/org/biblio/temp.bib"
                                        "~/github/org/biblio/tifs.bib"
                                        "~/github/org/biblio/crxwork/wheely.bib")
-      bibtex-completion-library-path '("~/github/org/biblio/pdfs"))
+      bibtex-completion-library-path '("~/github/org/biblio/pdfs")
+
+      bibtex-completion-format-citation-functions
+      '((org-mode      . bibtex-completion-format-citation-orb-cite)
+        (latex-mode    . bibtex-completion-format-citation-cite)
+        (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
+        (python-mode   . bibtex-completion-format-citation-sphinxcontrib-bibtex)
+        (rst-mode      . bibtex-completion-format-citation-sphinxcontrib-bibtex)
+        (default       . bibtex-completion-format-citation-default)))
+
 
 ;;; org-ref
 (setq reftex-default-bibliography bibtex-completion-bibliography
@@ -538,7 +567,6 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 **** HTML
 ***** MathJax
 
-
 #+begin_src emacs-lisp
 (setq org-html-mathjax-options
       '((path "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" )
@@ -547,6 +575,45 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
         (multlinewidth "85%")
         (tagindent ".8em")
         (tagside "right")))
+
+(setq org-html-mathjax-template
+      "<script>
+<!--/*--><![CDATA[/*><!--*/
+MathJax = {
+  chtml: {
+    scale: %SCALE
+  },
+  svg: {
+    scale: %SCALE,
+    fontCache: \"global\"
+  },
+  tex: {
+    tags: \"%AUTONUMBER\",
+    multlineWidth: \"%MULTLINEWIDTH\",
+    tagSide: \"%TAGSIDE\",
+    tagIndent: \"%TAGINDENT\",
+    macros: {
+      // algorithms
+      KeyGen: \"\\\\mathsf{KeyGen}\",
+      Enc: \"\\\\mathsf{Enc}\",
+      Dec: \"\\\\mathsf{Dec}\",
+      sk: \"\\\\mathsf{sk}\",
+      // spaces
+      M: \"\\\\mathcal{M}\",
+      K: \"\\\\mathcal{K}\",
+      C: \"\\\\mathcal{C}\",
+      // adversary, algorithm
+      A: \"\\\\mathcal{A}\",
+      // complexity
+      poly: \"\\\\sf{poly}\",
+      negl: \"\\\\sf{negl}\",
+    }
+  }
+};
+/*]]>*///-->
+</script>
+<script id=\"MathJax-script\" async
+        src=\"%PATH\"></script>")
 #+end_src
 
 ** Email
@@ -745,7 +812,6 @@ mu index
                                               ))))
          )))
 #+end_src
-
 
 ** TODO Web searching
 
@@ -982,6 +1048,7 @@ cc                  ; C/C++/Obj-C madness
 ;;csharp            ; unity, .NET, and mono shenanigans
 data                ; config/data formats
 ;;(dart +flutter)   ; paint ui and not much else
+;;dhall
 ;;elixir            ; erlang done right
 ;;elm               ; care for a cup of TEA?
 emacs-lisp          ; drown in parentheses
@@ -993,7 +1060,7 @@ emacs-lisp          ; drown in parentheses
 ;;fstar             ; (dependent) types and (monadic) effects and Z3
 ;;gdscript          ; the language you waited for
 ;;(go +lsp)         ; the hipster dialect
-(haskell +dante)    ; a language that's lazier than I am
+(haskell +lsp)      ; a language that's lazier than I am
 ;;hy                ; readability of scheme w/ speed of python
 ;;idris             ; a language you can depend on
 json                ; At least it ain't XML
@@ -1033,7 +1100,7 @@ plantuml            ; diagrams for confusing people more
 ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
 ;;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
 ;;scala             ; java, but good
-;;scheme            ; a fully conniving family of lisps
+;;(scheme +guile)   ; a fully conniving family of lisps
 (sh +fish)          ; she sells {ba,z,fi}sh shells on the C xor
 ;;sml
 ;;solidity          ; do you need a blockchain? No.
@@ -1057,7 +1124,8 @@ yaml                ; JSON, but readable
 #+begin_src emacs-lisp
 ;;calendar
 ;;emms
-;;irc               ; how neckbeards socialize
+everywhere          ; *leave* Emacs!? You must be joking
+irc                 ; how neckbeards socialize
 ;;(rss +org)        ; emacs as an RSS reader
 ;;twitter           ; twitter client https://twitter.com/vnought
 #+end_src
@@ -1087,25 +1155,21 @@ yaml                ; JSON, but readable
 ;;;; email
 (package! org-mime)
 
+;; When using org-roam via the `+roam` flag
+(unpin! org-roam)
 
 ;;; org-roam-ui
 (package! websocket)
 (package! org-roam-ui :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out")))
 
 ;;;;;;;;; org-roam-bibtex (ORB)
-(package! org-roam-bibtex
-  :recipe (:host github
-           :repo "org-roam/org-roam-bibtex"))
+(package! org-roam-bibtex :recipe (:host github :repo "org-roam/org-roam-bibtex"))
 
-;; When using org-roam via the `+roam` flag
-(unpin! org-roam company-org-roam)
 ;; When using bibtex-completion via the `biblio` module
 (unpin! bibtex-completion helm-bibtex ivy-bibtex)
 
 
 ;;; ORB dependencies
-(package! org-ref)
-(package! helm-bibtex)
 (package! ivy-bibtex)
 
 ;; To install a package directly from a remote git repo, you must specify a
@@ -1148,7 +1212,6 @@ yaml                ; JSON, but readable
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 #+end_src
-
 
 ** Extra configurations
 

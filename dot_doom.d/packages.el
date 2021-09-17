@@ -18,25 +18,21 @@
 ;;;; email
 (package! org-mime)
 
+;; When using org-roam via the `+roam` flag
+(unpin! org-roam)
 
 ;;; org-roam-ui
 (package! websocket)
 (package! org-roam-ui :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out")))
 
 ;;;;;;;;; org-roam-bibtex (ORB)
-(package! org-roam-bibtex
-  :recipe (:host github
-           :repo "org-roam/org-roam-bibtex"))
+(package! org-roam-bibtex :recipe (:host github :repo "org-roam/org-roam-bibtex"))
 
-;; When using org-roam via the `+roam` flag
-(unpin! org-roam company-org-roam)
 ;; When using bibtex-completion via the `biblio` module
 (unpin! bibtex-completion helm-bibtex ivy-bibtex)
 
 
 ;;; ORB dependencies
-(package! org-ref)
-(package! helm-bibtex)
 (package! ivy-bibtex)
 
 ;; To install a package directly from a remote git repo, you must specify a

@@ -48,7 +48,7 @@ myStartupHook = do
   spawnOnce "nm-applet &"
   spawnOnce "blueman-applet &"
   spawnOnce "fcitx5 &"
-  spawnOnce "conky -c $HOME/.config/conky/xmonad.conkyrc &"
+  -- spawnOnce "conky -c $HOME/.config/conky/xmonad.conkyrc &"
   spawnOnce "volumeicon &"
   spawnOnce "feh --bg-center --randomize /usr/share/backgrounds/archlinux/"
   spawnOnce "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 --tint 0x282c34  --height 30 &"
@@ -90,7 +90,6 @@ main :: IO ()
 main = do
   xmproc0 <- spawnPipe "xmobar -x 0 $HOME/.config/xmobar/xmobarrc0"
   xmproc1 <- spawnPipe "xmobar -x 1 $HOME/.config/xmobar/xmobarrc1"
-  -- setRandomWallpaper ["$HOME/Wallpapers", "$HOME/Pictures/Wallpapers"]
   xmonad
     $                 ewmh def
                         { modMask            = myModMask -- Use Super instead of Alt

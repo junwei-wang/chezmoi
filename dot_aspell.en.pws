@@ -1,4 +1,4 @@
-personal_ws-1.1 en 310
+personal_ws-1.1 en 314
 ACM
 ACNS
 AES
@@ -82,6 +82,7 @@ LeetCode
 Lepoint
 Lindell
 MPC
+MathJax
 Mathematica
 Matthieu
 Merkle
@@ -241,8 +242,10 @@ isogeny
 isomorphism
 iteratively
 lifecycle
+logarithmetic
 macOS
 malwares
+maskings
 maskverif
 microcontroller
 misc
@@ -280,6 +283,7 @@ residuosity
 reusability
 ridesharing
 runtime
+samplable
 scalable
 see
 several
