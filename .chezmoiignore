@@ -27,6 +27,7 @@ Videos
 .local/
 *.log
 LICENSE
+.mbsync
 #>>> history
 .bash_history
 .julia_history
