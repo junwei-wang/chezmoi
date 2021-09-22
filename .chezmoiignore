@@ -93,6 +93,10 @@ Zotero
 {{- end }}
 #>>> chezmoi
 #.config/chezmoi
+#>>> Xorg
+{{- if eq .chezmoi.os "darwin" }}
+.xmodmaprc
+{{- end }}
 #>>> Docker
 .docker
 #>>> Dropbox
