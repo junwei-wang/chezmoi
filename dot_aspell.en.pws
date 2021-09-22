@@ -1,4 +1,4 @@
-personal_ws-1.1 en 314
+personal_ws-1.1 en 318
 ACM
 ACNS
 AES
@@ -43,6 +43,7 @@ DRM
 Darmstadt
 Delft
 Diffie
+Dockerfile
 ECRYPT
 ElGamal
 Eurocrypt
@@ -82,11 +83,13 @@ LeetCode
 Lepoint
 Lindell
 MPC
+Makefile
 MathJax
 Mathematica
 Matthieu
 Merkle
 Micali
+Minio
 MixColumns
 NIST
 Nespresso
@@ -282,6 +285,7 @@ reproducibility
 residuosity
 reusability
 ridesharing
+roadmap
 runtime
 samplable
 scalable

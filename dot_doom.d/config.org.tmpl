@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2021-09-16 Thu 21:57]
+#+LAST_MODIFIED: [2021-09-22 Wed 18:14]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -16,7 +16,6 @@ This is a liberate configuration for [[https://github.com/hlissner/doom-emacs][D
 ** Without Doom
 
 * Prerequisites
-
 ** Install necessary softwares
 
 *** For MacOS
@@ -182,6 +181,24 @@ listing the missing fonts should appear for at least half a second.
 (setq display-line-numbers-type t)
 #+end_src
 
+#+begin_src emacs-lisp :tangle "packages.el"
+(package! all-the-icons-ivy)
+#+end_src
+
+#+begin_src emacs-lisp
+;;; to integrate beautiful all-the-icons in ivy and cousel
+(use-package! all-the-icons-ivy
+  :after (all-the-icons ivy)
+  :custom (all-the-icons-ivy-buffer-commands '(ivy-switch-buffer-other-window))
+  :config
+  (add-to-list 'all-the-icons-ivy-file-commands 'counsel-dired-jump)
+  (add-to-list 'all-the-icons-ivy-file-commands 'counsel-find-library)
+  (all-the-icons-ivy-setup))
+#+end_src
+
+A lik     ,test:w
+
+
 ** Others
 
 #+begin_src emacs-lisp
@@ -304,6 +321,8 @@ listing the missing fonts should appear for at least half a second.
 
 ** Python
 
+I find this nice writing to read in the future: https://www.reddit.com/r/emacs/comments/ijmgtx/tip_how_to_use_a_stable_and_fast_environment_to/
+
 #+begin_src emacs-lisp
 ;;;;;;;;;; Python
 (mapc (lambda (mode) (add-hook 'python-mode-hook mode))
@@ -313,6 +332,9 @@ listing the missing fonts should appear for at least half a second.
 (set-formatter! 'autopep8 'py-autopep8 :modes '(python-mode))
 ;; (add-hook 'python-mode-hook (lambda () (set-fill-column 100)))
 #+end_src
+** C++
+
+Find this writing: https://www.reddit.com/r/emacs/comments/audffp/tip_how_to_use_a_stable_and_fast_environment_to/
 
 ** Org Mode
 
@@ -1227,8 +1249,24 @@ irc                 ; how neckbeards socialize
   )
 #+end_src
 
-
 * Existing issues
 ** aspell mark most words incorrect
 
 - see https://github.com/hlissner/doom-emacs/issues/4009
+* Tips
+| command                   | bind    | description |
+|---------------------------+---------+-------------|
+| =delete-horizontal-space= | =M-\=   |             |
+| =just-one-space=          | =M-SPC= |             |
+* Packages
+| package    | purpose         |
+|------------+-----------------|
+| =ivy=      | searching       |
+| =company=  | completion      |
+| =flycheck= | syntax checking |
+| =flyspell= | spell checking  |
+* Packages to explore
+| package    | description                    |
+|------------+--------------------------------|
+| =webpaste= | paste code to some web service |
+| =imgbb=    | paste image to imgbb           |
