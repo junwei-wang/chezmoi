@@ -1,3 +1,7 @@
+;; [[file:config.org::*Appearance][Appearance:5]]
+(package! all-the-icons-ivy)
+;; Appearance:5 ends here
+
 ;; -*- no-byte-compile: t; -*-
 ;;; $DOOMDIR/packages.el
 

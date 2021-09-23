@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2021-09-22 Wed 18:14]
+#+LAST_MODIFIED: [2021-09-23 Thu 16:37]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -8,11 +8,11 @@ This is a liberate configuration for [[https://github.com/hlissner/doom-emacs][D
 
 * Emacs configurations from others
 ** With Doom
-*** [#A] [[https://tecosaur.github.io/emacs-config/config.html][tecosaur]]
-*** [[https://www.cheng92.com/emacs/doom-emacs-with-org/][若叶知秋]]
-*** [[https://github.com/zzamboni/dot-doom/blob/master/doom.org][zzamboni/dot-doom]]
-*** [[http://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua]]
-*** [[https://www.gtrun.org/custom/config.html][GuangTao]]
+- [[https://tecosaur.github.io/emacs-config/config.html][tecosaur]]
+- [[https://www.cheng92.com/emacs/doom-emacs-with-org/][若叶知秋]]
+- [[https://github.com/zzamboni/dot-doom/blob/master/doom.org][zzamboni/dot-doom]]
+- [[http://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua]]
+- [[https://www.gtrun.org/custom/config.html][GuangTao]]
 ** Without Doom
 
 * Prerequisites
@@ -637,9 +637,34 @@ MathJax = {
 <script id=\"MathJax-script\" async
         src=\"%PATH\"></script>")
 #+end_src
+*** Org Contact
+
+#+begin_src emacs-lisp
+(use-package! org-contacts
+  :ensure nil
+  :after org
+  :custom (org-contacts-files `(,(concat org-directory "contacts.org"))))
+
+(use-package! org-capture
+  :ensure nil
+  :after org
+  :preface
+  (defvar jwang/org-contacts-template "* %(org-contacts-template-name)
+:PROPERTIES:
+:ADDRESS: %^{ADDRESS}
+:BIRTHDAY: %^{yyyy-mm-dd}
+:EMAIL: %(org-contacts-template-email)
+:NOTE: %^{NOTE}
+:END:" "Template for org-contacts.")
+  :custom
+  (org-capture-templates
+   `(("c" "Contact" entry (file "~/github/org/contacts.org"),
+      jwang/org-contacts-template
+      :empty-lines 1))))
+(message (car org-contacts-files))
+#+end_src
 
 ** Email
-
 
 Create folder for ~mbsync~
 #+begin_src shell
@@ -834,7 +859,6 @@ mu index
                                               ))))
          )))
 #+end_src
-
 ** TODO Web searching
 
 To add google search of selected texts
@@ -1249,23 +1273,23 @@ irc                 ; how neckbeards socialize
   )
 #+end_src
 
-* Existing issues
-** aspell mark most words incorrect
-
-- see https://github.com/hlissner/doom-emacs/issues/4009
 * Tips
+#+ATTR_HTML: :summary ""
 | command                   | bind    | description |
 |---------------------------+---------+-------------|
 | =delete-horizontal-space= | =M-\=   |             |
 | =just-one-space=          | =M-SPC= |             |
 * Packages
-| package    | purpose         |
-|------------+-----------------|
-| =ivy=      | searching       |
-| =company=  | completion      |
-| =flycheck= | syntax checking |
-| =flyspell= | spell checking  |
+#+ATTR_HTML: :summary ""
+| package     | purpose              |
+|-------------+----------------------|
+| =ivy=       | searching            |
+| =company=   | completion           |
+| =flycheck=  | syntax checking      |
+| =flyspell=  | spell checking       |
+| =yasnippet= | snippets integration |
 * Packages to explore
+#+ATTR_HTML: :summary ""
 | package    | description                    |
 |------------+--------------------------------|
 | =webpaste= | paste code to some web service |
