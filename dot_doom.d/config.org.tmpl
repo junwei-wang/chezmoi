@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2021-09-23 Thu 16:37]
+#+LAST_MODIFIED: [2021-09-25 Sat 20:48]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -195,9 +195,6 @@ listing the missing fonts should appear for at least half a second.
   (add-to-list 'all-the-icons-ivy-file-commands 'counsel-find-library)
   (all-the-icons-ivy-setup))
 #+end_src
-
-A lik     ,test:w
-
 
 ** Others
 
@@ -478,23 +475,35 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   :config
   (require 'org-ref))
 
+(use-package! orb-book
+  :after (org-roam org-roam-bibtex))
+
 (setq orb-preformat-keywords '("year" "citekey" "title" "author" "file"))
 (setq org-roam-capture-templates
       '(("d" "default" plain "%?"
          :target (file+head "${slug}.org"
                             "#+TITLE: ${title}\n#+CREATED: %U\n#+LAST_MODIFIED: %U\n#+FILETAGS: ${filetags}\n\n")
          :unnarrowed t)
+        ("b" "bibliography reference" plain
+         (file "~/github/org/templates/orb.org")
+         :if-new
+         (file+head "biblio/${citekey}.org"
+                    "#+TITLE: ${year} - [${citekey}] - ${title} -- ${author}\n")
+         :unnarrowed t)
+        ("B" "Books  (Reading List)" entry "* TODO %?"
+         :target (file+olp "reading_list.org" ("Books"))
+         :unnarrowed t)
+        ("G" "Blogs  (Reading List)" entry "* TODO %?"
+         :target (file+olp "reading_list.org" ("Blogs"))
+         :unnarrowed t)
+        ("P" "Papers (Reading List)" entry "* TODO %?"
+         :target (file+olp "reading_list.org" ("Papers"))
+         :unnarrowed t)
         ("l" "LeetCode" plain
          (function org-roam-capture--get-point)
          (file "~/github/org/templates/org-roam-leetcode.org")
          :file-name "leetcode/${slug}"
          :head "#+TITLE: ${title}\n"
-         :unnarrowed t)
-        ("r" "bibliography reference" plain
-         (file "~/github/org/templates/orb.org")
-         :if-new
-         (file+head "biblio/${citekey}.org"
-                    "#+TITLE: ${year} - [${citekey}] - ${title} -- ${author}\n")
          :unnarrowed t)))
 
 (defun my/org-id-update-org-roam-files ()
@@ -629,6 +638,9 @@ MathJax = {
       // complexity
       poly: \"\\\\sf{poly}\",
       negl: \"\\\\sf{negl}\",
+      // math symbols
+      concat: \"\\\\parallel\",
+      qed: \"    \\\\blacksquare\"
     }
   }
 };
@@ -687,7 +699,7 @@ mu index
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
 {{- else if (eq .chezmoi.os "darwin") }}
 (add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu/mu4e")
-{{ end -}}
+{{- end }}
 
 (after! mu4e
   (setq
@@ -892,7 +904,6 @@ To add google search of selected texts
 #+end_src
 
 ** Doom configuration
-
 *** Modules
 :PROPERTIES:
 :header-args:emacs-lisp: :tangle no
@@ -1175,7 +1186,6 @@ irc                 ; how neckbeards socialize
 ;;twitter           ; twitter client https://twitter.com/vnought
 #+end_src
 
-
 *** Packages
 
 #+name: packages.el
@@ -1191,6 +1201,9 @@ irc                 ; how neckbeards socialize
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
 ;(package! some-package)
 
+#+end_src
+
+#+begin_src emacs-lisp :tangle "packages.el" :noweb no-export :comments none
 ;;;; Python
 (package! py-autopep8)
 
@@ -1210,9 +1223,11 @@ irc                 ; how neckbeards socialize
 ;;;;;;;;; org-roam-bibtex (ORB)
 (package! org-roam-bibtex :recipe (:host github :repo "org-roam/org-roam-bibtex"))
 
+;;;;;;;;; orb-book
+(package! orb-book :recipe (:host github :repo "junwei-wang/orb-book"))
+
 ;; When using bibtex-completion via the `biblio` module
 (unpin! bibtex-completion helm-bibtex ivy-bibtex)
-
 
 ;;; ORB dependencies
 (package! ivy-bibtex)

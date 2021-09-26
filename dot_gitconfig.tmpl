@@ -5,16 +5,9 @@
 {{- if (eq .chezmoi.hostname "jwang-imac") }}
     email       = junwei.wang@cryptoexperts.com
     signingkey  = 9F288BD7E2BD84AA
-{{ else if (eq .chezmoi.hostname "neo") }}
-    email       = junwei.wang@cryptoexperts.com
-{{- if (eq .chezmoi.osRelease.id "arch") }}
-    signingkey  = 9F288BD7E2BD84AA
-{{ else }}
-    signingkey  = A09211CBD41FEC84
-{{ end }}
 {{ else }}
     email       = me@jwa.ng
-    signingkey  = 249EF49B5E8B6264
+    signingkey  = 9F288BD7E2BD84AA
 {{ end -}}
 
 [core]

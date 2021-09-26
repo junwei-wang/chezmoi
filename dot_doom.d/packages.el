@@ -32,9 +32,11 @@
 ;;;;;;;;; org-roam-bibtex (ORB)
 (package! org-roam-bibtex :recipe (:host github :repo "org-roam/org-roam-bibtex"))
 
+;;;;;;;;; orb-book
+(package! orb-book :recipe (:host github :repo "junwei-wang/orb-book"))
+
 ;; When using bibtex-completion via the `biblio` module
 (unpin! bibtex-completion helm-bibtex ivy-bibtex)
-
 
 ;;; ORB dependencies
 (package! ivy-bibtex)
