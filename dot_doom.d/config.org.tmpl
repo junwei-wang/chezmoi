@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2021-09-25 Sat 20:48]
+#+LAST_MODIFIED: [2021-09-27 Mon 09:21]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -490,13 +490,14 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          (file+head "biblio/${citekey}.org"
                     "#+TITLE: ${year} - [${citekey}] - ${title} -- ${author}\n")
          :unnarrowed t)
-        ("B" "Books  (Reading List)" entry "* TODO %?"
+        ("r" "Reading List")
+        ("rb" "Books  (Reading List)" entry "* TODO %?"
          :target (file+olp "reading_list.org" ("Books"))
          :unnarrowed t)
-        ("G" "Blogs  (Reading List)" entry "* TODO %?"
+        ("rg" "Blogs  (Reading List)" entry "* TODO %?"
          :target (file+olp "reading_list.org" ("Blogs"))
          :unnarrowed t)
-        ("P" "Papers (Reading List)" entry "* TODO %?"
+        ("rp" "Papers (Reading List)" entry "* TODO %?"
          :target (file+olp "reading_list.org" ("Papers"))
          :unnarrowed t)
         ("l" "LeetCode" plain
@@ -1210,6 +1211,9 @@ irc                 ; how neckbeards socialize
 ;;;; Sage
 (package! sage-shell-mode)
 
+;;;; Editing: input method
+(package! pyim-basedict)
+
 ;;;; email
 (package! org-mime)
 
@@ -1285,6 +1289,33 @@ irc                 ; how neckbeards socialize
 (define-key! help-map
   "di"   #'doom/ediff-init-and-example
   )
+#+end_src
+** Editing
+*** Input Method
+#+begin_src emacs-lisp
+(use-package! pyim
+  :config
+  ;; 激活 basedict 拼音词库
+  (use-package! pyim-basedict
+    :config (pyim-basedict-enable))
+
+  ;; (setq default-input-method "pyim")
+
+  ;; 我使用全拼
+  (setq pyim-default-scheme 'quanpin)
+
+  ;; 开启拼音搜索功能
+  (pyim-isearch-mode 1)
+
+  ;; 使用 pupup-el 来绘制选词框
+  (setq pyim-page-tooltip 'popup)
+
+  ;; 选词框显示5个候选词
+  (setq pyim-page-length 8)
+
+  ;; 让 Emacs 启动时自动加载 pyim 词库
+  (add-hook 'emacs-startup-hook
+            #'(lambda () (pyim-restart-1 t))))
 #+end_src
 
 * Tips
