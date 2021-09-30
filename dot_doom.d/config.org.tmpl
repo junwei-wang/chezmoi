@@ -500,6 +500,12 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
         ("rp" "Papers (Reading List)" entry "* TODO %?"
          :target (file+olp "reading_list.org" ("Papers"))
          :unnarrowed t)
+        ("c" "cocktail" plain
+         (file "~/github/org/templates/cocktail.org")
+         :if-new
+         (file+head "cocktail/${slug}.org"
+                    "#+TITLE: ${title}\n#+CREATED: %U\n#+LAST_MODIFIED: %U\n#+FILETAGS: :cocktail:${filetags}:\n\n")
+         :unnarrowed t)
         ("l" "LeetCode" plain
          (function org-roam-capture--get-point)
          (file "~/github/org/templates/org-roam-leetcode.org")
@@ -538,9 +544,12 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   "Format org-roam-bibtex cite references for keys in KEYS."
   (s-join ", "
           (--map (format "cite:%s" it) keys)))
-(setq bibtex-completion-bibliography '("~/.cb/cryptobib/crypto.bib"
+(setq orb-book-bibliography "~/github/org/biblio/book.bib"
+
+      bibtex-completion-bibliography (list
+                                      "~/.cb/cryptobib/crypto.bib"
                                        "~/github/org/biblio/thesis.bib"
-                                       "~/github/org/biblio/book.bib"
+                                       orb-book-bibliography
                                        "~/github/org/biblio/course.bib"
                                        "~/github/org/biblio/misc.bib"
                                        "~/github/org/biblio/temp.bib"
@@ -641,7 +650,12 @@ MathJax = {
       negl: \"\\\\sf{negl}\",
       // math symbols
       concat: \"\\\\parallel\",
-      qed: \"    \\\\blacksquare\"
+      divides: \"\\\\mid\",
+      notdivides: \"\\\\nmid\",
+      qed: \"    \\\\blacksquare\",
+      defeq: \":=\",
+      // sets
+      ZZ: \"\\\\mathbb{Z}\"
     }
   }
 };
