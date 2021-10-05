@@ -473,7 +473,8 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 (use-package! org-roam-bibtex
   :after org-roam
   :config
-  (require 'org-ref))
+  (require 'org-ref)
+  (org-roam-bibtex-mode))
 
 (use-package! orb-book
   :after (org-roam org-roam-bibtex))
@@ -499,6 +500,9 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          :unnarrowed t)
         ("rp" "Papers (Reading List)" entry "* TODO %?"
          :target (file+olp "reading_list.org" ("Papers"))
+         :unnarrowed t)
+        ("ro" "Others (Reading List)" entry "* TODO %?"
+         :target (file+olp "reading_list.org" ("Others"))
          :unnarrowed t)
         ("c" "cocktail" plain
          (file "~/github/org/templates/cocktail.org")
@@ -1162,8 +1166,8 @@ plantuml            ; diagrams for confusing people more
 ;;purescript        ; javascript, but functional
 (python             ; beautiful is better than ugly
  +lsp
- +pyenv
- +pyright)
+ +pyright           ; pyright as the LSP server for python
+ +pyenv)
 ;;qt                ; the 'cutest' gui framework ever
 ;;racket            ; a DSL for DSLs
 ;;raku              ; the artist formerly known as perl6

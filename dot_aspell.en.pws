@@ -1,4 +1,4 @@
-personal_ws-1.1 en 323
+personal_ws-1.1 en 330
 ACM
 ACNS
 AES
@@ -29,6 +29,7 @@ COSADE
 CRX
 CTF
 Canetti
+Carrefour
 Cheon
 Chillotti
 Coppersmith
@@ -151,6 +152,7 @@ Wheely
 WhibOx
 Winograd
 Yao's
+abelian
 acyclic
 additively
 affine
@@ -234,6 +236,7 @@ gitbook
 gitea
 homomorphic
 homomorphically
+homomorphism
 https
 hypergeometric
 iO
@@ -259,8 +262,10 @@ microcontroller
 misc
 mmaps
 moduli
+mojito
 monic
 monomial
+muddler
 multilinear
 namespace
 nonce
@@ -276,6 +281,7 @@ polylogarithmic
 polynomially
 preprocess
 preprocessing
+primality
 pseudonymity
 pseudorandom
 pseudorandomly
@@ -306,6 +312,7 @@ sublinear
 submatrix
 submodule
 todo
+totient
 trie
 unary
 unbreakability
