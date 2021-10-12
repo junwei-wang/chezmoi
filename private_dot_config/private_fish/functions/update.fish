@@ -54,4 +54,6 @@ function update -d "System update"
             cd $HOME/Library/Application\ Support/Übersicht/widgets/simple-bar
             git pull
     end
+
+    cd $HOME
 end
