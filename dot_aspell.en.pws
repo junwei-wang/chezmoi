@@ -1,10 +1,11 @@
-personal_ws-1.1 en 333
+personal_ws-1.1 en 336
 ACM
 ACNS
 AES
 ANF
 Acknowledgement
 AddRoundKey
+Adleman
 Aleksei
 Algorithmica
 Applebaum
@@ -115,6 +116,7 @@ Revolut
 Rijndeal
 Riscure
 Rivain
+Rivest
 SAC
 SCA
 SIMD
@@ -308,6 +310,7 @@ softwares
 stackexchange
 standardisation
 stateful
+subexponential
 subfield
 subkey
 sublinear

@@ -360,10 +360,13 @@ Find this writing: https://www.reddit.com/r/emacs/comments/audffp/tip_how_to_use
   (browse-url (concat "https://leetcode.com/problems/" leetcode-problem-name "/solution/")))
 (defun make-eprint-link (eprint-id)
   (browse-url (concat "https://eprint.iacr.org/" eprint-id)))
+(defun make-oeis-link (oeis-id)
+  (browse-url (concat "https://oeis.org/" oeis-id)))
 (after! org
   (org-add-link-type "leetcode" #'make-leetcode-link)
   (org-add-link-type "leetcode-submission" #'make-leetcode-submission-link)
-  (org-add-link-type "eprint" #'make-eprint-link))
+  (org-add-link-type "IACR ePrint" #'make-eprint-link)
+  (org-add-link-type "OEIS" #'make-oeis-link))
 
 
 (add-hook! org-mode
@@ -668,6 +671,8 @@ MathJax = {
       notdivides: \"\\\\nmid\",
       qed: \"    \\\\blacksquare\",
       defeq: \":=\",
+      gcd: \"\\\\mathrm{gcd}\",
+      sample: \"\\\\gets_{\\\\$}\",
       // sets
       ZZ: \"\\\\mathbb{Z}\",
       FF: \"\\\\mathbb{F}\"
@@ -1238,6 +1243,7 @@ irc                 ; how neckbeards socialize
 
 ;;;; Sage
 (package! sage-shell-mode)
+(package! ob-sagemath)
 
 ;;;; Editing: input method
 (package! pyim-basedict)
