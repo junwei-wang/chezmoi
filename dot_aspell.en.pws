@@ -1,4 +1,4 @@
-personal_ws-1.1 en 336
+personal_ws-1.1 en 338
 ACM
 ACNS
 AES
@@ -175,6 +175,7 @@ bilinear
 binarily
 biometric
 bitcode
+bitlength
 bitsliced
 bitslicing
 bitwise
@@ -276,6 +277,7 @@ nonce
 obfuscator
 opam
 parallelization
+parallelize
 parallelized
 pdf
 plaintext
