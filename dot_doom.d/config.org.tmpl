@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2021-10-19 Tue 09:58]
+#+LAST_MODIFIED: [2021-10-21 Thu 21:47]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -563,6 +563,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
           (--map (format "cite:%s" it) keys)))
 (setq orb-book-bibliography "~/github/org/biblio/book.bib"
 
+      ;;; for bibtex-completion
       bibtex-completion-bibliography (list
                                       "~/.cb/cryptobib/crypto.bib"
                                        "~/github/org/biblio/thesis.bib"
@@ -573,6 +574,9 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
                                        "~/github/org/biblio/tifs.bib"
                                        "~/github/org/biblio/crxwork/wheely.bib")
       bibtex-completion-library-path '("~/github/org/biblio/pdfs")
+
+      ;;; org-cite: newly introduced in org v9.5
+      org-cite-global-bibliography bibtex-completion-bibliography
 
       bibtex-completion-format-citation-functions
       '((org-mode      . bibtex-completion-format-citation-orb-cite)
@@ -1243,6 +1247,9 @@ irc                 ; how neckbeards socialize
 ;;;; Python
 (package! py-autopep8)
 
+;;;;; epub
+(package! nov)
+
 ;;;; Sage
 (package! sage-shell-mode)
 (package! ob-sagemath)
@@ -1252,6 +1259,10 @@ irc                 ; how neckbeards socialize
 
 ;;;; email
 (package! org-mime)
+
+;;; fix error for org-ref: "Cannot open load file: No such file or directory, citeproc"
+(package! org-ref :recipe (:branch "org-ref-2"))
+;; (package! citeproc)
 
 ;; When using org-roam via the `+roam` flag
 (unpin! org-roam)
@@ -1353,7 +1364,17 @@ irc                 ; how neckbeards socialize
   (add-hook 'emacs-startup-hook
             #'(lambda () (pyim-restart-1 t))))
 #+end_src
-
+** Diagrams
+*** Ditaa
+#+begin_src emacs-lisp
+(setq org-ditaa-jar-path "/usr/local/Cellar/ditaa/0.11.0_1/libexec/ditaa-0.11.0-standalone.jar")
+#+end_src
+*** PlantUML
+*** TikZ
+** EBooks
+#+begin_src emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+#+end_src
 * Tips
 #+ATTR_HTML: :summary ""
 | command                   | bind    | description |

@@ -4,7 +4,7 @@ function update -d "System update"
         brew update
         brew upgrade
         echo ">>> Clean Homebrew"
-        brew cleanup
+        brew autoremove && brew cleanup
     else if type -q pacman
         echo ">>> Update pacman"
         sudo pacman -Syu

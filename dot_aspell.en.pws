@@ -1,4 +1,4 @@
-personal_ws-1.1 en 338
+personal_ws-1.1 en 349
 ACM
 ACNS
 AES
@@ -73,6 +73,7 @@ JCEN
 Joux
 Junwei
 KP
+Karatsuba
 Katz
 Keccak
 Kerckhoffs
@@ -122,6 +123,7 @@ SCA
 SIMD
 SPN
 Saclay
+SageMath
 Sahai
 Sbox
 Schneier
@@ -131,6 +133,7 @@ ShiftRows
 Shoup
 Sihem
 Standaert
+Strassen
 SubBytes
 TCC
 TCHES
@@ -138,6 +141,7 @@ TLS
 Thibauld
 Tibouchi
 TikZ
+Toom
 UTM
 Udovenko
 Unforgeable
@@ -160,6 +164,7 @@ additively
 affine
 analyse
 analysed
+aperiodic
 aspell
 auditability
 auditable
@@ -214,6 +219,7 @@ cryptology
 cryptolux
 cryptosystem
 cryptosystems
+customizable
 cyber
 cyclotomic
 cyptolux
@@ -257,6 +263,7 @@ invertible
 isogeny
 isomorphism
 iteratively
+libre
 lifecycle
 logarithmetic
 macOS
@@ -272,6 +279,7 @@ monic
 monomial
 muddler
 multilinear
+multiprecision
 namespace
 nonce
 obfuscator
@@ -282,6 +290,7 @@ parallelized
 pdf
 plaintext
 plaintexts
+pointwise
 poly
 polylogarithmic
 polynomially
@@ -297,6 +306,7 @@ qutebrowser
 randomisation
 randomised
 ransomware
+recomposition
 relinearization
 reproducibility
 residuosity
@@ -335,5 +345,6 @@ wayness
 webpage
 website
 wiki
+wordlength
 wyverse
 xetex
