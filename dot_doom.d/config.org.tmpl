@@ -273,7 +273,7 @@ listing the missing fonts should appear for at least half a second.
 (setq +format-on-save-enabled-modes
       '(not emacs-lisp-mode  ; elisp's mechanisms are good enough
             sql-mode         ; sqlformat is currently broken
-            ;; web-mode         ; html-tidy is not nice
+            latex-mode       ; by default, emacs-format-all-the-code use latexindent, but I want use auctex
             ))
 
 (set-formatter! 'html-tidy  ; overwrite predefined html-tidy formatter
