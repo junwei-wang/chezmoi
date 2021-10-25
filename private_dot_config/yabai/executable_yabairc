@@ -47,8 +47,8 @@ yabai -m config window_gap 06
 
 # space names
 yabai -m space 1 --label "org"
-yabai -m space 2 --label "dev"
-yabai -m space 3 --label "www"
+yabai -m space 2 --label "www"
+yabai -m space 3 --label "dev"
 yabai -m space 4 --label "mail"
 yabai -m space 5 --label "5-chat"
 yabai -m space 6 --label "conf"
