@@ -1,4 +1,4 @@
-personal_ws-1.1 en 349
+personal_ws-1.1 en 352
 ACM
 ACNS
 AES
@@ -106,6 +106,7 @@ PPT
 PRNG
 Paillier
 PoPETS
+Prouff
 Pythonic
 RFID
 RGB
@@ -157,6 +158,7 @@ Weil
 Wheely
 WhibOx
 Winograd
+Xiaomi
 Yao's
 abelian
 acyclic
@@ -181,6 +183,7 @@ binarily
 biometric
 bitcode
 bitlength
+bitslice
 bitsliced
 bitslicing
 bitwise

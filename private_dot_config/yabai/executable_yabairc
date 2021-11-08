@@ -54,7 +54,7 @@ yabai -m space 5 --label "5-chat"
 yabai -m space 6 --label "conf"
 yabai -m space 7 --label "read"
 yabai -m space 8 --label "music"
-yabai -m space 8 --label "9"
+yabai -m space 9 --label "9"
 
 # space 1: terminal
 
