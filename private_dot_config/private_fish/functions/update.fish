@@ -17,6 +17,7 @@ function update -d "System update"
     if type -q doom
         echo ">>> Updating doom"
         doom upgrade
+        doom sync
     end
 
     if test -d ~/.cb/cryptobib

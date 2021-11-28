@@ -1,4 +1,4 @@
-personal_ws-1.1 en 352
+personal_ws-1.1 en 356
 ACM
 ACNS
 AES
@@ -78,6 +78,7 @@ Katz
 Keccak
 Kerckhoffs
 Kerckhoffs's
+Kyber
 LACS
 LDA
 LLVM
@@ -106,6 +107,7 @@ PPT
 PRNG
 Paillier
 PoPETS
+Preneel
 Prouff
 Pythonic
 RFID
@@ -227,6 +229,7 @@ cyber
 cyclotomic
 cyptolux
 dataset
+decapsulation
 decisional
 decrypt
 decrypted
@@ -331,6 +334,7 @@ subkey
 sublinear
 submatrix
 submodule
+suboptimal
 subtree
 todo
 totient

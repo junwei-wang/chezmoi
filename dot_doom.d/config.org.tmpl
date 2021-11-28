@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2021-11-02 Tue 22:23]
+#+LAST_MODIFIED: [2021-11-08 Mon 14:27]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -686,8 +686,8 @@ MathJax = {
       // complexity class
       P: \"\\\\mathsf{P}\",
       // complexity
-      poly: \"\\\\sf{poly}\",
-      negl: \"\\\\sf{negl}\",
+      poly: \"\\\\mathsf{poly}\",
+      negl: \"\\\\mathsf{negl}\",
       // adversary, algorithm
       A: \"\\\\mathcal{A}\",
       // math symbols
@@ -698,6 +698,10 @@ MathJax = {
       defeq: \":=\",
       gcd: \"\\\\mathrm{gcd}\",
       sample: \"\\\\gets_{\\\\$}\",
+      // prob and statistics
+      H: \"\\\\mathrm{H}\",    // entropy
+      MI: \"\\\\mathrm{MI}\",  // mutual information
+      pdf: \"\\\\mathrm{pdf}\",
       // sets
       ZZ: \"\\\\mathbb{Z}\",
       CC: \"\\\\mathbb{C}\",
