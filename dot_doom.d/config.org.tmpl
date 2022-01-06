@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2021-11-08 Mon 14:27]
+#+LAST_MODIFIED: [2022-01-06 Thu 22:25]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -332,6 +332,16 @@ I find this nice writing to read in the future: https://www.reddit.com/r/emacs/c
 ** C++
 
 Find this writing: https://www.reddit.com/r/emacs/comments/audffp/tip_how_to_use_a_stable_and_fast_environment_to/
+
+#+begin_src emacs-lisp
+(setq lsp-clients-clangd-args '("-j=3"
+                                "--background-index"
+                                "--clang-tidy"
+                                "--completion-style=detailed"
+                                "--header-insertion=never"
+                                "--header-insertion-decorators=0"))
+(after! lsp-clangd (set-lsp-priority! 'clangd 2))
+#+end_src
 
 ** Org Mode
 
@@ -1162,7 +1172,7 @@ tty                 ; improve the terminal Emacs experience
 #+begin_src emacs-lisp
 ;;agda              ; types of types of types of types...
 ;;beancount         ; mind the GAAP
-cc                  ; C/C++/Obj-C madness
+(cc +lsp)           ; C/C++/Obj-C madness
 ;;clojure           ; java with a lisp
 ;;common-lisp       ; if you've seen one lisp, you've seen them all
 ;;coq               ; proofs-as-programs
