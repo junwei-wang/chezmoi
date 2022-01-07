@@ -21,17 +21,35 @@ This is a liberate configuration for [[https://github.com/hlissner/doom-emacs][D
 *** For MacOS
 
 #+begin_src shell
+# utilities
+brew install fish
+brew install lsd fasd fd ripgrep
+
+brew install chezmoi
+brew install cmake htop pkg-config openssl pass aspell
+
 # formatting
 brew install tidy-html5          # html
 brew install clang-format        # c/cpp
 brew install stfmt               # shell
+brew install autopep8            # python
 
 # mail
 brew install isync mu
 
 # fonts
 brew install svn # needed for Font Merriweather
-brew install font-jetbrains-mono font-merriweather font-juliamono font-alegreya
+brew install font-jetbrains-mono font-merriweather font-juliamono font-alegreya font-hack-nerd-font
+
+# lsp
+brew install pyright
+
+# applications
+brew install appcleaner eudic
+brew install homebrew/cask-drivers/logitech-options
+brew install ubersicht
+brew install koekeishiya/formulae/yabai
+brew install gpg-suite
 #+end_src
 
 *** For Arch Linux
