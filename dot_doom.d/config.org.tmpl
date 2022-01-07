@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2022-01-06 Thu 22:25]
+#+LAST_MODIFIED: [2022-01-06 Thu 17:32]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -525,6 +525,10 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
       '(("d" "default" plain "%?"
          :target (file+head "${slug}.org"
                             "#+TITLE: ${title}\n#+CREATED: %U\n#+LAST_MODIFIED: %U\n#+FILETAGS: ${filetags}\n\n")
+         :unnarrowed t)
+        ("a" "work for Apple" plain "%?"
+         :target (file+head "apple/${slug}.org"
+                            "#+TITLE: ${title}\n#+CREATED: %U\n#+LAST_MODIFIED: %U\n#+FILETAGS: :apple:work:${filetags}:\n\n")
          :unnarrowed t)
         ("b" "bibliography reference" plain
          (file "~/github/org/templates/orb.org")

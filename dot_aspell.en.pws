@@ -1,4 +1,4 @@
-personal_ws-1.1 en 357
+personal_ws-1.1 en 362
 ACM
 ACNS
 AES
@@ -98,6 +98,7 @@ Micali
 Minio
 MixColumns
 NIST
+NOT
 Nespresso
 Nginx
 Niantic
@@ -136,6 +137,7 @@ Shamir
 ShiftRows
 Shoup
 Sihem
+StackOverflow
 Standaert
 Strassen
 SubBytes
@@ -249,6 +251,8 @@ failover
 geolocation
 geolocations
 geospatial
+getter
+getters
 gitbook
 gitea
 homomorphic
@@ -352,6 +356,7 @@ verifier
 wayness
 webpage
 website
+whitespace
 wiki
 wordlength
 wyverse

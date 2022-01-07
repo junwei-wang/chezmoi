@@ -65,6 +65,7 @@ yabai -m space 9 --label "9"
 # application excpetions
 yabai -m rule --add app="^(AppCleaner|Garmin Express|GPG Keychain|Logi Options|Toggl Track|WeChat|YoudaoDict)$" manage=off
 yabai -m rule --add app="^(System Preferences|System Information)$" manage=off
+yabai -m rule --add app="^(Eudic|Frhelper)$" manage=off
 
 # dialog boxes
 yabai -m rule --add app="^Firefox$" title="^Opening .*$" manage=off

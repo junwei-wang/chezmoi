@@ -4,3 +4,4 @@
 
 export GPG_TTY=$(tty)
 [[ -f ~/.bashrc ]] && . ~/.bashrc
+[[ :$PATH: == *:$HOME/bin:* ]] || PATH=$HOME/bin:$PATH
