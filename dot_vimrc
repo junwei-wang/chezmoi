@@ -1,0 +1,18 @@
+set nocompatible     " not compatible with vi
+
+set encoding=utf-8
+
+""""" Appearance
+set number
+syntax on
+
+set t_Co=256         " enable 256 colors
+
+
+""""" Indentation 
+filetype indent on    " Load type related indentation rules from e.g. ~/.vim/indent/python.vim for .py files
+set autoindent        " Keep the indentation consistent with previous line automatically
+set tabstop=8         " Display Tab key as 8 characters
+set shiftwidth=4      " Indicate the number caracters in each level for >>, <<, == 
+set expandtab         " Turn Tab into Tab automatically
+set softtabstop=4     " Convert Tab into 4 spaces

@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2022-01-06 Thu 17:32]
+#+LAST_MODIFIED: [2022-01-27 Thu 13:48]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -96,7 +96,7 @@ It's useful to have some basic personal information
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
 (setq user-full-name "Junwei Wang"
-      user-mail-address "junwei.wang@cryptoexperts.com")
+      user-mail-address "me@jwa.ng")
 #+end_src
 
 Apparently this is used by ~GPG~, and all sorts of other things.
@@ -359,6 +359,10 @@ Find this writing: https://www.reddit.com/r/emacs/comments/audffp/tip_how_to_use
                                 "--header-insertion=never"
                                 "--header-insertion-decorators=0"))
 (after! lsp-clangd (set-lsp-priority! 'clangd 2))
+
+(setq gc-cons-threshold (* 2 33554432))
+(setq lsp-use-plists t)
+
 #+end_src
 
 ** Org Mode
@@ -784,7 +788,6 @@ mbsync -a
 Then index them by
 #+begin_src shell
 mu init --maildir=~/.mbsync \
-    --my-address=junwei.wang@cryptoexperts.com \
     --my-address=wakemecn@gmail.com \
     --my-address=me@jwa.ng \
     --my-address=i.junwei.wang@gmail.com
@@ -1024,6 +1027,19 @@ To add google search of selected texts
 ;;
 ;;      Alternatively, press 'gd' (or 'C-c c d') on a module to browse its
 ;;      directory (for easy access to its source code).
+
+
+;; TODO: if we don't put these in the beginning, emacs could not boot 2022-01-27
+(setq! orb-book-bibliography "~/github/org/biblio/book.bib"
+       ;;; for citar
+       citar-bibliography '("~/.cb/cryptobib/crypto.bib"
+                            "~/github/org/biblio/thesis.bib"
+                            orb-book-bibliography
+                            "~/github/org/biblio/course.bib"
+                            "~/github/org/biblio/misc.bib"
+                            "~/github/org/biblio/temp.bib"
+                            "~/github/org/biblio/tifs.bib"
+                            "~/github/org/biblio/crxwork/wheely.bib"))
 
 (doom! :input
        <<doom-input>>
