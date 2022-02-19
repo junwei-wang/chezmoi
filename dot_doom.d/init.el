@@ -14,6 +14,19 @@
 ;;      Alternatively, press 'gd' (or 'C-c c d') on a module to browse its
 ;;      directory (for easy access to its source code).
 
+
+;; TODO: if we don't put these in the beginning, emacs could not boot 2022-01-27
+(setq! orb-book-bibliography "~/github/org/biblio/book.bib"
+       ;;; for citar
+       citar-bibliography '("~/.cb/cryptobib/crypto.bib"
+                            "~/github/org/biblio/thesis.bib"
+                            orb-book-bibliography
+                            "~/github/org/biblio/course.bib"
+                            "~/github/org/biblio/misc.bib"
+                            "~/github/org/biblio/temp.bib"
+                            "~/github/org/biblio/tifs.bib"
+                            "~/github/org/biblio/crxwork/wheely.bib"))
+
 (doom! :input
        chinese
        ;;japanese
@@ -23,7 +36,7 @@
        (company             ; the ultimate code completion backend
         ;; +childframe
         )
-       ;;helm              ; the *other* search engine for love and life
+       helm                ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
        ivy                 ; a search engine for love and life
        (vertico +icons)    ; the search engine of the future

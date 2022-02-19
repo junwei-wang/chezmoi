@@ -482,6 +482,20 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 *** Org Roam
 
 #+begin_src emacs-lisp
+(setq! orb-book-bibliography "~/github/org/biblio/book.bib")
+(after! citar
+  (setq!
+   ;;; for bibtex-completion
+   citar-bibliography '("~/.cb/cryptobib/crypto.bib"
+                        "~/github/org/biblio/thesis.bib"
+                        orb-book-bibliography
+                        "~/github/org/biblio/course.bib"
+                        "~/github/org/biblio/misc.bib"
+                        "~/github/org/biblio/temp.bib"
+                        "~/github/org/biblio/tifs.bib"
+                        "~/github/org/biblio/crxwork/wheely.bib")))
+
+
 ;;;;;;;;;; Org-Roam v2
 (setq org-roam-v2-ack t
       org-roam-directory (file-truename "~/github/org/roam")
@@ -595,30 +609,34 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   "Format org-roam-bibtex cite references for keys in KEYS."
   (s-join ", "
           (--map (format "cite:%s" it) keys)))
-(setq orb-book-bibliography "~/github/org/biblio/book.bib"
+
+(setq!
 
       ;;; for bibtex-completion
-      bibtex-completion-bibliography (list
-                                      "~/.cb/cryptobib/crypto.bib"
-                                       "~/github/org/biblio/thesis.bib"
-                                       orb-book-bibliography
-                                       "~/github/org/biblio/course.bib"
-                                       "~/github/org/biblio/misc.bib"
-                                       "~/github/org/biblio/temp.bib"
-                                       "~/github/org/biblio/tifs.bib"
-                                       "~/github/org/biblio/crxwork/wheely.bib")
-      bibtex-completion-library-path '("~/github/org/biblio/pdfs")
+       citar-bibliography (list
+                           "~/.cb/cryptobib/crypto.bib"
+                           "~/github/org/biblio/thesis.bib"
+                           orb-book-bibliography
+                           "~/github/org/biblio/course.bib"
+                           "~/github/org/biblio/misc.bib"
+                           "~/github/org/biblio/temp.bib"
+                           "~/github/org/biblio/tifs.bib"
+                           "~/github/org/biblio/crxwork/wheely.bib")
+       bibtex-completion-bibliography citar-bibliography
+
+       bibtex-completion-library-path '("~/github/org/biblio/pdfs")
 
       ;;; org-cite: newly introduced in org v9.5
-      org-cite-global-bibliography bibtex-completion-bibliography
+       ;; org-cite-global-bibliography bibtex-completion-bibliography
+       ;; citar-bibliography bibtex-completion-bibliography
 
-      bibtex-completion-format-citation-functions
-      '((org-mode      . bibtex-completion-format-citation-orb-cite)
-        (latex-mode    . bibtex-completion-format-citation-cite)
-        (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
-        (python-mode   . bibtex-completion-format-citation-sphinxcontrib-bibtex)
-        (rst-mode      . bibtex-completion-format-citation-sphinxcontrib-bibtex)
-        (default       . bibtex-completion-format-citation-default)))
+       bibtex-completion-format-citation-functions
+       '((org-mode      . bibtex-completion-format-citation-orb-cite)
+         (latex-mode    . bibtex-completion-format-citation-cite)
+         (markdown-mode . bibtex-completion-format-citation-pandoc-citeproc)
+         (python-mode   . bibtex-completion-format-citation-sphinxcontrib-bibtex)
+         (rst-mode      . bibtex-completion-format-citation-sphinxcontrib-bibtex)
+         (default       . bibtex-completion-format-citation-default)))
 
 
 ;;; org-ref
