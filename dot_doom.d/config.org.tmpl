@@ -559,11 +559,9 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          (file+head "cocktail/${slug}.org"
                     "#+TITLE: ${title}\n#+CREATED: %U\n#+LAST_MODIFIED: %U\n#+FILETAGS: :cocktail:${filetags}:\n\n")
          :unnarrowed t)
-        ("l" "LeetCode" plain
-         (function org-roam-capture--get-point)
+        ("l" "LeetCode" plain ; "%?"
          (file "~/github/org/templates/org-roam-leetcode.org")
-         :file-name "leetcode/${slug}"
-         :head "#+TITLE: ${title}\n"
+         :target (file+head "leetcode/${slug}.org" "#+TITLE: ${title}\n")
          :unnarrowed t)))
 
 (defun my/org-id-update-org-roam-files ()
