@@ -1,5 +1,0 @@
-encryption = "gpg"
-[gpg]
-    recipient = "me@jwa.ng"
-[data]
-    email = "junwei.wang@cryptoexperts.com"

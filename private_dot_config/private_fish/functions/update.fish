@@ -12,6 +12,8 @@ function update -d "System update"
         sudo pacman -R (pacman -Qtdq)
     end
 
+    pip3 install --upgrade pip flake8 autopep8
+
     echo ""
 
     if type -q doom
