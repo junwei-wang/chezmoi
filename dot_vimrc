@@ -1,3 +1,5 @@
+" https://www.tutorialdocs.com/article/vim-configuration.html
+
 set nocompatible     " not compatible with vi
 
 set encoding=utf-8
@@ -13,6 +15,37 @@ set t_Co=256         " enable 256 colors
 filetype indent on    " Load type related indentation rules from e.g. ~/.vim/indent/python.vim for .py files
 set autoindent        " Keep the indentation consistent with previous line automatically
 set tabstop=8         " Display Tab key as 8 characters
-set shiftwidth=4      " Indicate the number caracters in each level for >>, <<, == 
+set shiftwidth=4      " Indicate the number characters in each level for >>, <<, == 
 set expandtab         " Turn Tab into Tab automatically
 set softtabstop=4     " Convert Tab into 4 spaces
+
+set cursorline        " show cursor line
+
+set textwidth=120     " line width
+set wrap              " warp lines if too long
+set linebreak         
+set wrapmargin=2
+
+set showmatch
+set hlsearch
+set incsearch
+set smartcase
+
+set spell spelllang=en_us " wrong
+set undofile
+
+set backupdir=~/.vim/.backup//
+set directory=~/.vim/.swp//
+set undodir=~/.vim/.undo//
+
+set autochdir
+
+set noerrorbells
+set visualbell
+
+set history=1000
+
+set autoread
+
+set wildmenu
+set wildmode=longest:list,full
