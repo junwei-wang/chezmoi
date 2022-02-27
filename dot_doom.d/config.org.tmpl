@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2022-02-11 Fri 22:12]
+#+LAST_MODIFIED: [2022-02-13 Sun 15:33]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -73,7 +73,7 @@ doom env refresh
 #+end_src
 
 #+begin_src bash
-cmake -DCMAKE_INSTALL_PREFIX=/Users/junwei/.emacs.d/.local/etc/irony-server/ -DLIBCLANG_LIBRARY=/usr/local/opt/llvm/lib/libclang.dylib -DLIBCLANG_INCLUDE_DIR=/usr/local/opt/llvm/include /Users/junwei/.emacs.d/.local/straight/build-27.2/irony/server && cmake --build . --use-stderr --config Release --target install
+cmake -DCMAKE_INSTALL_PREFIX\=/Users/junwei/.emacs.d/.local/etc/irony-server/ -DLIBCLANG_LIBRARY\=/usr/local/opt/llvm/lib/libclang.dylib -DLIBCLANG_INCLUDE_DIR\=/usr/local/opt/llvm/include /Users/junwei/.emacs.d/.local/straight/build-27.1/irony/server && cmake --build . --use-stderr --config Release --target install
 #+end_src
 
 * Rudimentary configuration
