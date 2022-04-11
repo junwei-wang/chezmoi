@@ -4,6 +4,8 @@ set nocompatible     " not compatible with vi
 
 set encoding=utf-8
 
+set mouse=a          " use mouse for scrolling
+
 """"" Appearance
 set number
 syntax on
@@ -21,8 +23,8 @@ set softtabstop=4     " Convert Tab into 4 spaces
 
 set cursorline        " show cursor line
 
-set textwidth=120     " line width
-set wrap              " warp lines if too long
+set textwidth=220     " line width
+" set wrap              " warp lines if too long
 set linebreak         
 set wrapmargin=2
 

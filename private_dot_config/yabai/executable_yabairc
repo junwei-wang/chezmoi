@@ -63,7 +63,7 @@ yabai -m space 9 --label "9"
 # space 3: browser
 
 # application excpetions
-yabai -m rule --add app="^(AppCleaner|Garmin Express|GPG Keychain|Logi Options|Toggl Track|WeChat|YoudaoDict)$" manage=off
+yabai -m rule --add app="^(AppCleaner|Garmin Express|GPG Keychain|Logi Options|Toggl Track|WeChat|YoudaoDict|Cisco Webex Meetings)$" manage=off
 yabai -m rule --add app="^(System Preferences|System Information|法语助手|EuDic)$" manage=off
 
 # dialog boxes
