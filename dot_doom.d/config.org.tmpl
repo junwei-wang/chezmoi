@@ -1,5 +1,5 @@
 #+TITLE: Doom Emacs Configuration
-#+LAST_MODIFIED: [2022-02-13 Sun 15:33]
+#+LAST_MODIFIED: [2022-07-11 Mon 16:11]
 #+startup: fold
 #+property: header-args:emacs-lisp :tangle yes :cache yes :results silent :comments link
 #+property: header-args :tangle no :results silent
@@ -415,6 +415,7 @@ Find this writing: https://www.reddit.com/r/emacs/comments/audffp/tip_how_to_use
 #+begin_src emacs-lisp
 (setq
  org-agenda-files (list "~/github/org"
+                        "~/github/org/roam/apple"
                         "~/github/org/roam/daily"
                         "~/github/org/roam/to_handle_over.org")
  org-agenda-custom-commands
