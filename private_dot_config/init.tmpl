@@ -1,11 +1,9 @@
-{{ if (eq .chezmoi.os "darwin") -}}
 # install homebrew
 if ! brew_loc="$(type -p brew)" || [[ -z $brew_loc ]]; then
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 fi
-{{- end }}
 
 # install cryptobib
-[[ ! -d ${HOME}/.cb/cryptobib ]] && git clone "git@github.com:cryptobib/export.git" "${HOME}/.cb/cryptobib"
+# [[ ! -d ${HOME}/.cb/cryptobib ]] && git clone "git@github.com:cryptobib/export.git" "${HOME}/.cb/cryptobib"
 
 # TODO: add Doom emacs
